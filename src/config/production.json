@@ -1,0 +1,7 @@
+{
+  "environment": "production",
+  "endpoint": "https://api.rumblum.com/api",
+  "stripeKey": "",
+  "ravenDSN": "",
+  "intercom": ""
+}
