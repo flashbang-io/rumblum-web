@@ -2,6 +2,14 @@
   "name": "rumblum",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "deploy:sandbox": "REACT_APP_NODE_ENV=sandbox yarn run build && now ./build --name=rumblum-web-sandbox --cache=60000 && now alias --local-config=now.sandbox.json",
+    "deploy:production": "REACT_APP_NODE_ENV=production yarn run build && now ./build --name=rumblum-web-production --cache=60000 && now alias --local-config=now.production.json",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "chroma-js": "^1.3.5",
     "http-status": "^1.0.1",
@@ -16,12 +24,6 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
     "styled-components": "^2.4.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "eslint": "^4.13.1",
