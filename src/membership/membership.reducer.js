@@ -64,9 +64,9 @@ const thunk = thunkify({
  * The return value of the inner function should be a promise. The dispatch function
  * returns the value of the function from within it. This allows us to chain dispatch functions.
  */
-export const attemptGetMemberships = playerId => thunk(async (dispatch, getState) => {
+export const attemptGetMemberships = templateId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
-  const memberships = await apiGetMemberships(token, playerId);
+  const memberships = await apiGetMemberships(token, templateId);
   dispatch(setMembership(memberships));
   return memberships;
 });
