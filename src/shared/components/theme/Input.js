@@ -4,9 +4,13 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 const InputStyled = styled.input`
-  background-color: blue;
-  border: 1px solid green;
-  color: white;
+  background-color: ${props => props.theme.colors.dark};
+  border: 1px solid ${props => props.theme.colors.darker};
+  color: ${props => props.theme.colors.off};
+  padding: 10px;
+  font-size: 14px;
+  border-radius: ${props => props.theme.size.radius};
+  outline: none;
 `;
 
 const InputTextarea = InputStyled.withComponent('textarea');

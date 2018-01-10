@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 const ButtonStyled = styled.button`
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: ${props => props.theme.size.radius};
   outline: none;
   color: white;
   background-color: blue;
