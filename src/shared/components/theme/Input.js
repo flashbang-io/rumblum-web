@@ -13,6 +13,7 @@ const InputStyled = styled.input`
   outline: none;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 10px;
 `;
 
 const InputTextarea = InputStyled.withComponent('textarea');

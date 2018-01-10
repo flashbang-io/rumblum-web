@@ -5,13 +5,13 @@ import { NavLink } from 'react-router-dom';
 
 const ButtonStyled = styled.button`
   text-decoration: none;
-  border-radius: ${props => props.theme.size.radius};
   outline: none;
-  color: white;
-  background-color: blue;
+  border-radius: ${props => props.theme.size.radius};
+  background-color: ${props => props.theme.colors.grey};
+  color: ${props => props.theme.colors.dark};
   border: none;
   font-size: 14px;
-  padding: 10px 18px;
+  padding: 10px 14px;
   ${props => props.big && css`
     font-size: 16px;
     padding: 14px 24px;

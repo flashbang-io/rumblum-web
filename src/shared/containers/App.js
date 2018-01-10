@@ -5,10 +5,10 @@ import { compose } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { attemptCheckPlayer } from '../../player/player.reducer';
 import config from '../../config';
-// import Login from '../../customer/containers/Login';
-// import Register from '../../customer/containers/Register';
-// import Forgot from '../../customer/containers/Forgot';
-// import Reset from '../../customer/containers/Reset';
+import LoginPage from '../../player/containers/LoginPage';
+// import Register from '../../player/containers/Register';
+// import Forgot from '../../player/containers/Forgot';
+// import Reset from '../../player/containers/Reset';
 import Frame from './Frame';
 
 class App extends Component {
@@ -33,10 +33,10 @@ class App extends Component {
     }
     return (
       <Switch>
-        {/* <Route path="/login" component={ Login } />
-        <Route path="/register" component={ Register } />
-        <Route path="/forgot" component={ Forgot } />
-        <Route path="/reset" component={ Reset } /> */}
+        <Route path="/login" component={ LoginPage } />
+        {/* <Route path="/register" component={ Register } /> */}
+        {/* <Route path="/forgot" component={ Forgot } /> */}
+        {/* <Route path="/reset" component={ Reset } /> */}
         <Route path="/" component={ Frame } />
         <Redirect to="/templates" />
       </Switch>

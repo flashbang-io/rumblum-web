@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { redirectUnauthenticatedGuard } from '../../guards';
-import { attemptGetWorkspaces, setWorkspace } from '../../workspace/workspace.reducer';
+import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
 import { Container } from '../components/theme/index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -18,7 +18,7 @@ class Frame extends Component {
 
   componentWillReceiveProps({ workspace, workspaces }) {
     if (!workspace && workspaces && workspaces.length) {
-      this.props.setWorkspace(workspaces[0]);
+      this.props.currentWorkspace(workspaces[0]);
     }
   }
 
@@ -44,7 +44,7 @@ class Frame extends Component {
 
 Frame.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
-  setWorkspace: PropTypes.func.isRequired,
+  currentWorkspace: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   })).isRequired,
@@ -63,8 +63,8 @@ const mapStateToProps = ({
   workspaces,
   workspace: current,
 });
-const mapDispatchToProps = { attemptGetWorkspaces, setWorkspace };
+const mapDispatchToProps = { attemptGetWorkspaces, currentWorkspace };
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
   redirectUnauthenticatedGuard,
+  connect(mapStateToProps, mapDispatchToProps),
 )(Frame);
