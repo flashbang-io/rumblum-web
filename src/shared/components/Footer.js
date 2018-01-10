@@ -25,6 +25,10 @@ const Menu = styled.div`
 
 const MenuItem = styled.div`
   margin-left: 10px;
+  transition: .2s;
+  &:hover {
+    color: ${props => props.theme.colors.grey};
+  }
 `;
 
 const Footer = () => (

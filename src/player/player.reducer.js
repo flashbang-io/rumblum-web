@@ -120,11 +120,13 @@ export const attemptLogoutPlayer = () => thunk(async (dispatch, getState) => {
   dispatch(resetPlayer());
 });
 export const attemptCheckPlayer = () => thunk(async (dispatch) => {
-  const auth = await apiCheckPlayer();
   try {
-    const player = await apiGetPlayer(auth.token, auth.userId); // check token still good
-    dispatch(authPlayer(auth));
-    dispatch(currentPlayer(player));
+    const auth = await apiCheckPlayer();
+    if (auth) {
+      const player = await apiGetPlayer(auth.token, auth.userId); // check token still good
+      dispatch(authPlayer(auth));
+      dispatch(currentPlayer(player));
+    }
   } catch (e) {
     localStorage.removeItem('auth');
   }
@@ -216,6 +218,17 @@ export default handleActions({
   [PLAYER_PATCH]: (state, { payload = {} }) => ({
     ...state,
     current: { ...state.current, ...payload },
+  }),
+
+  [PLAYER_AUTH]: (state, { payload = null }) => ({
+    ...state,
+    auth: payload,
+    authenticated: !!payload,
+  }),
+
+  [PLAYER_CHECK]: (state, { payload = true }) => ({
+    ...state,
+    checked: payload,
   }),
 
 }, initialState);

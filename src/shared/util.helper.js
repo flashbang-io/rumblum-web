@@ -9,16 +9,22 @@ export const handleResponse = async res => {
   throw data.error;
 };
 
-export const thunkify = (start, end, error) => work => async (dispatch, getState) => {
+export const thunkify = ({ start, end, error }) => work => async (dispatch, getState) => {
   let result;
-  start(dispatch, getState);
+  if (start) {
+    start(dispatch, getState);
+  }
   try {
     result = await work(dispatch, getState);
   } catch (e) {
-    console.warn(e);
-    error(e, dispatch, getState);
+    console.warn(e.message || e);
+    if (error) {
+      error(e, dispatch, getState);
+    }
   }
-  end(dispatch, getState);
+  if (end) {
+    end(dispatch, getState);
+  }
   return result;
 };
 
