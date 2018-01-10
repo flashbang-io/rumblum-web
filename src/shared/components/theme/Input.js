@@ -6,11 +6,13 @@ import moment from 'moment';
 const InputStyled = styled.input`
   background-color: ${props => props.theme.colors.dark};
   border: 1px solid ${props => props.theme.colors.darker};
-  color: ${props => props.theme.colors.off};
+  color: ${props => props.theme.colors.white};
   padding: 10px;
   font-size: 14px;
   border-radius: ${props => props.theme.size.radius};
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const InputTextarea = InputStyled.withComponent('textarea');
