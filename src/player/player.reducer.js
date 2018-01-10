@@ -171,6 +171,7 @@ export default handleActions({
 
   [PLAYER_RESET]: () => ({
     ...initialState,
+    checked: true,
   }),
 
   [PLAYER_LOADING]: (state, { payload = true }) => ({

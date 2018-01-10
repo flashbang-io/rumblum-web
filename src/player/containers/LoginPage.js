@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptLoginPlayer, erroredPlayer } from '../player.reducer';
 import { Container, Title, Button } from '../../shared/components/theme';
@@ -10,13 +12,21 @@ import Page from '../components/Page';
 
 class LoginPage extends Component {
 
+  constructor(props) {
+    super(props);
+    const { redirect } = queryString.parse(props.location.search);
+    this.state = { redirect };
+  }
+
   componentWillUnmount() {
     this.props.erroredPlayer(); // clear errors
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.attemptLoginPlayer();
+    const { redirect } = this.state;
+    this.props.attemptLoginPlayer()
+      .then(player => player && redirect && this.props.history.push(redirect));
   }
 
   render() {
@@ -40,6 +50,12 @@ class LoginPage extends Component {
 LoginPage.propTypes = {
   attemptLoginPlayer: PropTypes.func.isRequired,
   erroredPlayer: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = ({
@@ -48,5 +64,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = { attemptLoginPlayer, erroredPlayer };
 export default compose(
   redirectAuthenticatedGuard,
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
 )(LoginPage);
