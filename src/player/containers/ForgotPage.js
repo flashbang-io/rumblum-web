@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptForgotPassword, erroredPlayer } from '../player.reducer';
 import { Container, Title, Button } from '../../shared/components/theme';
@@ -21,17 +22,19 @@ class ForgotPage extends Component {
 
   render() {
     return (
-      <Page>
-        <Container>
-          <Title>Forgot Password</Title>
-          <ForgotForm
-            handleSubmit={ event => this.handleSubmit(event) }
-            { ...this.props }
-          />
-          <Button to="/login">Login</Button>
-          <Button to="/register">Sign Up</Button>
-        </Container>
-      </Page>
+      <DocumentTitle title="Forgot Password | Rumblum">
+        <Page>
+          <Container>
+            <Title>Forgot Password</Title>
+            <ForgotForm
+              handleSubmit={ event => this.handleSubmit(event) }
+              { ...this.props }
+            />
+            <Button to="/login">Login</Button>
+            <Button to="/register">Sign Up</Button>
+          </Container>
+        </Page>
+      </DocumentTitle>
     );
   }
 

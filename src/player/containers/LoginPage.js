@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
+import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptLoginPlayer, erroredPlayer } from '../player.reducer';
 import { Container, Title, Button } from '../../shared/components/theme';
@@ -31,17 +32,19 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <Page>
-        <Container>
-          <Title>Login</Title>
-          <LoginForm
-            handleSubmit={ event => this.handleSubmit(event) }
-            { ...this.props }
-          />
-          <Button to="/register">Sign Up</Button>
-          <Button to="/forgot">Forgot Password</Button>
-        </Container>
-      </Page>
+      <DocumentTitle title="Login | Rumblum">
+        <Page>
+          <Container>
+            <Title>Login</Title>
+            <LoginForm
+              handleSubmit={ event => this.handleSubmit(event) }
+              { ...this.props }
+            />
+            <Button to="/register">Sign Up</Button>
+            <Button to="/forgot">Forgot Password</Button>
+          </Container>
+        </Page>
+      </DocumentTitle>
     );
   }
 

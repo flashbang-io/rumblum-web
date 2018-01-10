@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
+import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptResetPassword, erroredPlayer } from '../player.reducer';
 import { Container, Title, Button } from '../../shared/components/theme';
@@ -30,18 +31,20 @@ class ResetPage extends Component {
   render() {
     const { email } = this.state;
     return (
-      <Page>
-        <Container>
-          <Title>Forgot Password</Title>
-          <ResetForm
-            handleSubmit={ event => this.handleSubmit(event) }
-            initialValues={{ email }}
-            email={ email }
-            { ...this.props }
-          />
-          <Button to="/login">Login</Button>
-        </Container>
-      </Page>
+      <DocumentTitle title="Reset Password | Rumblum">
+        <Page>
+          <Container>
+            <Title>Forgot Password</Title>
+            <ResetForm
+              handleSubmit={ event => this.handleSubmit(event) }
+              initialValues={{ email }}
+              email={ email }
+              { ...this.props }
+            />
+            <Button to="/login">Login</Button>
+          </Container>
+        </Page>
+      </DocumentTitle>
     );
   }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptCreatePlayer, erroredPlayer } from '../player.reducer';
 import { Container, Title, Button } from '../../shared/components/theme';
@@ -21,16 +22,18 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <Page>
-        <Container>
-          <Title>Forgot Password</Title>
-          <RegisterForm
-            handleSubmit={ event => this.handleSubmit(event) }
-            { ...this.props }
-          />
-          <Button to="/login">Login</Button>
-        </Container>
-      </Page>
+      <DocumentTitle title="Sign Up | Rumblum">
+        <Page>
+          <Container>
+            <Title>Forgot Password</Title>
+            <RegisterForm
+              handleSubmit={ event => this.handleSubmit(event) }
+              { ...this.props }
+            />
+            <Button to="/login">Login</Button>
+          </Container>
+        </Page>
+      </DocumentTitle>
     );
   }
 
