@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptLoginPlayer, erroredPlayer } from '../player.reducer';
-import { Container, Title } from '../../shared/components/theme';
+import { Container, Title, Button } from '../../shared/components/theme';
 import LoginForm from './LoginForm';
 import Page from '../components/Page';
 
@@ -29,6 +28,8 @@ class LoginPage extends Component {
             handleSubmit={ event => this.handleSubmit(event) }
             { ...this.props }
           />
+          <Button to="/register">Sign Up</Button>
+          <Button to="/forgot">Forgot Password</Button>
         </Container>
       </Page>
     );
@@ -47,6 +48,5 @@ const mapStateToProps = ({
 const mapDispatchToProps = { attemptLoginPlayer, erroredPlayer };
 export default compose(
   redirectAuthenticatedGuard,
-  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
 )(LoginPage);

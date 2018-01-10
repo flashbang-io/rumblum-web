@@ -9,9 +9,12 @@ const ButtonStyled = styled.button`
   border-radius: ${props => props.theme.size.radius};
   background-color: ${props => props.theme.colors.grey};
   color: ${props => props.theme.colors.dark};
+  margin-bottom: 10px;
+  margin-right: 10px;
   border: none;
   font-size: 14px;
   padding: 10px 14px;
+  display: inline-block;
   ${props => props.big && css`
     font-size: 16px;
     padding: 14px 24px;

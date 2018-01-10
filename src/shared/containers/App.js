@@ -6,9 +6,9 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { attemptCheckPlayer } from '../../player/player.reducer';
 import config from '../../config';
 import LoginPage from '../../player/containers/LoginPage';
-// import Register from '../../player/containers/Register';
-// import Forgot from '../../player/containers/Forgot';
-// import Reset from '../../player/containers/Reset';
+import RegisterPage from '../../player/containers/RegisterPage';
+import ForgotPage from '../../player/containers/ForgotPage';
+import ResetPage from '../../player/containers/ResetPage';
 import Frame from './Frame';
 
 class App extends Component {
@@ -34,9 +34,9 @@ class App extends Component {
     return (
       <Switch>
         <Route path="/login" component={ LoginPage } />
-        {/* <Route path="/register" component={ Register } /> */}
-        {/* <Route path="/forgot" component={ Forgot } /> */}
-        {/* <Route path="/reset" component={ Reset } /> */}
+        <Route path="/register" component={ RegisterPage } />
+        <Route path="/forgot" component={ ForgotPage } />
+        <Route path="/reset" component={ ResetPage } />
         <Route path="/" component={ Frame } />
         <Redirect to="/templates" />
       </Switch>

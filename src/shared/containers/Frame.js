@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { redirectUnauthenticatedGuard } from '../../guards';
 import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
 import { Container } from '../components/theme/index';
-import Header from '../components/Header';
+import Header from './Header';
 import Footer from '../components/Footer';
 import TemplateList from '../../template/containers/TemplateList';
 
