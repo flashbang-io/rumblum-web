@@ -12,6 +12,7 @@ const theme = {
     darkless: '#202426',
     darker: '#151515',
     grey: '#888888',
+    greyer: '#333333',
     info: '#28b0ff',
     infoHover: chroma('#28b0ff').darken(1),
     success: '#2fce3a',

@@ -164,7 +164,11 @@ export const attemptUpdateBilling = (playerId, source) => thunk(async (dispatch,
 export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
   const state = getState();
   const formName = 'share';
-  console.log(state.form[formName].values);
+  const { message, people } = state.form[formName].values;
+  if (!people || !people.length) {
+    throw new Error('Must have at least one person to share to');
+  }
+  console.log(message);
   dispatch(successPlayer());
 });
 

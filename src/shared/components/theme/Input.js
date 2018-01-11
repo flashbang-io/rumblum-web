@@ -20,7 +20,7 @@ const InputStyled = styled.input`
 `;
 
 const InputTextarea = InputStyled.withComponent('textarea').extend`
-  height: 100px;
+  height: 130px;
   resize: none;
 `;
 

@@ -27,7 +27,7 @@ const PersonFields = ({ fields }) => (
           style={{ minWidth: '220px' }}
           component={ Input }
         />
-        <Button onClick={ () => fields.remove(index) }>
+        <Button info onClick={ () => fields.remove(index) }>
           <Icon name="close" />
         </Button>
       </Group>
@@ -57,7 +57,7 @@ const ShareForm = ({ handleSubmit, loading, problem }) => (
     </div>
     { problem && <Error>{ problem.message || problem }</Error> }
     <Group>
-      <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Share' }</Button>
+      <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Send' }</Button>
     </Group>
   </Form>
 );

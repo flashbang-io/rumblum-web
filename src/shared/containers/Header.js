@@ -23,6 +23,7 @@ class Header extends Component {
             </Brand>
             <Menu>
               <MenuItem onClick={ this.props.onShare }>Share</MenuItem>
+              <MenuItem onClick={ this.props.onSettings }>Settings</MenuItem>
               <MenuItem onClick={ () => this.handleLogout() }>Logout</MenuItem>
               <MenuItem>
                 <Icon name="cog" /> Settings
@@ -38,6 +39,7 @@ class Header extends Component {
 Header.propTypes = {
   attemptLogoutPlayer: PropTypes.func.isRequired,
   onShare: PropTypes.func.isRequired,
+  onSettings: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ player }) => ({ player: player.current });

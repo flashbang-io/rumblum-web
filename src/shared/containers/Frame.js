@@ -11,13 +11,17 @@ import Header from './Header';
 import Footer from '../components/Footer';
 import TemplateList from '../../template/containers/TemplateList';
 import ShareModal from '../../player/containers/ShareModal';
+import SettingsModal from '../../player/containers/SettingsModal';
+
+const MODAL_SHARE = 'MODAL_SHARE';
+const MODAL_SETTINGS = 'MODAL_SETTINGS';
 
 class Frame extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      share: false,
+      modal: null,
     };
   }
 
@@ -31,18 +35,19 @@ class Frame extends Component {
     }
   }
 
-  toggleShare() {
-    this.setState({ share: !this.state.share });
+  handleModal({ modal = null } = {}) {
+    this.setState({ modal });
   }
 
   render() {
     const { workspace } = this.props;
-    const { share } = this.state;
+    const { modal } = this.state;
     return (
       <DocumentTitle title="Document Templates | Rumblum">
         <div>
           <Header
-            onShare={ () => this.toggleShare() }
+            onShare={ () => this.handleModal({ modal: MODAL_SHARE }) }
+            onSettings={ () => this.handleModal({ modal: MODAL_SETTINGS }) }
           />
           <Container>
             { workspace && (
@@ -53,8 +58,11 @@ class Frame extends Component {
             ) }
           </Container>
           <Footer />
-          { share && <ShareModal
-            handleClose={ () => this.toggleShare() }
+          { modal && modal === MODAL_SHARE && <ShareModal
+            handleClose={ () => this.handleModal() }
+          /> }
+          { modal && modal === MODAL_SETTINGS && <SettingsModal
+            handleClose={ () => this.handleModal() }
           /> }
         </div>
       </DocumentTitle>

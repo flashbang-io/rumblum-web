@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Wrap = styled.div`
   display: flex;
   padding: 0 0 10px;
   margin: 20px 0 0;
-  border-bottom: 1px solid ${props => props.theme.colors.grey};
+  border-bottom: 1px solid ${props => props.theme.colors.greyer};
   &:last-of-type {
     border-bottom: none;
   }
@@ -15,6 +15,10 @@ const Wrap = styled.div`
 const Description = styled.div`
   margin-right: 10px;
   margin-bottom: 10px;
+  flex-grow: 1;
+  ${props => props.padding && css`
+    padding-top: 10px;
+  `}
 `;
 
 const Label = styled.label`
@@ -24,7 +28,7 @@ const Label = styled.label`
 
 const Help = styled.div`
   font-size: 12px;
-  color: ${props => props.theme.colors.offer};
+  color: ${props => props.theme.colors.grey};
   margin-top: 2px;
 `;
 
@@ -35,7 +39,7 @@ const Data = styled.div`
 
 const Control = ({ label, help, children, ...props }) => (
   <Wrap { ...props }>
-    <Description>
+    <Description padding={ !help }>
       <Label>{ label }</Label>
       { help && <Help>{ help }</Help> }
     </Description>

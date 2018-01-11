@@ -25,6 +25,13 @@ const ButtonStyled = styled.button`
   ${props => props.danger && css`
     background-color: ${props.theme.colors.danger};
   `}
+  ${props => props.info && css`
+    color: ${props.theme.colors.grey};
+    background-color: ${props.theme.colors.offer};
+    &:hover {
+      background-color: ${props.theme.colors.off};
+    }
+  `}
   ${props => props.float && css`
     margin-left: auto;
   `}

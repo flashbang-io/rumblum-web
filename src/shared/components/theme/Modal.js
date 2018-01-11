@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const hook = document.getElementById('hook');
 
 const Shadow = styled.div`
-  padding: 50px 15px;
+  padding: 60px 15px;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
