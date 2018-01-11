@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { attemptUpdatePlayer, erroredPlayer } from '../player.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import SettingsForm from './SettingsForm';
-import Popup from '../../shared/components/Popup';
+import Popup, { Tab } from '../../shared/components/Popup';
 
 class SharePage extends Component {
 
@@ -21,14 +21,20 @@ class SharePage extends Component {
     const { player } = this.props;
     return (
       <Modal handleClose={ this.props.handleClose }>
-        <Popup>
-          <Heading inverted flatten>Settings</Heading>
-          <Subheading>Edit your profile settings.</Subheading>
-          <SettingsForm
-            handleSubmit={ event => this.handleSubmit(event) }
-            initialValues={ player }
-            { ...this.props }
-          />
+        <Popup tabs>
+          <Tab title="Settings">
+            <Heading inverted flatten>Settings</Heading>
+            <Subheading>Edit your profile settings.</Subheading>
+            <SettingsForm
+              handleSubmit={ event => this.handleSubmit(event) }
+              initialValues={ player }
+              { ...this.props }
+            />
+          </Tab>
+          <Tab title="Second">
+            <Heading inverted flatten>Second Page</Heading>
+            <Subheading>Edit your profile settings.</Subheading>
+          </Tab>
         </Popup>
       </Modal>
     );
