@@ -19,7 +19,10 @@ const InputStyled = styled.input`
   ${props => props.tiny && sizeTiny}
 `;
 
-const InputTextarea = InputStyled.withComponent('textarea');
+const InputTextarea = InputStyled.withComponent('textarea').extend`
+  height: 100px;
+  resize: none;
+`;
 
 const Input = ({ type, input, ...props }) => {
   if (type === 'textarea') {

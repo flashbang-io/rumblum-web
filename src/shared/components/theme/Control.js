@@ -7,14 +7,13 @@ const Wrap = styled.div`
   padding: 0 0 10px;
   margin: 20px 0 0;
   border-bottom: 1px solid ${props => props.theme.colors.grey};
-  align-items: center;
   &:last-of-type {
     border-bottom: none;
   }
 `;
 
 const Description = styled.div`
-  margin-right: auto;
+  margin-right: 10px;
   margin-bottom: 10px;
 `;
 

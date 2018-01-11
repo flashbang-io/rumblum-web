@@ -1,38 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field, FieldArray, Form } from 'redux-form';
-import { Input, Button, Error, Control } from '../../shared/components/theme';
+import { Input, Button, Error, Group, Icon, Control } from '../../shared/components/theme';
 
 const PersonFields = ({ fields }) => (
   <div>
+    <Button small onClick={ () => fields.push({}) }>Add Person</Button>
     { fields.map((person, index) => (
-      <div key={ index }>
-        <Control
-          label="Email"
-          help="This is how we contact them."
-        >
-          <Field
-            name={ `${person}.email` }
-            type="email"
-            placeholder="john@example.com.au"
-            component={ Input }
-          />
-        </Control>
-        <Control
-          label="Name"
-          help="Help us be personal."
-        >
-          <Field
-            name={ `${person}.name` }
-            type="text"
-            placeholder="John Blogs"
-            component={ Input }
-          />
-        </Control>
-        <Button tiny onClick={ () => fields.remove(index) }>Remove Person</Button>
-      </div>
+      <Group space key={ index }>
+        <Field
+          name={ `${person}.firstName` }
+          type="text"
+          placeholder="First Name"
+          component={ Input }
+        />
+        <Field
+          name={ `${person}.lastName` }
+          type="text"
+          placeholder="Last Name"
+          component={ Input }
+        />
+        <Field
+          name={ `${person}.email` }
+          type="email"
+          placeholder="Email"
+          style={{ minWidth: '220px' }}
+          component={ Input }
+        />
+        <Button onClick={ () => fields.remove(index) }>
+          <Icon name="close" />
+        </Button>
+      </Group>
     )) }
-    <Button tiny onClick={ () => fields.push({}) }>Add Person</Button>
   </div>
 );
 
@@ -42,9 +41,24 @@ PersonFields.propTypes = {
 
 const ShareForm = ({ handleSubmit, loading, problem }) => (
   <Form onSubmit={ handleSubmit }>
-    <FieldArray name="emails" component={ PersonFields } />
+    <FieldArray name="people" component={ PersonFields } />
+    <div>
+      <Control
+        label="Message"
+        help="Write a personal message so that they know it's from you."
+      >
+        <Field
+          name="message"
+          type="textarea"
+          placeholder="Message..."
+          component={ Input }
+        />
+      </Control>
+    </div>
     { problem && <Error>{ problem.message || problem }</Error> }
-    <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Share' }</Button>
+    <Group>
+      <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Share' }</Button>
+    </Group>
   </Form>
 );
 

@@ -8,20 +8,25 @@ const ButtonStyled = styled.button`
   text-decoration: none;
   outline: none;
   border-radius: ${props => props.theme.size.radius};
-  background-color: ${props => props.theme.colors.grey};
-  color: ${props => props.theme.colors.dark};
   margin-bottom: 10px;
   border: none;
   display: inline-block;
+  cursor: pointer;
+  transition: .2s;
+  color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors.info};
+  &:hover {
+    background-color: ${props => props.theme.colors.infoDark};
+  }
   ${sizeNormal}
   ${props => props.big && sizeBig}
   ${props => props.small && sizeSmall}
   ${props => props.tiny && sizeTiny}
   ${props => props.danger && css`
-    background-color: red;
+    background-color: ${props.theme.colors.danger};
   `}
   ${props => props.float && css`
-    float: right;
+    margin-left: auto;
   `}
 `;
 
@@ -29,7 +34,7 @@ const ButtonRoute = ButtonStyled.withComponent(NavLink);
 
 const ButtonLink = ButtonStyled.withComponent('a');
 
-export const Button = ({ children, to, href, ...props }) => {
+const Button = ({ children, to, href, ...props }) => {
   if (to) {
     return <ButtonRoute to={ to } { ...props }>{ children }</ButtonRoute>;
   }
@@ -51,11 +56,4 @@ Button.defaultProps = {
   children: null,
 };
 
-export const ButtonGroup = `
-  & > * {
-    margin-right: 10px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-`;
+export default Button;

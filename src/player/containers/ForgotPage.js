@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptForgotPassword, erroredPlayer } from '../player.reducer';
-import { Container, Title, Button, ButtonGroup } from '../../shared/components/theme';
+import { Container, Title, Button, Group } from '../../shared/components/theme';
 import ForgotForm from './ForgotForm';
 import Page from '../components/Page';
 
@@ -30,10 +30,10 @@ class ForgotPage extends Component {
               handleSubmit={ event => this.handleSubmit(event) }
               { ...this.props }
             />
-            <ButtonGroup>
+            <Group>
               <Button to="/login">Login</Button>
               <Button to="/register">Sign Up</Button>
-            </ButtonGroup>
+            </Group>
           </Container>
         </Page>
       </DocumentTitle>

@@ -163,7 +163,7 @@ export const attemptUpdateBilling = (playerId, source) => thunk(async (dispatch,
 });
 export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
   const state = getState();
-  const formName = 'reset';
+  const formName = 'share';
   console.log(state.form[formName].values);
   dispatch(successPlayer());
 });
