@@ -25,7 +25,7 @@ class RegisterPage extends Component {
       <DocumentTitle title="Sign Up | Rumblum">
         <Page>
           <Container>
-            <Title>Forgot Password</Title>
+            <Title>Sign Up</Title>
             <RegisterForm
               handleSubmit={ event => this.handleSubmit(event) }
               { ...this.props }
