@@ -22,7 +22,7 @@ class SharePage extends Component {
     return (
       <Modal handleClose={ this.props.handleClose }>
         <Popup tabs>
-          <Tab title="Settings">
+          <Tab title="Settings" icon="cog">
             <Heading inverted flatten>Settings</Heading>
             <Subheading>Edit your profile settings.</Subheading>
             <SettingsForm
@@ -31,7 +31,7 @@ class SharePage extends Component {
               { ...this.props }
             />
           </Tab>
-          <Tab title="Second">
+          <Tab title="Second" icon="home">
             <Heading inverted flatten>Second Page</Heading>
             <Subheading>Edit your profile settings.</Subheading>
           </Tab>
