@@ -38,7 +38,7 @@ class Modal extends Component {
 
   handleClick(e) {
     if (e.target === e.currentTarget) {
-      this.props.handleHide();
+      this.props.handleClose();
     }
   }
 
@@ -62,13 +62,13 @@ class Modal extends Component {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  handleHide: PropTypes.func,
+  handleClose: PropTypes.func,
   hidden: PropTypes.bool,
 };
 
 Modal.defaultProps = {
   children: null,
-  handleHide: () => {},
+  handleClose: () => {},
   hidden: false,
 };
 

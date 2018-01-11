@@ -1,15 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Title = styled.h1`
-  font-size: 20px;
+  font-size: 24px;
   color: #333333;
   margin: 0 0 10px;
 `;
 
 export const Heading = styled.div`
-  font-size: 16px;
-  color: #888888;
+  font-size: 18px;
+  color: ${props => props.theme.colors.grey};
   margin: 0 0 10px;
+  ${props => props.inverted && css`
+    color: ${props.theme.colors.white};
+  `}
 `;
 
 export const Subheading = styled.div`

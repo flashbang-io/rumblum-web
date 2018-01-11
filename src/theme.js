@@ -5,13 +5,13 @@ const theme = {
     radius: '3px',
   },
   colors: {
-    dark: '#282a2d',
-    darkless: chroma('#282a2d').brighten(0.5),
-    darker: chroma('#282a2d').darken(1),
+    white: '#ffffff',
     off: chroma('#ffffff').darken(0.5),
     offer: chroma('#ffffff').darken(1),
+    dark: '#16191A',
+    darkless: '#202426',
+    darker: '#151515',
     grey: '#888888',
-    white: '#ffffff',
   },
 };
 

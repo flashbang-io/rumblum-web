@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptLoginPlayer, erroredPlayer } from '../player.reducer';
-import { Container, Title, Button } from '../../shared/components/theme';
+import { Container, Title, Button, ButtonGroup } from '../../shared/components/theme';
 import LoginForm from './LoginForm';
 import Page from '../components/Page';
 
@@ -40,8 +40,10 @@ class LoginPage extends Component {
               handleSubmit={ event => this.handleSubmit(event) }
               { ...this.props }
             />
-            <Button to="/register">Sign Up</Button>
-            <Button to="/forgot">Forgot Password</Button>
+            <ButtonGroup>
+              <Button to="/register">Sign Up</Button>
+              <Button to="/forgot">Forgot Password</Button>
+            </ButtonGroup>
           </Container>
         </Page>
       </DocumentTitle>
