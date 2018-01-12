@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import onClickOutside from 'react-onclickoutside';
-import { sizeNormal } from './theme/style';
 
 const DropWrap = styled.div`
   width: 200px;
-  background-color: ${props => props.theme.colors.dark};
+  background-color: ${props => props.theme.colors.darkless};
   border-radius: ${props => props.theme.size.radius};
   overflow: hidden;
   display: none;
@@ -20,11 +19,16 @@ const DropWrap = styled.div`
 `;
 
 export const DropItem = styled.div`
-  ${sizeNormal}
+  font-size: 12px;
+  padding: 12px 10px;
   width: 100%;
   margin: 0 5px;
   box-sizing: border-box;
   color: ${props => props.theme.colors.white};
+  i {
+    width: 20px;
+    text-align: center;
+  }
   &:hover {
     margin-left: 0;
     border-left: 5px solid ${props => props.theme.colors.info};

@@ -41,7 +41,7 @@ class SettingsModal extends Component {
           <Tab
             id={ SETTINGS_TAB_PROFILE }
             title="Profile"
-            icon="cog"
+            icon="user"
           >
             <Heading inverted flatten>Profile</Heading>
             <Subheading>Edit your profile settings.</Subheading>

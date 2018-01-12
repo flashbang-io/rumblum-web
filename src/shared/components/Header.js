@@ -86,10 +86,18 @@ class Bar extends Component {
                   handleClose={ () => this.toggleDropdown() }
                   active={ open }
                 >
-                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_PROFILE }) }>Profile</DropItem>
-                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_SECURITY }) }>Security</DropItem>
-                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_BILLING }) }>Billing</DropItem>
-                  <DropItem onClick={ handleLogout }>Logout</DropItem>
+                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_PROFILE }) }>
+                    <Icon name="user" /> Profile
+                  </DropItem>
+                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_SECURITY }) }>
+                    <Icon name="lock" /> Security
+                  </DropItem>
+                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_BILLING }) }>
+                    <Icon name="credit-card" /> Billing
+                  </DropItem>
+                  <DropItem onClick={ handleLogout }>
+                    <Icon name="sign-out" /> Logout
+                  </DropItem>
                 </Dropdown>
               </MenuItem>
             </Menu>
