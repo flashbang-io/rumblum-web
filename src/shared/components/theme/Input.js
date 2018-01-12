@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { sizeBig, sizeNormal, sizeSmall, sizeTiny } from './style';
 
-const InputStyled = styled.input`
+export const InputStyled = styled.input`
   background-color: ${props => props.theme.colors.dark};
   border: 1px solid ${props => props.theme.colors.darker};
   color: ${props => props.theme.colors.white};

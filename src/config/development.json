@@ -1,7 +1,7 @@
 {
   "environment": "development",
   "endpoint": "http://localhost:3000/api",
-  "stripeKey": "",
+  "stripeKey": "pk_test_7iwdGKGGspOf4rdCQ1uHa3Fu",
   "ravenDSN": "",
   "intercom": false
 }

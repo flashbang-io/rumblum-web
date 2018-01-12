@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdatePlayer, attemptChangePassword, cleanPlayer } from '../player.reducer';
+import { Elements } from 'react-stripe-elements';
+import { attemptUpdatePlayer, attemptChangePassword, attemptUpdateBilling, cleanPlayer, loadingPlayer } from '../player.reducer';
 import { tabCampaign } from '../../shared/campaign.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
-import SettingsForm from './SettingsForm';
 import Popup, { Tab } from '../../shared/components/Popup';
-import PasswordForm from './PasswordForm';
 import {
   SETTINGS_TAB_PROFILE,
   SETTINGS_TAB_SECURITY,
   SETTINGS_TAB_BILLING,
 } from '../player.constants';
+import PasswordForm from './PasswordForm';
+import BillingForm from './BillingForm';
+import SettingsForm from './SettingsForm';
 
 class SettingsModal extends Component {
 
@@ -27,6 +29,10 @@ class SettingsModal extends Component {
   handleChangePassword(event) {
     event.preventDefault();
     this.props.attemptChangePassword(this.props.player.id);
+  }
+
+  handleToken(token) {
+    this.props.attemptUpdateBilling(this.props.player.id, token);
   }
 
   render() {
@@ -70,6 +76,15 @@ class SettingsModal extends Component {
           >
             <Heading inverted flatten>Billing</Heading>
             <Subheading>Update your payment settings.</Subheading>
+            <Elements>
+              <BillingForm
+                handleSubmit={ event => this.handleBilling(event) }
+                player={ player }
+                handleToken={ (...args) => this.handleToken(...args) }
+                handleLoading={ (...args) => this.props.loadingPlayer(...args) }
+                { ...this.props }
+              />
+            </Elements>
           </Tab>
         </Popup>
       </Modal>
@@ -81,9 +96,11 @@ class SettingsModal extends Component {
 SettingsModal.propTypes = {
   attemptUpdatePlayer: PropTypes.func.isRequired,
   attemptChangePassword: PropTypes.func.isRequired,
+  attemptUpdateBilling: PropTypes.func.isRequired,
   cleanPlayer: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  loadingPlayer: PropTypes.func.isRequired,
   tabCampaign: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
   active: PropTypes.string.isRequired,
   player: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -94,5 +111,12 @@ const mapStateToProps = ({
   player: { loading, problem, current },
   campaign: { tab },
 }) => ({ loading, problem, player: current, active: tab });
-const mapDispatchToProps = { attemptUpdatePlayer, attemptChangePassword, cleanPlayer, tabCampaign };
+const mapDispatchToProps = {
+  attemptUpdatePlayer,
+  attemptChangePassword,
+  attemptUpdateBilling,
+  cleanPlayer,
+  loadingPlayer,
+  tabCampaign,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

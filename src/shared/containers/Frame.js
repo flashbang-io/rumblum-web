@@ -3,7 +3,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import DocumentTitle from 'react-document-title';
 import { redirectUnauthenticatedGuard } from '../../guards';
 import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
 import { modalCampaign, tabCampaign } from '../campaign.reducer';
@@ -35,29 +34,27 @@ class Frame extends Component {
   render() {
     const { workspace, modal } = this.props;
     return (
-      <DocumentTitle title="Document Templates | Rumblum">
-        <div>
-          <Header
-            handleShare={ () => this.props.modalCampaign(MODAL_SHARE) }
-            handleSettings={ (...args) => this.handleSettings(...args) }
-          />
-          <Container>
-            { workspace && (
-              <Switch>
-                <Route path="/templates" exact component={ TemplateList } />
-                <Redirect to="/templates" />
-              </Switch>
-            ) }
-          </Container>
-          <Footer />
-          { modal && modal === MODAL_SHARE && <ShareModal
-            handleClose={ () => this.props.modalCampaign() }
-          /> }
-          { modal && modal === MODAL_SETTINGS && <SettingsModal
-            handleClose={ () => this.props.modalCampaign() }
-          /> }
-        </div>
-      </DocumentTitle>
+      <div>
+        <Header
+          handleShare={ () => this.props.modalCampaign(MODAL_SHARE) }
+          handleSettings={ (...args) => this.handleSettings(...args) }
+        />
+        <Container>
+          { workspace && (
+            <Switch>
+              <Route path="/templates" exact component={ TemplateList } />
+              <Redirect to="/templates" />
+            </Switch>
+          ) }
+        </Container>
+        <Footer />
+        { modal && modal === MODAL_SHARE && <ShareModal
+          handleClose={ () => this.props.modalCampaign() }
+        /> }
+        { modal && modal === MODAL_SETTINGS && <SettingsModal
+          handleClose={ () => this.props.modalCampaign() }
+        /> }
+      </div>
     );
   }
 
