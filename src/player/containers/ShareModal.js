@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptSharePlayer, erroredPlayer } from '../player.reducer';
+import { attemptSharePlayer, cleanPlayer } from '../player.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import ShareForm from './ShareForm';
 import Popup from '../../shared/components/Popup';
 
-class SharePage extends Component {
+class ShareModal extends Component {
 
   componentWillUnmount() {
-    this.props.erroredPlayer(); // clear errors
+    this.props.cleanPlayer();
   }
 
   handleSubmit(event) {
@@ -19,7 +19,7 @@ class SharePage extends Component {
 
   render() {
     const values = {
-      message: `Hi,
+      message: `Hi {firstName},
 
 I wanted to share a cool little app I found that I think you may be interested in.`,
       people: [{}],
@@ -41,14 +41,14 @@ I wanted to share a cool little app I found that I think you may be interested i
 
 }
 
-SharePage.propTypes = {
+ShareModal.propTypes = {
   attemptSharePlayer: PropTypes.func.isRequired,
-  erroredPlayer: PropTypes.func.isRequired,
+  cleanPlayer: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({
   player: { loading, problem },
 }) => ({ loading, problem });
-const mapDispatchToProps = { attemptSharePlayer, erroredPlayer };
-export default connect(mapStateToProps, mapDispatchToProps)(SharePage);
+const mapDispatchToProps = { attemptSharePlayer, cleanPlayer };
+export default connect(mapStateToProps, mapDispatchToProps)(ShareModal);

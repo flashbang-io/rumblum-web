@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
-import { attemptLoginPlayer, erroredPlayer } from '../player.reducer';
+import { attemptLoginPlayer, cleanPlayer } from '../player.reducer';
 import { Container, Title, Button, Group } from '../../shared/components/theme';
 import LoginForm from './LoginForm';
 import Page from '../components/Page';
@@ -20,7 +20,7 @@ class LoginPage extends Component {
   }
 
   componentWillUnmount() {
-    this.props.erroredPlayer(); // clear errors
+    this.props.cleanPlayer();
   }
 
   handleSubmit(event) {
@@ -54,7 +54,7 @@ class LoginPage extends Component {
 
 LoginPage.propTypes = {
   attemptLoginPlayer: PropTypes.func.isRequired,
-  erroredPlayer: PropTypes.func.isRequired,
+  cleanPlayer: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
@@ -66,7 +66,7 @@ LoginPage.propTypes = {
 const mapStateToProps = ({
   player: { loading, problem },
 }) => ({ loading, problem });
-const mapDispatchToProps = { attemptLoginPlayer, erroredPlayer };
+const mapDispatchToProps = { attemptLoginPlayer, cleanPlayer };
 export default compose(
   redirectAuthenticatedGuard,
   withRouter,

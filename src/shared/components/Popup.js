@@ -23,7 +23,7 @@ const Menu = styled.div`
 const MenuItem = styled.div`
   padding: 6px 10px;
   margin-bottom: 4px;
-  font-size: 14px;
+  font-size: 16px;
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
@@ -34,7 +34,7 @@ const MenuItem = styled.div`
     background-color: ${props => props.theme.colors.darklesser};
   }
   i {
-    margin-right: 4px;
+    width: 15px;
   }
   ${props => props.active && css`
     background-color: ${props.theme.colors.info};

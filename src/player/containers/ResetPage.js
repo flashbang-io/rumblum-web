@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
-import { attemptResetPassword, erroredPlayer } from '../player.reducer';
+import { attemptResetPassword, cleanPlayer } from '../player.reducer';
 import { Container, Title, Button } from '../../shared/components/theme';
 import ResetForm from './ResetForm';
 import Page from '../components/Page';
@@ -20,7 +20,7 @@ class ResetPage extends Component {
   }
 
   componentWillUnmount() {
-    this.props.erroredPlayer(); // clear errors
+    this.props.cleanPlayer();
   }
 
   handleSubmit(event) {
@@ -52,7 +52,7 @@ class ResetPage extends Component {
 
 ResetPage.propTypes = {
   attemptResetPassword: PropTypes.func.isRequired,
-  erroredPlayer: PropTypes.func.isRequired,
+  cleanPlayer: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
@@ -61,7 +61,7 @@ ResetPage.propTypes = {
 const mapStateToProps = ({
   player: { loading, problem },
 }) => ({ loading, problem });
-const mapDispatchToProps = { attemptResetPassword, erroredPlayer };
+const mapDispatchToProps = { attemptResetPassword, cleanPlayer };
 export default compose(
   redirectAuthenticatedGuard,
   withRouter,

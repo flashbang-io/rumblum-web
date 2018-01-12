@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
-import { attemptForgotPassword, erroredPlayer } from '../player.reducer';
+import { attemptForgotPassword, cleanPlayer } from '../player.reducer';
 import { Container, Title, Button, Group } from '../../shared/components/theme';
 import ForgotForm from './ForgotForm';
 import Page from '../components/Page';
@@ -12,7 +12,7 @@ import Page from '../components/Page';
 class ForgotPage extends Component {
 
   componentWillUnmount() {
-    this.props.erroredPlayer(); // clear errors
+    this.props.cleanPlayer();
   }
 
   handleSubmit(event) {
@@ -44,13 +44,13 @@ class ForgotPage extends Component {
 
 ForgotPage.propTypes = {
   attemptForgotPassword: PropTypes.func.isRequired,
-  erroredPlayer: PropTypes.func.isRequired,
+  cleanPlayer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({
   player: { loading, problem },
 }) => ({ loading, problem });
-const mapDispatchToProps = { attemptForgotPassword, erroredPlayer };
+const mapDispatchToProps = { attemptForgotPassword, cleanPlayer };
 export default compose(
   redirectAuthenticatedGuard,
   connect(mapStateToProps, mapDispatchToProps),

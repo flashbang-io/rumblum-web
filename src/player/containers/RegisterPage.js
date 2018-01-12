@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
-import { attemptCreatePlayer, erroredPlayer } from '../player.reducer';
+import { attemptCreatePlayer, cleanPlayer } from '../player.reducer';
 import { Container, Title, Button } from '../../shared/components/theme';
 import RegisterForm from './RegisterForm';
 import Page from '../components/Page';
@@ -12,7 +12,7 @@ import Page from '../components/Page';
 class RegisterPage extends Component {
 
   componentWillUnmount() {
-    this.props.erroredPlayer(); // clear errors
+    this.props.cleanPlayer();
   }
 
   handleSubmit(event) {
@@ -41,13 +41,13 @@ class RegisterPage extends Component {
 
 RegisterPage.propTypes = {
   attemptCreatePlayer: PropTypes.func.isRequired,
-  erroredPlayer: PropTypes.func.isRequired,
+  cleanPlayer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({
   player: { loading, problem },
 }) => ({ loading, problem });
-const mapDispatchToProps = { attemptCreatePlayer, erroredPlayer };
+const mapDispatchToProps = { attemptCreatePlayer, cleanPlayer };
 export default compose(
   redirectAuthenticatedGuard,
   connect(mapStateToProps, mapDispatchToProps),

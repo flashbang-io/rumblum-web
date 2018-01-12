@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field, Form } from 'redux-form';
 import { Input, Button, Error, Control, Group } from '../../shared/components/theme';
 
-const RegisterForm = ({ handleSubmit, loading, problem }) => (
+const SettingsForm = ({ handleSubmit, loading, problem }) => (
   <Form onSubmit={ handleSubmit }>
     <div>
       <Control
@@ -56,7 +56,7 @@ const RegisterForm = ({ handleSubmit, loading, problem }) => (
   </Form>
 );
 
-RegisterForm.propTypes = {
+SettingsForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   problem: PropTypes.shape({
@@ -64,8 +64,8 @@ RegisterForm.propTypes = {
   }),
 };
 
-RegisterForm.defaultProps = {
+SettingsForm.defaultProps = {
   problem: null,
 };
 
-export default reduxForm({ form: 'player' })(RegisterForm);
+export default reduxForm({ form: 'player' })(SettingsForm);

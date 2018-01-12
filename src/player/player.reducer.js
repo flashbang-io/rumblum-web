@@ -32,6 +32,7 @@ const initialState = {
  * Constants
  */
 export const PLAYER_RESET = 'rumblum/player/RESET';
+export const PLAYER_CLEAN = 'rumblum/player/CLEAN';
 export const PLAYER_LOADING = 'rumblum/player/LOADING';
 export const PLAYER_SUCCESS = 'rumblum/player/SUCCESS';
 export const PLAYER_ERRORED = 'rumblum/player/ERRORED';
@@ -50,6 +51,7 @@ export const PLAYER_CHECK = 'PLAYER_CHECK';
  * These describe what happened.
  */
 export const resetPlayer = createAction(PLAYER_RESET);
+export const cleanPlayer = createAction(PLAYER_CLEAN);
 export const loadingPlayer = createAction(PLAYER_LOADING);
 export const successPlayer = createAction(PLAYER_SUCCESS);
 export const erroredPlayer = createAction(PLAYER_ERRORED);
@@ -182,6 +184,12 @@ export default handleActions({
   [PLAYER_RESET]: () => ({
     ...initialState,
     checked: true,
+  }),
+
+  [PLAYER_CLEAN]: (state) => ({
+    ...state,
+    problem: null,
+    success: false,
   }),
 
   [PLAYER_LOADING]: (state, { payload = true }) => ({

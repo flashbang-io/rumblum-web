@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdatePlayer, erroredPlayer } from '../player.reducer';
+import { attemptUpdatePlayer, attemptChangePassword, cleanPlayer } from '../player.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import SettingsForm from './SettingsForm';
 import Popup, { Tab } from '../../shared/components/Popup';
+import PasswordForm from './PasswordForm';
 
-class SharePage extends Component {
+class SettingsModal extends Component {
 
   componentWillUnmount() {
-    this.props.erroredPlayer(); // clear errors
+    this.props.cleanPlayer();
   }
 
-  handleSubmit(event) {
+  handleUpdate(event) {
     event.preventDefault();
     this.props.attemptUpdatePlayer(this.props.player.id);
+  }
+
+  handleChangePassword(event) {
+    event.preventDefault();
+    this.props.attemptChangePassword(this.props.player.id);
   }
 
   render() {
@@ -26,14 +32,18 @@ class SharePage extends Component {
             <Heading inverted flatten>Settings</Heading>
             <Subheading>Edit your profile settings.</Subheading>
             <SettingsForm
-              handleSubmit={ event => this.handleSubmit(event) }
+              handleSubmit={ event => this.handleUpdate(event) }
               initialValues={ player }
               { ...this.props }
             />
           </Tab>
-          <Tab title="Second" icon="home">
-            <Heading inverted flatten>Second Page</Heading>
+          <Tab title="Security" icon="lock">
+            <Heading inverted flatten>Security</Heading>
             <Subheading>Edit your profile settings.</Subheading>
+            <PasswordForm
+              handleSubmit={ event => this.handleChangePassword(event) }
+              { ...this.props }
+            />
           </Tab>
         </Popup>
       </Modal>
@@ -42,9 +52,10 @@ class SharePage extends Component {
 
 }
 
-SharePage.propTypes = {
+SettingsModal.propTypes = {
   attemptUpdatePlayer: PropTypes.func.isRequired,
-  erroredPlayer: PropTypes.func.isRequired,
+  attemptChangePassword: PropTypes.func.isRequired,
+  cleanPlayer: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   player: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -54,5 +65,5 @@ SharePage.propTypes = {
 const mapStateToProps = ({
   player: { loading, problem, current },
 }) => ({ loading, problem, player: current });
-const mapDispatchToProps = { attemptUpdatePlayer, erroredPlayer };
-export default connect(mapStateToProps, mapDispatchToProps)(SharePage);
+const mapDispatchToProps = { attemptUpdatePlayer, attemptChangePassword, cleanPlayer };
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);
