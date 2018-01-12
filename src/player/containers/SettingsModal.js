@@ -6,6 +6,11 @@ import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import SettingsForm from './SettingsForm';
 import Popup, { Tab } from '../../shared/components/Popup';
 import PasswordForm from './PasswordForm';
+import {
+  SETTINGS_TAB_PROFILE,
+  SETTINGS_TAB_SECURITY,
+  SETTINGS_TAB_BILLING,
+} from '../../shared/shared.constants';
 
 class SettingsModal extends Component {
 
@@ -24,11 +29,15 @@ class SettingsModal extends Component {
   }
 
   render() {
-    const { player } = this.props;
+    const { player, active } = this.props;
     return (
       <Modal handleClose={ this.props.handleClose }>
-        <Popup tabs>
-          <Tab title="Profile" icon="cog">
+        <Popup tabs active={ active }>
+          <Tab
+            id={ SETTINGS_TAB_PROFILE }
+            title="Profile"
+            icon="cog"
+          >
             <Heading inverted flatten>Profile</Heading>
             <Subheading>Edit your profile settings.</Subheading>
             <SettingsForm
@@ -37,13 +46,25 @@ class SettingsModal extends Component {
               { ...this.props }
             />
           </Tab>
-          <Tab title="Security" icon="lock">
+          <Tab
+            id={ SETTINGS_TAB_SECURITY }
+            title="Security"
+            icon="lock"
+          >
             <Heading inverted flatten>Security</Heading>
             <Subheading>Edit your profile settings.</Subheading>
             <PasswordForm
               handleSubmit={ event => this.handleChangePassword(event) }
               { ...this.props }
             />
+          </Tab>
+          <Tab
+            id={ SETTINGS_TAB_BILLING }
+            title="Billing"
+            icon="credit-card"
+          >
+            <Heading inverted flatten>Billing</Heading>
+            <Subheading>Update your payment settings.</Subheading>
           </Tab>
         </Popup>
       </Modal>
@@ -57,6 +78,7 @@ SettingsModal.propTypes = {
   attemptChangePassword: PropTypes.func.isRequired,
   cleanPlayer: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
+  active: PropTypes.string.isRequired,
   player: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,

@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Container, Icon } from '../components/theme';
 import Dropdown, { DropItem } from './Dropdown';
+import {
+  SETTINGS_TAB_PROFILE,
+  SETTINGS_TAB_SECURITY,
+  SETTINGS_TAB_BILLING,
+} from '../shared.constants';
 
 const Wrap = styled.div`
   background-color: ${props => props.theme.colors.dark};
@@ -81,9 +86,9 @@ class Bar extends Component {
                   handleClose={ () => this.toggleDropdown() }
                   active={ open }
                 >
-                  <DropItem onClick={ handleSettings }>Profile</DropItem>
-                  <DropItem onClick={ handleSettings }>Security</DropItem>
-                  <DropItem onClick={ handleSettings }>Billing</DropItem>
+                  <DropItem onClick={ () => handleSettings(SETTINGS_TAB_PROFILE) }>Profile</DropItem>
+                  <DropItem onClick={ () => handleSettings(SETTINGS_TAB_SECURITY) }>Security</DropItem>
+                  <DropItem onClick={ () => handleSettings(SETTINGS_TAB_BILLING) }>Billing</DropItem>
                   <DropItem onClick={ handleLogout }>Logout</DropItem>
                 </Dropdown>
               </MenuItem>

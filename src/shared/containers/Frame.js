@@ -20,6 +20,7 @@ class Frame extends Component {
     super(props);
     this.state = {
       modal: null,
+      active: null,
     };
   }
 
@@ -33,19 +34,19 @@ class Frame extends Component {
     }
   }
 
-  handleModal({ modal = null } = {}) {
-    this.setState({ modal });
+  handleModal({ modal, active } = {}) {
+    this.setState({ modal, active });
   }
 
   render() {
     const { workspace } = this.props;
-    const { modal } = this.state;
+    const { modal, active } = this.state;
     return (
       <DocumentTitle title="Document Templates | Rumblum">
         <div>
           <Header
             handleShare={ () => this.handleModal({ modal: MODAL_SHARE }) }
-            handleSettings={ () => this.handleModal({ modal: MODAL_SETTINGS }) }
+            handleSettings={ tab => this.handleModal({ modal: MODAL_SETTINGS, active: tab }) }
           />
           <Container>
             { workspace && (
@@ -61,6 +62,7 @@ class Frame extends Component {
           /> }
           { modal && modal === MODAL_SETTINGS && <SettingsModal
             handleClose={ () => this.handleModal() }
+            active={ active }
           /> }
         </div>
       </DocumentTitle>

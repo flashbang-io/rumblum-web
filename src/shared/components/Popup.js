@@ -34,7 +34,8 @@ const MenuItem = styled.div`
     background-color: ${props => props.theme.colors.darklesser};
   }
   i {
-    width: 15px;
+    width: 20px;
+    text-align: center;
   }
   ${props => props.active && css`
     background-color: ${props.theme.colors.info};
