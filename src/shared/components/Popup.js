@@ -63,25 +63,20 @@ class Popup extends Component {
 
   constructor(props) {
     super(props);
-    const { children, tabs, active } = this.props;
+    const { children, tabs } = props;
     if (tabs) {
-      const items = children.length ? children.map(Popup.tabMap) : [Popup.tabMap(children)];
-      this.state = {
-        items,
-        open: active ? items.find(i => i.id === active) : items[0],
-      };
+      const items = children.length ? children.map(Popup.tabMap) : [
+        Popup.tabMap(children),
+      ];
+      this.state = { items };
     } else {
       this.state = {};
     }
   }
 
-  handleClick(tab) {
-    this.setState({ open: tab });
-  }
-
   render() {
-    const { children, tabs } = this.props;
-    const { items, open } = this.state;
+    const { children, tabs, active, handleTab } = this.props;
+    const { items } = this.state;
     if (tabs) {
       return (
         <Wrap>
@@ -90,14 +85,14 @@ class Popup extends Component {
             { items.map(item => (
               <MenuItem
                 key={ item.title }
-                onClick={ () => this.handleClick(item) }
-                active={ item.title === open.title }
+                onClick={ () => handleTab(item.id) }
+                active={ item.id === active }
               >
                 { item.icon && <Icon name={ item.icon } /> } { item.title }
               </MenuItem>
             )) }
           </Menu>
-          <Padding>{ children.find(tab => tab.props.title === open.title) }</Padding>
+          <Padding>{ children.find(tab => tab.props.id === active) }</Padding>
         </Wrap>
       );
     }
@@ -117,11 +112,13 @@ Popup.propTypes = {
   ]).isRequired,
   tabs: PropTypes.bool,
   active: PropTypes.string,
+  handleTab: PropTypes.func,
 };
 
 Popup.defaultProps = {
   tabs: false,
   active: null,
+  handleTab: () => {},
 };
 
 export default Popup;

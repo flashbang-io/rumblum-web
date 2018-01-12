@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import DocumentTitle from 'react-document-title';
 import { redirectUnauthenticatedGuard } from '../../guards';
 import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
+import { modalCampaign, tabCampaign } from '../campaign.reducer';
 import { Container } from '../components/theme/index';
 import Header from './Header';
 import Footer from '../components/Footer';
@@ -15,14 +16,6 @@ import SettingsModal from '../../player/containers/SettingsModal';
 import { MODAL_SETTINGS, MODAL_SHARE } from '../shared.constants';
 
 class Frame extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: null,
-      active: null,
-    };
-  }
 
   componentDidMount() {
     this.props.attemptGetWorkspaces();
@@ -34,19 +27,19 @@ class Frame extends Component {
     }
   }
 
-  handleModal({ modal, active } = {}) {
-    this.setState({ modal, active });
+  handleSettings({ tab }) {
+    this.props.modalCampaign(MODAL_SETTINGS);
+    this.props.tabCampaign(tab);
   }
 
   render() {
-    const { workspace } = this.props;
-    const { modal, active } = this.state;
+    const { workspace, modal } = this.props;
     return (
       <DocumentTitle title="Document Templates | Rumblum">
         <div>
           <Header
-            handleShare={ () => this.handleModal({ modal: MODAL_SHARE }) }
-            handleSettings={ tab => this.handleModal({ modal: MODAL_SETTINGS, active: tab }) }
+            handleShare={ () => this.props.modalCampaign(MODAL_SHARE) }
+            handleSettings={ (...args) => this.handleSettings(...args) }
           />
           <Container>
             { workspace && (
@@ -58,11 +51,10 @@ class Frame extends Component {
           </Container>
           <Footer />
           { modal && modal === MODAL_SHARE && <ShareModal
-            handleClose={ () => this.handleModal() }
+            handleClose={ () => this.props.modalCampaign() }
           /> }
           { modal && modal === MODAL_SETTINGS && <SettingsModal
-            handleClose={ () => this.handleModal() }
-            active={ active }
+            handleClose={ () => this.props.modalCampaign() }
           /> }
         </div>
       </DocumentTitle>
@@ -74,25 +66,36 @@ class Frame extends Component {
 Frame.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   currentWorkspace: PropTypes.func.isRequired,
+  modalCampaign: PropTypes.func.isRequired,
+  tabCampaign: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   })).isRequired,
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
+  modal: PropTypes.string,
 };
 
 Frame.defaultProps = {
   workspace: null,
+  modal: null,
 };
 
 const mapStateToProps = ({
   workspace: { workspaces, current },
+  campaign: { modal },
 }) => ({
   workspaces,
   workspace: current,
+  modal,
 });
-const mapDispatchToProps = { attemptGetWorkspaces, currentWorkspace };
+const mapDispatchToProps = {
+  attemptGetWorkspaces,
+  currentWorkspace,
+  modalCampaign,
+  tabCampaign,
+};
 export default compose(
   redirectUnauthenticatedGuard,
   connect(mapStateToProps, mapDispatchToProps),

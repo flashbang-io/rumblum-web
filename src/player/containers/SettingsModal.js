@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptUpdatePlayer, attemptChangePassword, cleanPlayer } from '../player.reducer';
+import { tabCampaign } from '../../shared/campaign.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import SettingsForm from './SettingsForm';
 import Popup, { Tab } from '../../shared/components/Popup';
@@ -10,7 +11,7 @@ import {
   SETTINGS_TAB_PROFILE,
   SETTINGS_TAB_SECURITY,
   SETTINGS_TAB_BILLING,
-} from '../../shared/shared.constants';
+} from '../player.constants';
 
 class SettingsModal extends Component {
 
@@ -32,7 +33,11 @@ class SettingsModal extends Component {
     const { player, active } = this.props;
     return (
       <Modal handleClose={ this.props.handleClose }>
-        <Popup tabs active={ active }>
+        <Popup
+          tabs
+          active={ active }
+          handleTab={ (...args) => this.props.tabCampaign(...args) }
+        >
           <Tab
             id={ SETTINGS_TAB_PROFILE }
             title="Profile"
@@ -78,6 +83,7 @@ SettingsModal.propTypes = {
   attemptChangePassword: PropTypes.func.isRequired,
   cleanPlayer: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
+  tabCampaign: PropTypes.func.isRequired,
   active: PropTypes.string.isRequired,
   player: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -86,6 +92,7 @@ SettingsModal.propTypes = {
 
 const mapStateToProps = ({
   player: { loading, problem, current },
-}) => ({ loading, problem, player: current });
-const mapDispatchToProps = { attemptUpdatePlayer, attemptChangePassword, cleanPlayer };
+  campaign: { tab },
+}) => ({ loading, problem, player: current, active: tab });
+const mapDispatchToProps = { attemptUpdatePlayer, attemptChangePassword, cleanPlayer, tabCampaign };
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

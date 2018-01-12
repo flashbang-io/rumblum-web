@@ -7,7 +7,7 @@ import {
   SETTINGS_TAB_PROFILE,
   SETTINGS_TAB_SECURITY,
   SETTINGS_TAB_BILLING,
-} from '../shared.constants';
+} from '../../player/player.constants';
 
 const Wrap = styled.div`
   background-color: ${props => props.theme.colors.dark};
@@ -86,9 +86,9 @@ class Bar extends Component {
                   handleClose={ () => this.toggleDropdown() }
                   active={ open }
                 >
-                  <DropItem onClick={ () => handleSettings(SETTINGS_TAB_PROFILE) }>Profile</DropItem>
-                  <DropItem onClick={ () => handleSettings(SETTINGS_TAB_SECURITY) }>Security</DropItem>
-                  <DropItem onClick={ () => handleSettings(SETTINGS_TAB_BILLING) }>Billing</DropItem>
+                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_PROFILE }) }>Profile</DropItem>
+                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_SECURITY }) }>Security</DropItem>
+                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_BILLING }) }>Billing</DropItem>
                   <DropItem onClick={ handleLogout }>Logout</DropItem>
                 </Dropdown>
               </MenuItem>
