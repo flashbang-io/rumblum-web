@@ -52,20 +52,22 @@ const Padding = styled.div`
 
 class Popup extends Component {
 
+  static tabMap({ props: { id, title, icon } }) {
+    return {
+      id,
+      title,
+      icon,
+    };
+  }
+
   constructor(props) {
     super(props);
-    const { children, tabs } = this.props;
+    const { children, tabs, active } = this.props;
     if (tabs) {
-      const items = children.length ? children.map(tab => ({
-        title: tab.props.title,
-        icon: tab.props.icon,
-      })) : [{
-        title: children.props.title,
-        icon: children.props.icon,
-      }];
+      const items = children.length ? children.map(Popup.tabMap) : [Popup.tabMap(children)];
       this.state = {
         items,
-        open: items[0],
+        open: active ? items.find(i => i.id === active) : items[0],
       };
     } else {
       this.state = {};
@@ -113,10 +115,12 @@ Popup.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
   tabs: PropTypes.bool,
+  active: PropTypes.string,
 };
 
 Popup.defaultProps = {
   tabs: false,
+  active: null,
 };
 
 export default Popup;

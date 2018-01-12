@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptLogoutPlayer } from '../../player/player.reducer';
-import { Wrap, Content, Menu, MenuItem, Brand } from '../components/Header';
-import { Container, Icon } from '../components/theme';
+import Bar from '../components/Header';
 
 class Header extends Component {
 
@@ -13,33 +12,18 @@ class Header extends Component {
 
   render() {
     return (
-      <Wrap>
-        <Container>
-          <Content>
-            <Brand>
-              Rumblum
-              <br />
-              <span>Document Templates</span>
-            </Brand>
-            <Menu>
-              <MenuItem onClick={ this.props.onShare }>Share</MenuItem>
-              <MenuItem onClick={ this.props.onSettings }>Settings</MenuItem>
-              <MenuItem onClick={ () => this.handleLogout() }>Logout</MenuItem>
-              <MenuItem>
-                <Icon name="cog" /> Settings
-              </MenuItem>
-            </Menu>
-          </Content>
-        </Container>
-      </Wrap>
+      <Bar
+        handleLogout={ () => this.handleLogout() }
+        { ...this.props }
+      />
     );
   }
 }
 
 Header.propTypes = {
   attemptLogoutPlayer: PropTypes.func.isRequired,
-  onShare: PropTypes.func.isRequired,
-  onSettings: PropTypes.func.isRequired,
+  handleShare: PropTypes.func.isRequired,
+  handleSettings: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ player }) => ({ player: player.current });

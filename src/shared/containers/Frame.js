@@ -12,9 +12,7 @@ import Footer from '../components/Footer';
 import TemplateList from '../../template/containers/TemplateList';
 import ShareModal from '../../player/containers/ShareModal';
 import SettingsModal from '../../player/containers/SettingsModal';
-
-const MODAL_SHARE = 'MODAL_SHARE';
-const MODAL_SETTINGS = 'MODAL_SETTINGS';
+import { MODAL_SETTINGS, MODAL_SHARE } from '../shared.constants';
 
 class Frame extends Component {
 
@@ -46,8 +44,8 @@ class Frame extends Component {
       <DocumentTitle title="Document Templates | Rumblum">
         <div>
           <Header
-            onShare={ () => this.handleModal({ modal: MODAL_SHARE }) }
-            onSettings={ () => this.handleModal({ modal: MODAL_SETTINGS }) }
+            handleShare={ () => this.handleModal({ modal: MODAL_SHARE }) }
+            handleSettings={ () => this.handleModal({ modal: MODAL_SETTINGS }) }
           />
           <Container>
             { workspace && (

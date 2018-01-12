@@ -15,7 +15,7 @@ const theme = {
     grey: '#888888',
     greyer: '#333333',
     info: '#28b0ff',
-    infoHover: chroma('#28b0ff').darken(1),
+    electric: '#006884',
     success: '#2fce3a',
     danger: '#fc0f3e',
   },

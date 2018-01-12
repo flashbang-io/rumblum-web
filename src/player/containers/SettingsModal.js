@@ -28,8 +28,8 @@ class SettingsModal extends Component {
     return (
       <Modal handleClose={ this.props.handleClose }>
         <Popup tabs>
-          <Tab title="Settings" icon="cog">
-            <Heading inverted flatten>Settings</Heading>
+          <Tab title="Profile" icon="cog">
+            <Heading inverted flatten>Profile</Heading>
             <Subheading>Edit your profile settings.</Subheading>
             <SettingsForm
               handleSubmit={ event => this.handleUpdate(event) }
