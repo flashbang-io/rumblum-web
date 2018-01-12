@@ -31,7 +31,7 @@ const MenuItem = styled.div`
   transition: .2s;
   border-radius: ${props => props.theme.size.radius};
   &:hover {
-    background-color: ${props => props.theme.colors.darklesser};
+    background-color: ${props => props.theme.colors.darkless};
   }
   i {
     width: 20px;
