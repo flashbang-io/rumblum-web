@@ -23,7 +23,7 @@ const SettingsForm = ({ handleSubmit, loading, problem }) => (
         <Field
           name="firstName"
           type="text"
-          placeholder="Fred"
+          placeholder="Jack"
           component={ Input }
         />
       </Control>
@@ -33,7 +33,7 @@ const SettingsForm = ({ handleSubmit, loading, problem }) => (
         <Field
           name="lastName"
           type="text"
-          placeholder="Blogs"
+          placeholder="Scott"
           component={ Input }
         />
       </Control>

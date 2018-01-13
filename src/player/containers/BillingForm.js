@@ -19,7 +19,7 @@ class BillingForm extends Component {
     const { player } = props;
     this.state = {
       error: null,
-      name: player ? `${player.firstName} ${player.lastName}` : null,
+      name: player ? `${player.firstName} ${player.lastName}` : '',
     };
   }
 
@@ -56,6 +56,7 @@ class BillingForm extends Component {
           >
             <Input
               name="name"
+              placeholder="Jack Scott"
               value={ name }
               onChange={ (...args) => this.handleNameChange(...args) }
             />

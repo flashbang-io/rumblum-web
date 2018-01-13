@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdateWorkspace } from '../workspace.reducer';
+import { attemptUpdateSubscription } from '../workspace.reducer';
 import PlanForm from './PlanForm';
 
 class PlanTab extends Component {
 
-  handleSubscription({ plan }) {
-    console.log('Plan selected:', plan);
-    // this.props.attemptUpdateSubscription(this.props.workspace.id, { plan });
+  handleSubscription(data) {
+    this.props.attemptUpdateSubscription(this.props.workspace.id, data);
   }
 
   render() {
     const { workspace } = this.props;
     return (
       <PlanForm
-        handleSubmit={ (...args) => this.handleSubscription(...args) }
+        handleSubscription={ (...args) => this.handleSubscription(...args) }
         initialValues={ workspace }
         { ...this.props }
       />
@@ -25,7 +24,7 @@ class PlanTab extends Component {
 }
 
 PlanTab.propTypes = {
-  attemptUpdateWorkspace: PropTypes.func.isRequired,
+  attemptUpdateSubscription: PropTypes.func.isRequired,
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
@@ -34,5 +33,5 @@ PlanTab.propTypes = {
 const mapStateToProps = ({
   workspace: { current, loading, problem },
 }) => ({ loading, problem, workspace: current });
-const mapDispatchToProps = { attemptUpdateWorkspace };
+const mapDispatchToProps = { attemptUpdateSubscription };
 export default connect(mapStateToProps, mapDispatchToProps)(PlanTab);
