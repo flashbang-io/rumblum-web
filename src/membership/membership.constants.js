@@ -1,0 +1,3 @@
+export const MEMBERSHIP_ROLE_USER = 'USER';
+export const MEMBERSHIP_ROLE_EDITOR = 'EDITOR';
+export const MEMBERSHIP_ROLE_OWNER = 'OWNER';

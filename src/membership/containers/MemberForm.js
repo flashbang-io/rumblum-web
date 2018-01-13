@@ -21,7 +21,7 @@ const MemberForm = ({ handleSubmit, loading, problem }) => (
         name="email"
         type="email"
         placeholder="Email"
-        style={{ minWidth: '60%' }}
+        style={{ minWidth: '50%' }}
         component={ Input }
       />
       <Button type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Invite' }</Button>

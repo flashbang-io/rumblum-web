@@ -39,6 +39,9 @@ const ButtonStyled = styled.button`
   ${props => props.float && css`
     margin-left: auto;
   `}
+  ${props => props.uppercase && css`
+    text-transform: uppercase;
+  `}
 `;
 
 const ButtonRoute = ButtonStyled.withComponent(NavLink);

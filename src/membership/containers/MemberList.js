@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptGetMemberships, attemptUpdateMembership, attemptRemoveMembership, setMembership } from '../membership.reducer';
+import Member from '../components/Member';
 
 class MemberList extends Component {
 
@@ -22,12 +23,18 @@ class MemberList extends Component {
   }
 
   render() {
-    const { memberships, loading } = this.props;
+    const { memberships } = this.props;
     return (
-      <ul>
-        { loading && <li>Loading...</li> }
-        { memberships.map(({ id, player }) => <li>{ id }: { player.email }</li>) }
-      </ul>
+      <div>
+        { memberships.map(membership => (
+          <Member
+            key={ membership.id }
+            membership={ membership }
+            handleRole={ (...args) => this.handleRole(...args) }
+            handleRemove={ (...args) => this.handleRemove(...args) }
+          />
+        )) }
+      </div>
     );
   }
 
@@ -39,16 +46,15 @@ MemberList.propTypes = {
   attemptRemoveMembership: PropTypes.func.isRequired,
   setMembership: PropTypes.func.isRequired,
   memberships: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
 };
 
 const mapStateToProps = ({
-  membership: { memberships, loading },
+  membership: { memberships, loading, problem },
   workspace: { current },
-}) => ({ memberships, loading, workspace: current });
+}) => ({ memberships, loading, problem, workspace: current });
 const mapDispatchToProps = {
   attemptGetMemberships,
   attemptUpdateMembership,

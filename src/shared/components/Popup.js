@@ -53,31 +53,29 @@ const Padding = styled.div`
 
 class Popup extends Component {
 
-  static tabMap({ props: { id, title, icon } }) {
-    return {
-      id,
-      title,
-      icon,
-    };
-  }
-
   constructor(props) {
     super(props);
     const { children, tabs } = props;
     if (tabs) {
-      const items = children.length ? children.map(Popup.tabMap) : [
-        Popup.tabMap(children),
-      ];
-      this.state = { items };
+      this.state = {
+        items: children.length ? children.map(tab => ({
+          tab,
+          ...tab.props,
+        })) : [{
+          tab: children,
+          ...children.props,
+        }],
+      };
     } else {
       this.state = {};
     }
   }
 
   render() {
-    const { children, tabs, active, handleTab } = this.props;
+    const { children, tabs, active, handleTab, title } = this.props;
     const { items } = this.state;
     if (tabs) {
+      const current = items.find(tab => tab.id === active) || {};
       return (
         <Wrap>
           <Menu>
@@ -92,13 +90,19 @@ class Popup extends Component {
               </MenuItem>
             )) }
           </Menu>
-          <Padding>{ children.find(tab => tab.props.id === active) }</Padding>
+          <Padding>
+            { current.title && <Heading inverted>{ current.title }</Heading> }
+            { current.component ? <current.component /> : current.tab }
+          </Padding>
         </Wrap>
       );
     }
     return (
       <Wrap>
-        <Padding>{ children }</Padding>
+        <Padding>
+          { title && <Heading inverted>{ title }</Heading> }
+          { children }
+        </Padding>
       </Wrap>
     );
   }
@@ -112,12 +116,14 @@ Popup.propTypes = {
   ]).isRequired,
   tabs: PropTypes.bool,
   active: PropTypes.string,
+  title: PropTypes.string,
   handleTab: PropTypes.func,
 };
 
 Popup.defaultProps = {
   tabs: false,
   active: null,
+  title: null,
   handleTab: () => {},
 };
 
