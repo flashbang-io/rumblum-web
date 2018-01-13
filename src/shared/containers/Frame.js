@@ -5,14 +5,15 @@ import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { redirectUnauthenticatedGuard } from '../../guards';
 import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
-import { modalCampaign, tabCampaign } from '../campaign.reducer';
+import { modalCampaign } from '../campaign.reducer';
+import { MODAL_SETTINGS, MODAL_SHARE, MODAL_WORKSPACE } from '../shared.constants';
 import { Container } from '../components/theme/index';
 import Header from './Header';
 import Footer from '../components/Footer';
 import TemplateList from '../../template/containers/TemplateList';
 import ShareModal from '../../player/containers/ShareModal';
 import SettingsModal from '../../player/containers/SettingsModal';
-import { MODAL_SETTINGS, MODAL_SHARE } from '../shared.constants';
+import SpaceModal from '../../workspace/containers/SpaceModal';
 
 class Frame extends Component {
 
@@ -26,19 +27,11 @@ class Frame extends Component {
     }
   }
 
-  handleSettings({ tab }) {
-    this.props.modalCampaign(MODAL_SETTINGS);
-    this.props.tabCampaign(tab);
-  }
-
   render() {
     const { workspace, modal } = this.props;
     return (
       <div>
-        <Header
-          handleShare={ () => this.props.modalCampaign(MODAL_SHARE) }
-          handleSettings={ (...args) => this.handleSettings(...args) }
-        />
+        <Header />
         <Container>
           { workspace && (
             <Switch>
@@ -54,6 +47,9 @@ class Frame extends Component {
         { modal && modal === MODAL_SETTINGS && <SettingsModal
           handleClose={ () => this.props.modalCampaign() }
         /> }
+        { modal && modal === MODAL_WORKSPACE && <SpaceModal
+          handleClose={ () => this.props.modalCampaign() }
+        /> }
       </div>
     );
   }
@@ -64,7 +60,6 @@ Frame.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   currentWorkspace: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
-  tabCampaign: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   })).isRequired,
@@ -91,7 +86,6 @@ const mapDispatchToProps = {
   attemptGetWorkspaces,
   currentWorkspace,
   modalCampaign,
-  tabCampaign,
 };
 export default compose(
   redirectUnauthenticatedGuard,

@@ -25,6 +25,7 @@ const initialState = {
  * Constants
  */
 export const WORKSPACE_RESET = 'rumblum/workspace/RESET';
+export const WORKSPACE_CLEAN = 'rumblum/workspace/CLEAN';
 export const WORKSPACE_LOADING = 'rumblum/workspace/LOADING';
 export const WORKSPACE_SUCCESS = 'rumblum/workspace/SUCCESS';
 export const WORKSPACE_ERRORED = 'rumblum/workspace/ERRORED';
@@ -41,6 +42,7 @@ export const WORKSPACE_PATCH = 'rumblum/workspace/PATCH';
  * These describe what happened.
  */
 export const resetWorkspace = createAction(WORKSPACE_RESET);
+export const cleanWorkspace = createAction(WORKSPACE_CLEAN);
 export const loadingWorkspace = createAction(WORKSPACE_LOADING);
 export const successWorkspace = createAction(WORKSPACE_SUCCESS);
 export const erroredWorkspace = createAction(WORKSPACE_ERRORED);
@@ -132,6 +134,12 @@ export default handleActions({
 
   [WORKSPACE_RESET]: () => ({
     ...initialState,
+  }),
+
+  [WORKSPACE_CLEAN]: (state) => ({
+    ...state,
+    problem: null,
+    success: false,
   }),
 
   [WORKSPACE_LOADING]: (state, { payload = true }) => ({

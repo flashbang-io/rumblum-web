@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptSharePlayer, cleanPlayer } from '../player.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
-import ShareForm from './ShareForm';
 import Popup from '../../shared/components/Popup';
+import ShareForm from './ShareForm';
 
 class ShareModal extends Component {
 

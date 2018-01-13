@@ -67,7 +67,7 @@ class Bar extends Component {
   }
 
   render() {
-    const { handleShare, handleSettings, handleLogout } = this.props;
+    const { handleShare, handleSettings, handleLogout, handleSpace } = this.props;
     const { open } = this.state;
     return (
       <Wrap>
@@ -88,6 +88,9 @@ class Bar extends Component {
                 >
                   <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_PROFILE }) }>
                     <Icon name="user" /> Profile
+                  </DropItem>
+                  <DropItem onClick={ () => handleSpace() }>
+                    <Icon name="suitcase" /> Workspace
                   </DropItem>
                   <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_SECURITY }) }>
                     <Icon name="lock" /> Security
@@ -112,6 +115,7 @@ Bar.propTypes = {
   handleLogout: PropTypes.func.isRequired,
   handleShare: PropTypes.func.isRequired,
   handleSettings: PropTypes.func.isRequired,
+  handleSpace: PropTypes.func.isRequired,
 };
 
 export default Bar;
