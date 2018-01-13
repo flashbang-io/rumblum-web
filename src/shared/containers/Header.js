@@ -12,17 +12,17 @@ class Header extends Component {
     this.props.attemptLogoutPlayer();
   }
 
-  handleSettings({ tab }) {
-    this.props.modalCampaign(MODAL_SETTINGS);
+  handleTabbed({ modal, tab }) {
+    this.props.modalCampaign(modal);
     this.props.tabCampaign(tab);
   }
 
   render() {
     return (
       <Bar
-        handleSpace={ () => this.props.modalCampaign(MODAL_WORKSPACE) }
         handleShare={ () => this.props.modalCampaign(MODAL_SHARE) }
-        handleSettings={ (...args) => this.handleSettings(...args) }
+        handleSpace={ ({ tab }) => this.handleTabbed({ tab, modal: MODAL_WORKSPACE }) }
+        handleSettings={ ({ tab }) => this.handleTabbed({ tab, modal: MODAL_SETTINGS }) }
         handleLogout={ () => this.handleLogout() }
         { ...this.props }
       />

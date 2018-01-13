@@ -29,16 +29,23 @@ class Frame extends Component {
 
   render() {
     const { workspace, modal } = this.props;
+    if (!workspace) {
+      return (
+        <div>
+          This is to be a splace screen.
+          <br />
+          We do not want to render the other view yet because it relies on workspace being loaded.
+        </div>
+      );
+    }
     return (
       <div>
         <Header />
         <Container>
-          { workspace && (
-            <Switch>
-              <Route path="/templates" exact component={ TemplateList } />
-              <Redirect to="/templates" />
-            </Switch>
-          ) }
+          <Switch>
+            <Route path="/templates" exact component={ TemplateList } />
+            <Redirect to="/templates" />
+          </Switch>
         </Container>
         <Footer />
         { modal && modal === MODAL_SHARE && <ShareModal

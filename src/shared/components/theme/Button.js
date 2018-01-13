@@ -15,6 +15,10 @@ const ButtonStyled = styled.button`
   transition: .2s;
   color: ${props => props.theme.colors.white};
   background-color: ${props => props.theme.colors.info};
+  &:disabled {
+    background-color: ${props => props.theme.colors.grey};
+    cursor: default;
+  }
   &:hover {
     background-color: ${props => props.theme.colors.infoDark};
   }

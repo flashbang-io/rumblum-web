@@ -8,6 +8,7 @@ import {
   SETTINGS_TAB_SECURITY,
   SETTINGS_TAB_BILLING,
 } from '../../player/player.constants';
+import { WORKSPACE_TAB_EDIT } from '../../workspace/workspace.constants';
 
 const Wrap = styled.div`
   background-color: ${props => props.theme.colors.dark};
@@ -89,7 +90,7 @@ class Bar extends Component {
                   <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_PROFILE }) }>
                     <Icon name="user" /> Profile
                   </DropItem>
-                  <DropItem onClick={ () => handleSpace() }>
+                  <DropItem onClick={ () => handleSpace({ tab: WORKSPACE_TAB_EDIT }) }>
                     <Icon name="suitcase" /> Workspace
                   </DropItem>
                   <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_SECURITY }) }>
