@@ -20,7 +20,7 @@ class SpaceModal extends Component {
     this.props.attemptUpdateWorkspace(this.props.workspace.id);
   }
 
-  handleSubscription({ plan }) {
+  handleSubscription(/* { plan } */) {
     // this.props.attemptUpdateSubscription(this.props.workspace.id, { plan });
   }
 

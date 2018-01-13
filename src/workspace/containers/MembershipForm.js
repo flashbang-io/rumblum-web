@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Error, Group } from '../../shared/components/theme';
+import { Button, Error } from '../../shared/components/theme';
 import Plan from '../components/Plan';
 
 class MembershipForm extends Component {
@@ -34,7 +34,7 @@ class MembershipForm extends Component {
     );
   }
 
-};
+}
 
 MembershipForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
