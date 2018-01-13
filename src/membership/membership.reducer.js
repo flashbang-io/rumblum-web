@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
+import { reset as resetForm } from 'redux-form';
 import { thunkify } from '../shared/util.helper';
 import {
   apiGetMemberships,
@@ -84,6 +85,7 @@ export const attemptCreateMembership = workspaceId => thunk(async (dispatch, get
   const membership = await apiCreateMembership(token, body);
   dispatch(currentMembership(membership));
   dispatch(addMembership(membership));
+  dispatch(resetForm(formName));
   dispatch(successMembership());
   return membership;
 });

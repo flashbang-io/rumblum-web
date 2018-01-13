@@ -42,4 +42,4 @@ MemberForm.defaultProps = {
   problem: null,
 };
 
-export default reduxForm({ form: 'share' })(MemberForm);
+export default reduxForm({ form: 'membership' })(MemberForm);

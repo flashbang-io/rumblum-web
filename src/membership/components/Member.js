@@ -22,10 +22,10 @@ const Email = styled.div`
   margin-bottom: 10px;
 `;
 
-const Member = ({ handleRole, handleRemove, membership: { id, role, email, player }, ...props }) => (
+const Member = ({ handleRole, handleRemove, membership: { id, role, email, name, player }, ...props }) => (
   <Wrap { ...props }>
-    <Name>{ player ? `${player.firstName} ${player.lastName}` : 'Unknown User' }</Name>
-    <Email>{ player.email || email }</Email>
+    <Name>{ player ? `${player.firstName} ${player.lastName}` : name || 'Unknown User' }{ !player && ' - Pending' }</Name>
+    <Email>{ player ? player.email : email }</Email>
     <Group>
       { role !== MEMBERSHIP_ROLE_USER && <Button tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_USER }) }>Make User</Button> }
       { role !== MEMBERSHIP_ROLE_EDITOR && <Button tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_EDITOR }) }>Make Editor</Button> }
