@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { Container, Icon } from '../components/theme';
 import Dropdown, { DropItem } from './Dropdown';
 import {
-  SETTINGS_TAB_PROFILE,
-  SETTINGS_TAB_SECURITY,
-  SETTINGS_TAB_BILLING,
-} from '../../player/player.constants';
-import { WORKSPACE_TAB_EDIT } from '../../workspace/workspace.constants';
+  MODAL_SETTINGS_TAB_PROFILE,
+  MODAL_SETTINGS_TAB_SECURITY,
+  MODAL_SETTINGS_TAB_BILLING,
+  MODAL_SPACE_TAB_EDIT,
+} from '../../shared/shared.constants';
 
 const Wrap = styled.div`
   background-color: ${props => props.theme.colors.dark};
@@ -87,16 +87,16 @@ class Bar extends Component {
                   handleClose={ () => this.toggleDropdown() }
                   active={ open }
                 >
-                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_PROFILE }) }>
+                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_PROFILE }) }>
                     <Icon name="user" /> Profile
                   </DropItem>
-                  <DropItem onClick={ () => handleSpace({ tab: WORKSPACE_TAB_EDIT }) }>
+                  <DropItem onClick={ () => handleSpace({ tab: MODAL_SPACE_TAB_EDIT }) }>
                     <Icon name="suitcase" /> Workspace
                   </DropItem>
-                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_SECURITY }) }>
+                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_SECURITY }) }>
                     <Icon name="lock" /> Security
                   </DropItem>
-                  <DropItem onClick={ () => handleSettings({ tab: SETTINGS_TAB_BILLING }) }>
+                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_BILLING }) }>
                     <Icon name="credit-card" /> Billing
                   </DropItem>
                   <DropItem onClick={ handleLogout }>

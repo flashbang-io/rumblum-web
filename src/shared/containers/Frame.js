@@ -6,14 +6,14 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { redirectUnauthenticatedGuard } from '../../guards';
 import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
 import { modalCampaign } from '../campaign.reducer';
-import { MODAL_SETTINGS, MODAL_SHARE, MODAL_WORKSPACE } from '../shared.constants';
+import { MODAL_SETTINGS, MODAL_SHARE, MODAL_SPACE } from '../shared.constants';
 import { Container } from '../components/theme/index';
 import Header from './Header';
 import Footer from '../components/Footer';
 import TemplateList from '../../template/containers/TemplateList';
 import ShareModal from '../../player/containers/ShareModal';
-import SettingsModal from '../../player/containers/SettingsModal';
-import SpaceModal from '../../workspace/containers/SpaceModal';
+import SettingsModal from './SettingsModal';
+import SpaceModal from './SpaceModal';
 
 class Frame extends Component {
 
@@ -54,7 +54,7 @@ class Frame extends Component {
         { modal && modal === MODAL_SETTINGS && <SettingsModal
           handleClose={ () => this.props.modalCampaign() }
         /> }
-        { modal && modal === MODAL_WORKSPACE && <SpaceModal
+        { modal && modal === MODAL_SPACE && <SpaceModal
           handleClose={ () => this.props.modalCampaign() }
         /> }
       </div>

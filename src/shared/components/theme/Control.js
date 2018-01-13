@@ -6,7 +6,9 @@ const Wrap = styled.div`
   display: flex;
   padding: 0 0 10px;
   margin: 20px 0 0;
-  border-bottom: 1px solid ${props => props.theme.colors.greyer};
+  ${props => !props.noline && css`
+    border-bottom: 1px solid ${props.theme.colors.greyer};
+  `}
   &:last-of-type {
     border-bottom: none;
   }
@@ -43,20 +45,19 @@ const Control = ({ label, help, children, ...props }) => (
       <Label>{ label }</Label>
       { help && <Help>{ help }</Help> }
     </Description>
-    <Data>
-      { children }
-    </Data>
+    { children && <Data>{ children }</Data> }
   </Wrap>
 );
 
 Control.propTypes = {
   label: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   help: PropTypes.string,
 };
 
 Control.defaultProps = {
   help: null,
+  children: null,
 };
 
 export default Control;

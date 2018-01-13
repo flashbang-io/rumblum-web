@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdateWorkspace, attemptUpdateSubscription, cleanWorkspace } from '../workspace.reducer';
-import { WORKSPACE_TAB_EDIT, WORKSPACE_TAB_BILLING } from '../workspace.constants';
+import { attemptUpdateWorkspace, attemptUpdateSubscription, cleanWorkspace } from '../../workspace/workspace.reducer';
 import { tabCampaign } from '../../shared/campaign.reducer';
 import { Heading, Modal } from '../../shared/components/theme';
 import Popup, { Tab } from '../../shared/components/Popup';
-import SpaceForm from './SpaceForm';
-import MembershipForm from './MembershipForm';
+import SpaceForm from '../../workspace/containers/SpaceForm';
+import PlanForm from '../../workspace/containers/PlanForm';
+import { MODAL_SPACE_TAB_EDIT, MODAL_SPACE_TAB_BILLING, MODAL_SPACE_TAB_MEMBERS } from '../shared.constants';
+import MemberForm from '../../membership/containers/MemberForm';
+import MemberList from '../../membership/containers/MemberList';
 
 class SpaceModal extends Component {
 
@@ -20,7 +22,14 @@ class SpaceModal extends Component {
     this.props.attemptUpdateWorkspace(this.props.workspace.id);
   }
 
-  handleSubscription(/* { plan } */) {
+  handleSubscription({ plan }) {
+    console.log('Plan selected:', plan);
+    // this.props.attemptUpdateSubscription(this.props.workspace.id, { plan });
+  }
+
+  handleMember(event) {
+    event.preventDefault();
+    console.log('Member added.');
     // this.props.attemptUpdateSubscription(this.props.workspace.id, { plan });
   }
 
@@ -34,7 +43,7 @@ class SpaceModal extends Component {
           handleTab={ (...args) => this.props.tabCampaign(...args) }
         >
           <Tab
-            id={ WORKSPACE_TAB_EDIT }
+            id={ MODAL_SPACE_TAB_EDIT }
             title="Workspace"
             icon="suitcase"
           >
@@ -46,14 +55,26 @@ class SpaceModal extends Component {
             />
           </Tab>
           <Tab
-            id={ WORKSPACE_TAB_BILLING }
-            title="Membership"
-            icon="users"
+            id={ MODAL_SPACE_TAB_BILLING }
+            title="Plan"
+            icon="trophy"
           >
-            <Heading inverted>Membership</Heading>
-            <MembershipForm
+            <Heading inverted>Plan</Heading>
+            <PlanForm
               handleSubmit={ (...args) => this.handleSubscription(...args) }
               initialValues={ workspace }
+              { ...this.props }
+            />
+          </Tab>
+          <Tab
+            id={ MODAL_SPACE_TAB_MEMBERS }
+            title="Members"
+            icon="users"
+          >
+            <Heading inverted>Members</Heading>
+            <MemberList />
+            <MemberForm
+              handleSubmit={ (...args) => this.handleMember(...args) }
               { ...this.props }
             />
           </Tab>

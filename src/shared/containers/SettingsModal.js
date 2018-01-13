@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Elements } from 'react-stripe-elements';
-import { attemptUpdatePlayer, attemptChangePassword, attemptUpdateBilling, cleanPlayer, loadingPlayer } from '../player.reducer';
+import { attemptUpdatePlayer, attemptChangePassword, attemptUpdateBilling, cleanPlayer, loadingPlayer } from '../../player/player.reducer';
 import { tabCampaign } from '../../shared/campaign.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import Popup, { Tab } from '../../shared/components/Popup';
 import {
-  SETTINGS_TAB_PROFILE,
-  SETTINGS_TAB_SECURITY,
-  SETTINGS_TAB_BILLING,
-} from '../player.constants';
-import PasswordForm from './PasswordForm';
-import BillingForm from './BillingForm';
-import SettingsForm from './SettingsForm';
+  MODAL_SETTINGS_TAB_PROFILE,
+  MODAL_SETTINGS_TAB_SECURITY,
+  MODAL_SETTINGS_TAB_BILLING,
+} from '../shared.constants';
+import PasswordForm from '../../player/containers/PasswordForm';
+import BillingForm from '../../player/containers/BillingForm';
+import SettingsForm from '../../player/containers/SettingsForm';
 
 class SettingsModal extends Component {
 
@@ -45,7 +45,7 @@ class SettingsModal extends Component {
           handleTab={ (...args) => this.props.tabCampaign(...args) }
         >
           <Tab
-            id={ SETTINGS_TAB_PROFILE }
+            id={ MODAL_SETTINGS_TAB_PROFILE }
             title="Profile"
             icon="user"
           >
@@ -58,7 +58,7 @@ class SettingsModal extends Component {
             />
           </Tab>
           <Tab
-            id={ SETTINGS_TAB_SECURITY }
+            id={ MODAL_SETTINGS_TAB_SECURITY }
             title="Security"
             icon="lock"
           >
@@ -70,7 +70,7 @@ class SettingsModal extends Component {
             />
           </Tab>
           <Tab
-            id={ SETTINGS_TAB_BILLING }
+            id={ MODAL_SETTINGS_TAB_BILLING }
             title="Billing"
             icon="credit-card"
           >

@@ -27,9 +27,11 @@ const PersonFields = ({ fields }) => (
           style={{ minWidth: '220px' }}
           component={ Input }
         />
-        <Button info onClick={ () => fields.remove(index) }>
-          <Icon name="close" />
-        </Button>
+        { fields && fields.length > 1 && (
+          <Button info onClick={ () => fields.remove(index) }>
+            <Icon name="close" />
+          </Button>
+        ) }
       </Group>
     )) }
   </div>

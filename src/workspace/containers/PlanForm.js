@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Error } from '../../shared/components/theme';
 import Plan from '../components/Plan';
 
-class MembershipForm extends Component {
+class PlanForm extends Component {
 
   constructor(props) {
     super(props);
@@ -36,7 +36,7 @@ class MembershipForm extends Component {
 
 }
 
-MembershipForm.propTypes = {
+PlanForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   problem: PropTypes.shape({
@@ -44,8 +44,8 @@ MembershipForm.propTypes = {
   }),
 };
 
-MembershipForm.defaultProps = {
+PlanForm.defaultProps = {
   problem: null,
 };
 
-export default MembershipForm;
+export default PlanForm;
