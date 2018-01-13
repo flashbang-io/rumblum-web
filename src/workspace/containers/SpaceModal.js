@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptUpdateWorkspace, cleanWorkspace } from '../workspace.reducer';
-import { Heading, Subheading, Modal } from '../../shared/components/theme';
+import { Heading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
 import SpaceForm from './SpaceForm';
 
