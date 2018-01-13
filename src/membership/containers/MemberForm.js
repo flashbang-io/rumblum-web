@@ -12,30 +12,21 @@ const MemberForm = ({ handleSubmit, loading, problem }) => (
     />
     <Group>
       <Field
-        name="firstName"
+        name="name"
         type="text"
-        placeholder="First Name"
-        component={ Input }
-      />
-      <Field
-        name="lastName"
-        type="text"
-        placeholder="Last Name"
+        placeholder="Name"
         component={ Input }
       />
       <Field
         name="email"
         type="email"
         placeholder="Email"
-        style={{ minWidth: '220px' }}
+        style={{ minWidth: '60%' }}
         component={ Input }
       />
+      <Button type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Invite' }</Button>
     </Group>
     { problem && <Error>{ problem.message || problem }</Error> }
-    <br />
-    <Group>
-      <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Invite' }</Button>
-    </Group>
   </Form>
 );
 

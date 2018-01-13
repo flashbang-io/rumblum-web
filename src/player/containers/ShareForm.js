@@ -17,14 +17,14 @@ const PersonFields = ({ fields }) => (
         <Field
           name={ `${person}.lastName` }
           type="text"
-          placeholder="Last Name"
+          placeholder="Last Name (Optional)"
           component={ Input }
         />
         <Field
           name={ `${person}.email` }
           type="email"
           placeholder="Email"
-          style={{ minWidth: '220px' }}
+          style={{ minWidth: '45%' }}
           component={ Input }
         />
         { fields && fields.length > 1 && (

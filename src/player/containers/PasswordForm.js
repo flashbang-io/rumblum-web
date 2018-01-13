@@ -24,7 +24,7 @@ const PasswordForm = ({ handleSubmit, loading, problem }) => (
         <Field
           name="newPassword"
           type="password"
-          placeholder="Old Password"
+          placeholder="New Password"
           component={ Input }
         />
       </Control>
