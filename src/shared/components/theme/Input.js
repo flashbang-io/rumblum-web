@@ -14,6 +14,8 @@ export const InputStyled = styled.input`
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 10px;
+  min-width: 300px;
+  max-width: 100%;
   ${sizeNormal}
   ${props => props.big && sizeBig}
   ${props => props.small && sizeSmall}

@@ -9,6 +9,11 @@ const Wrap = styled.div`
   ${props => !props.noline && css`
     border-bottom: 1px solid ${props.theme.colors.greyer};
   `}
+  ${props => props.upline && css`
+    margin-top: 10px;
+    padding-top: 20px;
+    border-top: 1px solid ${props.theme.colors.greyer};
+  `}
   &:last-of-type {
     border-bottom: none;
   }
@@ -34,10 +39,7 @@ const Help = styled.div`
   margin-top: 2px;
 `;
 
-const Data = styled.div`
-  width: 100%;
-  max-width: 260px;
-`;
+const Data = styled.div``;
 
 const Control = ({ label, help, children, ...props }) => (
   <Wrap { ...props }>
