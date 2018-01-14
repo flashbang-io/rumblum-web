@@ -83,7 +83,11 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   const { token } = state.player.auth;
   const formName = 'template';
   const formData = new FormData();
-  formData.append('image', state.form[formName].values.image[0]);
+  const file = state.form[formName].values.file[0];
+  if (!file) {
+    throw new Error('Please add a file to upload');
+  }
+  formData.append('file', file);
   const body = { ...state.form[formName].values, id: undefined };
   const template = await apiCreateTemplate(token, workspaceId, body);
   const chronicle = await apiCreateChronicle(token, template.id, formData);

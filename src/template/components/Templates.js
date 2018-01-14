@@ -3,26 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Icon, Button, Group } from '../../shared/components/theme';
-import { pulse } from '../../shared/util.helper';
-
-const Wrap = styled.div`
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: ${props => props.theme.colors.darkless};
-  border-radius: ${props => props.theme.size.radius};
-  overflow: hidden;
-  display: flex;
-  margin-bottom: 10px;
-`;
-
-const Ghost = styled.div`
-  height: 100px;
-  box-sizing: border-box;
-  border-radius: ${props => props.theme.size.radius};
-  background-color: ${props => props.theme.colors.off};
-  animation: ${props => pulse(props.theme.colors.off, props.theme.colors.offer)} 2s linear infinite;
-  margin-bottom: 10px;
-`;
+import Level, { Ghost } from '../../shared/components/Level';
 
 const Badge = styled.div`
   height: 80px;
@@ -58,7 +39,7 @@ const Meta = styled.div`
 `;
 
 const Template = ({ handleInspect, template: { id, name, updatedAt } }) => (
-  <Wrap>
+  <Level rows>
     <Badge>
       <Icon name="file-word-o" />
     </Badge>
@@ -69,7 +50,7 @@ const Template = ({ handleInspect, template: { id, name, updatedAt } }) => (
         <Button flatten tiny onClick={ () => handleInspect({ id }) }>Edit</Button>
       </Group>
     </Content>
-  </Wrap>
+  </Level>
 );
 
 Template.propTypes = {
@@ -89,7 +70,7 @@ const List = styled.div`
 
 const Templates = ({ handleCreate, templates, loading, ...props }) => (
   <List>
-    <Button onClick={ handleCreate }>Create New Template</Button>
+    <Button onClick={ handleCreate }><Icon name="plus" /> Template</Button>
     { templates.map(template => (
       <Template
         key={ template.id }

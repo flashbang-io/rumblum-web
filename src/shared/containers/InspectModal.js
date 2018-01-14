@@ -5,8 +5,9 @@ import { cleanPlayer } from '../../player/player.reducer';
 import { tabCampaign } from '../campaign.reducer';
 import { Modal } from '../components/theme';
 import Popup, { Tab } from '../components/Popup';
-import { MODAL_INSPECT_TAB_EDIT } from '../shared.constants';
+import { MODAL_INSPECT_TAB_EDIT, MODAL_INSPECT_TAB_CHRONICLES } from '../shared.constants';
 import TemplateTab from '../../template/containers/TemplateTab';
+import ChronicleList from '../../chronicle/containers/ChronicleList';
 
 const InspectModal = ({ active, handleClose, ...props }) => (
   <Modal handleClose={ handleClose }>
@@ -20,6 +21,12 @@ const InspectModal = ({ active, handleClose, ...props }) => (
         title="Edit Template"
         icon="edit"
         component={ TemplateTab }
+      />
+      <Tab
+        id={ MODAL_INSPECT_TAB_CHRONICLES }
+        title="Versions"
+        icon="history"
+        component={ ChronicleList }
       />
     </Popup>
   </Modal>
