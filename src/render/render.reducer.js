@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions, combineActions } from 'redux-actions';
 import { thunkify } from '../shared/util.helper';
 import {
   apiGetRenders,
@@ -7,6 +7,7 @@ import {
   apiUpdateRender,
   apiRemoveRender,
 } from './render.service';
+import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
  * Initial state
@@ -112,7 +113,7 @@ export const attemptRemoveRender = renderId => thunk(async (dispatch, getState) 
  */
 export default handleActions({
 
-  [RENDER_RESET]: () => ({
+  [combineActions(RENDER_RESET, PLAYER_LOGOUT)]: () => ({
     ...initialState,
   }),
 

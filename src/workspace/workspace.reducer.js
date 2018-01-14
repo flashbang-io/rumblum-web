@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions, combineActions } from 'redux-actions';
 import { thunkify } from '../shared/util.helper';
 import {
   apiGetWorkspaces,
@@ -9,6 +9,7 @@ import {
   apiUpdateSubscription,
   apiCancelSubscription,
 } from './workspace.service';
+import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
  * Initial state
@@ -132,7 +133,7 @@ export const attemptCancelSubscription = workspaceId => thunk(async (dispatch, g
  */
 export default handleActions({
 
-  [WORKSPACE_RESET]: () => ({
+  [combineActions(WORKSPACE_RESET, PLAYER_LOGOUT)]: () => ({
     ...initialState,
   }),
 

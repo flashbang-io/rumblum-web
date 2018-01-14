@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { attemptGetTemplates } from '../template.reducer';
+import { modalCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
 import { Spread, Info, Sidebar } from '../components/Info';
+import { MODAL_TEMPLATE } from '../../shared/shared.constants';
 
 class TemplateList extends Component {
 
@@ -23,7 +25,10 @@ class TemplateList extends Component {
     }];
     return (
       <Spread>
-        <Templates { ...this.props } />
+        <Templates
+          handleCreate={ () => this.props.modalCampaign(MODAL_TEMPLATE) }
+          { ...this.props }
+        />
         <Sidebar>
           { articles.map(article => <Info key={ article.id } article={ article } />) }
         </Sidebar>
@@ -35,6 +40,7 @@ class TemplateList extends Component {
 
 TemplateList.propTypes = {
   attemptGetTemplates: PropTypes.func.isRequired,
+  modalCampaign: PropTypes.func.isRequired,
   templates: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -52,5 +58,5 @@ const mapStateToProps = ({
   loading,
   workspace: workspace.current,
 });
-const mapDispatchToProps = { attemptGetTemplates };
+const mapDispatchToProps = { attemptGetTemplates, modalCampaign };
 export default connect(mapStateToProps, mapDispatchToProps)(TemplateList);

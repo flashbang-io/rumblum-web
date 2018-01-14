@@ -1,5 +1,6 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions, combineActions } from 'redux-actions';
 import { thunkify } from '../shared/util.helper';
+import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
  * Initial state
@@ -60,7 +61,7 @@ export const attemptSomething = () => thunk(async (dispatch) => {
  */
 export default handleActions({
 
-  [CAMPAIGN_RESET]: () => ({
+  [combineActions(CAMPAIGN_RESET, PLAYER_LOGOUT)]: () => ({
     ...initialState,
   }),
 

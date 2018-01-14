@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions, combineActions } from 'redux-actions';
 import { thunkify } from '../shared/util.helper';
 import {
   apiGetTemplates,
@@ -7,6 +7,7 @@ import {
   apiUpdateTemplate,
   apiRemoveTemplate,
 } from './template.service';
+import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
  * Initial state
@@ -112,7 +113,7 @@ export const attemptRemoveTemplate = templateId => thunk(async (dispatch, getSta
  */
 export default handleActions({
 
-  [TEMPLATE_RESET]: () => ({
+  [combineActions(TEMPLATE_RESET, PLAYER_LOGOUT)]: () => ({
     ...initialState,
   }),
 

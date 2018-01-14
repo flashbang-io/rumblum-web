@@ -17,7 +17,7 @@ export const Sidebar = styled.div``;
 const Wrap = styled.div`
   padding: 10px;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border: 1px solid ${props => props.theme.colors.grey};
   border-radius: ${props => props.theme.size.radius};
 `;

@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions, combineActions } from 'redux-actions';
 import { reset as resetForm } from 'redux-form';
 import { thunkify } from '../shared/util.helper';
 import {
@@ -42,8 +42,9 @@ export const PLAYER_REMOVE = 'rumblum/player/REMOVE';
 export const PLAYER_ADD = 'rumblum/player/ADD';
 export const PLAYER_CURRENT = 'rumblum/player/CURRENT';
 export const PLAYER_PATCH = 'rumblum/player/PATCH';
-export const PLAYER_AUTH = 'PLAYER_AUTH';
-export const PLAYER_CHECK = 'PLAYER_CHECK';
+export const PLAYER_AUTH = 'rumblum/player/AUTH';
+export const PLAYER_CHECK = 'rumblum/player/CHECK';
+export const PLAYER_LOGOUT = 'rumblum/player/LOGOUT';
 
 /**
  * Actions
@@ -63,6 +64,7 @@ export const currentPlayer = createAction(PLAYER_CURRENT);
 export const patchPlayer = createAction(PLAYER_PATCH);
 export const authPlayer = createAction(PLAYER_AUTH);
 export const checkPlayer = createAction(PLAYER_CHECK);
+export const logoutPlayer = createAction(PLAYER_LOGOUT);
 
 /**
  * Config
@@ -119,7 +121,7 @@ export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
 export const attemptLogoutPlayer = () => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiLogoutPlayer(token);
-  dispatch(resetPlayer());
+  dispatch(logoutPlayer());
 });
 export const attemptCheckPlayer = () => thunk(async (dispatch) => {
   try {
@@ -181,7 +183,7 @@ export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
  */
 export default handleActions({
 
-  [PLAYER_RESET]: () => ({
+  [combineActions(PLAYER_RESET, PLAYER_LOGOUT)]: () => ({
     ...initialState,
     checked: true,
   }),

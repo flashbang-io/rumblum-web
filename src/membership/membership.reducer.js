@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions, combineActions } from 'redux-actions';
 import { reset as resetForm } from 'redux-form';
 import { thunkify } from '../shared/util.helper';
 import {
@@ -8,6 +8,7 @@ import {
   apiUpdateMembership,
   apiRemoveMembership,
 } from './membership.service';
+import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
  * Initial state
@@ -114,7 +115,7 @@ export const attemptRemoveMembership = membershipId => thunk(async (dispatch, ge
  */
 export default handleActions({
 
-  [MEMBERSHIP_RESET]: () => ({
+  [combineActions(MEMBERSHIP_RESET, PLAYER_LOGOUT)]: () => ({
     ...initialState,
   }),
 

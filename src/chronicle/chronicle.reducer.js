@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions, combineActions } from 'redux-actions';
 import { thunkify } from '../shared/util.helper';
 import {
   apiGetChronicles,
@@ -7,6 +7,7 @@ import {
   apiUpdateChronicle,
   apiRemoveChronicle,
 } from './chronicle.service';
+import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
  * Initial state
@@ -113,7 +114,7 @@ export const attemptRemoveChronicle = chronicleId => thunk(async (dispatch, getS
  */
 export default handleActions({
 
-  [CHRONICLE_RESET]: () => ({
+  [combineActions(CHRONICLE_RESET, PLAYER_LOGOUT)]: () => ({
     ...initialState,
   }),
 
