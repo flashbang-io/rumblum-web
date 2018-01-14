@@ -81,8 +81,12 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
   const state = getState();
   const { token } = state.player.auth;
   const formName = 'render';
-  const body = { ...state.form[formName].values, id: undefined };
-  const render = await apiCreateRender(token, templateId, { data: body });
+  const body = { ...state.form[formName].values };
+  const data = Object.keys(state.form[formName].registeredFields).reduce((accum, next) => ({
+    ...accum,
+    [next]: body[next] || '',
+  }), {});
+  const render = await apiCreateRender(token, templateId, { data });
   const a = document.createElement('a');
   a.href = render.location;
   a.download = true;
