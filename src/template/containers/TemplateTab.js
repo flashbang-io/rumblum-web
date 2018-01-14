@@ -6,8 +6,16 @@ import { modalCampaign } from '../../shared/campaign.reducer';
 import SimpleForm from './SimpleForm';
 import { Control } from '../../shared/components/theme';
 import Button from '../../shared/components/theme/Button';
+import Group from '../../shared/components/theme/Group';
 
 class SettingsTab extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      sure: false,
+    };
+  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -15,8 +23,16 @@ class SettingsTab extends Component {
   }
 
   handleDelete() {
-    this.props.attemptRemoveTemplate(this.props.template.id)
-      .then(() => this.props.modalCampaign());
+    if (this.state.sure) {
+      this.props.attemptRemoveTemplate(this.props.template.id)
+        .then(() => this.props.modalCampaign());
+    } else {
+      this.setState({ sure: true });
+    }
+  }
+
+  toggleSure() {
+    this.setState({ sure: !this.state.sure });
   }
 
   render() {
@@ -33,7 +49,10 @@ class SettingsTab extends Component {
           help="Warning, this can not be undone."
           upline
         >
-          <Button danger onClick={ () => this.handleDelete() }>Delete</Button>
+          <Group>
+            { this.state.sure && <Button dull onClick={ () => this.toggleSure() }>Cancel</Button> }
+            <Button danger onClick={ () => this.handleDelete() }>{ this.state.sure ? 'Are you sure?' : 'Delete' }</Button>
+          </Group>
         </Control>
       </div>
     );

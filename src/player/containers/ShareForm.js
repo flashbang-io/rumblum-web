@@ -28,7 +28,7 @@ const PersonFields = ({ fields }) => (
           component={ Input }
         />
         { fields && fields.length > 1 && (
-          <Button info onClick={ () => fields.remove(index) }>
+          <Button dull onClick={ () => fields.remove(index) }>
             <Icon name="close" />
           </Button>
         ) }

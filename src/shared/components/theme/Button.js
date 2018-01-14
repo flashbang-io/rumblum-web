@@ -29,8 +29,8 @@ const ButtonStyled = styled.button`
   ${props => props.danger && css`
     background-color: ${props.theme.colors.danger};
   `}
-  ${props => props.info && css`
-    color: ${props.theme.colors.grey};
+  ${props => props.dull && css`
+    color: ${props.theme.colors.dark};
     background-color: ${props.theme.colors.offer};
     &:hover {
       background-color: ${props.theme.colors.off};
