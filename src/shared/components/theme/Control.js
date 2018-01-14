@@ -24,6 +24,7 @@ const Description = styled.div`
   margin-right: 10px;
   margin-bottom: 10px;
   flex-grow: 1;
+  flex-basis: 0;
   ${props => props.padding && css`
     padding-top: 10px;
   `}
@@ -40,7 +41,15 @@ const Help = styled.div`
   margin-top: 2px;
 `;
 
-const Data = styled.div``;
+const Data = styled.div`
+  width: 300px;
+  max-width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-grow: 1;
+  flex-basis: 0;
+`;
 
 const Control = ({ label, help, children, ...props }) => (
   <Wrap { ...props }>
