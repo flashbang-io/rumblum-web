@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { attemptGetChronicles } from '../chronicle.reducer';
+import { attemptGetRenders } from '../render.reducer';
 import Level from '../../shared/components/Level';
 import { Button, Heading, Subheading } from '../../shared/components/theme';
 
-class ChronicleList extends Component {
+class RenderList extends Component {
 
   componentDidMount() {
-    this.props.attemptGetChronicles(this.props.template.id);
+    this.props.attemptGetRenders(this.props.template.id);
   }
 
   render() {
-    const { chronicles } = this.props;
+    const { renders } = this.props;
     return (
       <div>
-        { chronicles.map(({ id, location, createdAt }) => (
+        { renders.map(({ id, location, createdAt }) => (
           <Level key={ id } across center>
             <div style={{ marginRight: 'auto' }}>
               <Heading inverted flatten>{ id }</Heading>
@@ -31,9 +31,9 @@ class ChronicleList extends Component {
 
 }
 
-ChronicleList.propTypes = {
-  attemptGetChronicles: PropTypes.func.isRequired,
-  chronicles: PropTypes.arrayOf(PropTypes.shape({
+RenderList.propTypes = {
+  attemptGetRenders: PropTypes.func.isRequired,
+  renders: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   })).isRequired,
   template: PropTypes.shape({
@@ -42,12 +42,12 @@ ChronicleList.propTypes = {
 };
 
 const mapStateToProps = ({
-  chronicle: { chronicles, loading },
+  render: { renders, loading },
   template,
 }) => ({
-  chronicles,
+  renders,
   loading,
   template: template.current,
 });
-const mapDispatchToProps = { attemptGetChronicles };
-export default connect(mapStateToProps, mapDispatchToProps)(ChronicleList);
+const mapDispatchToProps = { attemptGetRenders };
+export default connect(mapStateToProps, mapDispatchToProps)(RenderList);
