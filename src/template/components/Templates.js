@@ -39,7 +39,7 @@ const Meta = styled.div`
 `;
 
 const Template = ({ handleInspect, template: { id, name, updatedAt } }) => (
-  <Level rows>
+  <Level across>
     <Badge>
       <Icon name="file-word-o" />
     </Badge>
@@ -68,9 +68,8 @@ const List = styled.div`
   flex-grow: 1;
 `;
 
-const Templates = ({ handleCreate, templates, loading, ...props }) => (
+const Templates = ({ templates, loading, ...props }) => (
   <List>
-    <Button onClick={ handleCreate }><Icon name="plus" /> Template</Button>
     { templates.map(template => (
       <Template
         key={ template.id }
@@ -83,7 +82,6 @@ const Templates = ({ handleCreate, templates, loading, ...props }) => (
 );
 
 Templates.propTypes = {
-  handleCreate: PropTypes.func.isRequired,
   templates: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired).isRequired,

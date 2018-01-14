@@ -10,7 +10,7 @@ const Level = styled.div`
   border-radius: ${props => props.theme.size.radius};
   display: flex;
   flex-direction: columns;
-  ${props => props.rows && css`
+  ${props => props.across && css`
     flex-direction: rows;
   `}
   ${props => props.center && css`

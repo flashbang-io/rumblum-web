@@ -6,6 +6,7 @@ import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
 import { Spread, Info, Sidebar } from '../components/Info';
 import { MODAL_TEMPLATE, MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT } from '../../shared/shared.constants';
+import { Icon, Button } from '../../shared/components/theme';
 
 class TemplateList extends Component {
 
@@ -32,11 +33,13 @@ class TemplateList extends Component {
     return (
       <Spread>
         <Templates
-          handleCreate={ () => this.props.modalCampaign(MODAL_TEMPLATE) }
           handleInspect={ (...args) => this.handleInspect(...args) }
           { ...this.props }
         />
         <Sidebar>
+          <Button onClick={ () => this.props.modalCampaign(MODAL_TEMPLATE) }>
+            <Icon name="plus" /> Template
+          </Button>
           { articles.map(article => <Info key={ article.id } article={ article } />) }
         </Sidebar>
       </Spread>
