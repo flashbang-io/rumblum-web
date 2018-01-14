@@ -38,7 +38,7 @@ const Meta = styled.div`
   flex-grow: 1;
 `;
 
-const Template = ({ handleInspect, template: { id, name, updatedAt } }) => (
+const Template = ({ handleInspect, handleRender, template: { id, name, updatedAt, currentChronicleId } }) => (
   <Level across>
     <Badge>
       <Icon name="file-word-o" />
@@ -48,6 +48,7 @@ const Template = ({ handleInspect, template: { id, name, updatedAt } }) => (
       <Meta>Last updated { moment(updatedAt).format('ll') }</Meta>
       <Group>
         <Button flatten tiny onClick={ () => handleInspect({ id }) }>Edit</Button>
+        { currentChronicleId && <Button flatten tiny onClick={ () => handleRender({ id }) }>Render Document</Button> }
       </Group>
     </Content>
   </Level>
@@ -55,12 +56,10 @@ const Template = ({ handleInspect, template: { id, name, updatedAt } }) => (
 
 Template.propTypes = {
   handleInspect: PropTypes.func.isRequired,
+  handleRender: PropTypes.func.isRequired,
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
-};
-
-Template.defaultProps = {
 };
 
 const List = styled.div`
