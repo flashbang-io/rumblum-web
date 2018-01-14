@@ -92,7 +92,6 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
   a.download = true;
   a.click();
   dispatch(currentRender(render));
-  dispatch(addRender(render));
   dispatch(successRender());
   return render;
 });
