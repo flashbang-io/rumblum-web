@@ -57,7 +57,7 @@ const Meta = styled.div`
   flex-grow: 1;
 `;
 
-const Template = ({ template: { name, updatedAt } }) => (
+const Template = ({ handleInspect, template: { id, name, updatedAt } }) => (
   <Wrap>
     <Badge>
       <Icon name="file-word-o" />
@@ -66,13 +66,14 @@ const Template = ({ template: { name, updatedAt } }) => (
       <Name>{ name }</Name>
       <Meta>Last updated { moment(updatedAt).format('ll') }</Meta>
       <Group>
-        <Button flatten tiny>Edit</Button>
+        <Button flatten tiny onClick={ () => handleInspect({ id }) }>Edit</Button>
       </Group>
     </Content>
   </Wrap>
 );
 
 Template.propTypes = {
+  handleInspect: PropTypes.func.isRequired,
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
@@ -86,11 +87,17 @@ const List = styled.div`
   flex-grow: 1;
 `;
 
-const Templates = ({ handleCreate, templates, loading }) => (
+const Templates = ({ handleCreate, templates, loading, ...props }) => (
   <List>
     <Button onClick={ handleCreate }>Create New Template</Button>
-    { loading && <Ghost /> }
-    { templates.map(template => <Template key={ template.id } template={ template } />) }
+    { templates.map(template => (
+      <Template
+        key={ template.id }
+        template={ template }
+        { ...props }
+      />
+    )) }
+    { loading && (!templates || !templates.length) && <Ghost /> }
   </List>
 );
 

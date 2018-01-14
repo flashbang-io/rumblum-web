@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { attemptGetTemplates } from '../template.reducer';
-import { modalCampaign } from '../../shared/campaign.reducer';
+import { attemptGetTemplates, currentTemplate } from '../template.reducer';
+import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
 import { Spread, Info, Sidebar } from '../components/Info';
-import { MODAL_TEMPLATE } from '../../shared/shared.constants';
+import { MODAL_TEMPLATE, MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT } from '../../shared/shared.constants';
 
 class TemplateList extends Component {
 
   componentDidMount() {
     this.props.attemptGetTemplates(this.props.workspace.id);
+  }
+
+  handleInspect({ id }) {
+    this.props.currentTemplate(this.props.templates.find(template => template.id === id));
+    this.props.tabCampaign(MODAL_INSPECT_TAB_EDIT);
+    this.props.modalCampaign(MODAL_INSPECT);
   }
 
   render() {
@@ -27,6 +33,7 @@ class TemplateList extends Component {
       <Spread>
         <Templates
           handleCreate={ () => this.props.modalCampaign(MODAL_TEMPLATE) }
+          handleInspect={ (...args) => this.handleInspect(...args) }
           { ...this.props }
         />
         <Sidebar>
@@ -40,7 +47,9 @@ class TemplateList extends Component {
 
 TemplateList.propTypes = {
   attemptGetTemplates: PropTypes.func.isRequired,
+  currentTemplate: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
+  tabCampaign: PropTypes.func.isRequired,
   templates: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -58,5 +67,5 @@ const mapStateToProps = ({
   loading,
   workspace: workspace.current,
 });
-const mapDispatchToProps = { attemptGetTemplates, modalCampaign };
+const mapDispatchToProps = { attemptGetTemplates, currentTemplate, modalCampaign, tabCampaign };
 export default connect(mapStateToProps, mapDispatchToProps)(TemplateList);

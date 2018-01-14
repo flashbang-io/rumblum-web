@@ -18,7 +18,7 @@ class TemplateModal extends Component {
     return (
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
-          <Heading inverted>Create New Template</Heading>
+          <Heading inverted>New Template</Heading>
           <TemplateForm
             handleSubmit={ event => this.handleSubmit(event) }
             { ...this.props }

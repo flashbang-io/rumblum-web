@@ -7,6 +7,7 @@ import {
   apiUpdateTemplate,
   apiRemoveTemplate,
 } from './template.service';
+import { apiCreateChronicle } from '../chronicle/chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
@@ -81,12 +82,15 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   const state = getState();
   const { token } = state.player.auth;
   const formName = 'template';
+  const formData = new FormData();
+  formData.append('image', state.form[formName].values.image[0]);
   const body = { ...state.form[formName].values, id: undefined };
   const template = await apiCreateTemplate(token, workspaceId, body);
+  const chronicle = await apiCreateChronicle(token, template.id, formData);
   dispatch(currentTemplate(template));
   dispatch(addTemplate(template));
   dispatch(successTemplate());
-  return template;
+  return { template, chronicle };
 });
 export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
