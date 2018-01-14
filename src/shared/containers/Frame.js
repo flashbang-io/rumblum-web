@@ -17,6 +17,7 @@ import SpaceModal from './SpaceModal';
 import InspectModal from './InspectModal';
 import TemplateModal from '../../template/containers/TemplateModal';
 import RenderModal from '../../render/containers/RenderModal';
+import Splash from '../components/Splash';
 
 class Frame extends Component {
 
@@ -33,13 +34,7 @@ class Frame extends Component {
   render() {
     const { workspace, modal } = this.props;
     if (!workspace) {
-      return (
-        <div>
-          This is to be a splace screen.
-          <br />
-          We do not want to render the other view yet because it relies on workspace being loaded.
-        </div>
-      );
+      return <Splash />;
     }
     return (
       <div>

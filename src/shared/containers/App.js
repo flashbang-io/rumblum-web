@@ -10,6 +10,7 @@ import RegisterPage from '../../player/containers/RegisterPage';
 import ForgotPage from '../../player/containers/ForgotPage';
 import ResetPage from '../../player/containers/ResetPage';
 import Frame from './Frame';
+import Splash from '../components/Splash';
 
 class App extends Component {
 
@@ -29,7 +30,7 @@ class App extends Component {
   render() {
     const { checked } = this.props;
     if (!checked) {
-      return <div>{ checked } Loading app - replace with splace screen...</div>;
+      return <Splash />;
     }
     return (
       <Switch>
