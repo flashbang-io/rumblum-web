@@ -17,6 +17,17 @@ const TemplateForm = ({ handleSubmit, loading, problem }) => (
           component={ Input }
         />
       </Control>
+      <Control
+        label="File"
+        help="Upload the file you wish to use."
+      >
+        <Field
+          name="file"
+          type="file"
+          accept=".doc,.docx,.ppt,.pptx"
+          component={ Input }
+        />
+      </Control>
     </div>
     { problem && <Error>{ problem.message || problem }</Error> }
     <Group>

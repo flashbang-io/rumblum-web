@@ -66,7 +66,7 @@ const Template = ({ template: { name, updatedAt } }) => (
       <Name>{ name }</Name>
       <Meta>Last updated { moment(updatedAt).format('ll') }</Meta>
       <Group>
-        <Button flatten small>Edit Template</Button>
+        <Button flatten tiny>Edit</Button>
       </Group>
     </Content>
   </Wrap>
