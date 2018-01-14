@@ -14,6 +14,7 @@ const Wrap = styled.div`
   background-color: ${props => props.theme.colors.dark};
   border-bottom: 1px solid ${props => props.theme.colors.darker};
   color: ${props => props.theme.colors.off};
+  margin: 0 0 50px;
 `;
 
 const Content = styled.div`

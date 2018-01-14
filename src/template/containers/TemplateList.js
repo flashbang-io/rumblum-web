@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { attemptGetTemplates } from '../template.reducer';
+import Templates from '../components/Templates';
+import { Spread, Info, Sidebar } from '../components/Info';
 
 class TemplateList extends Component {
 
@@ -10,11 +12,22 @@ class TemplateList extends Component {
   }
 
   render() {
-    const { templates } = this.props;
+    const articles = [{
+      id: 1,
+      title: 'Tesla Motors',
+      sub: 'This app was inspired by the Tesla motor company.',
+    }, {
+      id: 2,
+      title: 'Elon Musk',
+      sub: 'Elon is a cool cat the does cool things.',
+    }];
     return (
-      <ul>
-        { templates.map(template => <li key={ template.id }>{ template.name }</li>) }
-      </ul>
+      <Spread>
+        <Templates { ...this.props } />
+        <Sidebar>
+          { articles.map(article => <Info key={ article.id } article={ article } />) }
+        </Sidebar>
+      </Spread>
     );
   }
 
@@ -32,10 +45,11 @@ TemplateList.propTypes = {
 };
 
 const mapStateToProps = ({
-  template: { templates },
+  template: { templates, loading },
   workspace,
 }) => ({
   templates,
+  loading,
   workspace: workspace.current,
 });
 const mapDispatchToProps = { attemptGetTemplates };

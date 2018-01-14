@@ -6,6 +6,7 @@ const theme = {
   },
   colors: {
     white: '#ffffff',
+    black: '#000000',
     off: chroma('#ffffff').darken(0.5),
     offer: chroma('#ffffff').darken(1),
     dark: '#16191A',
