@@ -30,7 +30,7 @@ const RenderForm = ({ handleSubmit, tags, loading, problem }) => {
       </div>
       { problem && <Error>{ problem.message || problem }</Error> }
       <Group>
-        <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Update' }</Button>
+        <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Create' }</Button>
       </Group>
     </Form>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import moment from 'moment';
 import { Icon, Button } from './index';
 import { sizeBig, sizeNormal, sizeSmall, sizeTiny } from './style';
@@ -48,15 +48,27 @@ const Holo = InputStyled.withComponent('div').extend`
     margin-bottom: 10px;
     color: ${props => props.theme.colors.grey};
   }
+  ${props => props.active && css`
+    background-color: ${props.theme.colors.electric};
+    border: 1px solid ${props.theme.colors.info};
+  `}
 `;
 
-const InputFile = ({ ...props }) => (
-  <Holo>
+const InputFile = ({ active, ...props }) => (
+  <Holo active={ active }>
     <Icon name="upload" />
     <Button tiny flatten>Upload File</Button>
     <File { ...props } />
   </Holo>
 );
+
+InputFile.propTypes = {
+  active: PropTypes.bool,
+};
+
+InputFile.defaultProps = {
+  active: false,
+};
 
 const Input = ({ type, input: { value, ...input }, ...props }) => {
   if (type === 'date') {
@@ -73,6 +85,7 @@ const Input = ({ type, input: { value, ...input }, ...props }) => {
     return (
       <InputFile
         type={ type }
+        active={ value && !!value.length }
         { ...input }
         { ...props }
       />

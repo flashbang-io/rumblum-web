@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptCreateRender } from '../render.reducer';
+import { attemptCreateRender, currentRender } from '../render.reducer';
+import { currentTemplate } from '../../template/template.reducer';
 import { Heading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
 import RenderForm from './RenderForm';
 
 class RenderModal extends Component {
+
+  componentWillUnmount() {
+    this.props.currentRender();
+    this.props.currentTemplate();
+  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -35,6 +41,8 @@ class RenderModal extends Component {
 
 RenderModal.propTypes = {
   attemptCreateRender: PropTypes.func.isRequired,
+  currentRender: PropTypes.func.isRequired,
+  currentTemplate: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -49,5 +57,5 @@ const mapStateToProps = ({
   render: { loading, problem },
   template,
 }) => ({ loading, problem, template: template.current });
-const mapDispatchToProps = { attemptCreateRender };
+const mapDispatchToProps = { attemptCreateRender, currentRender, currentTemplate };
 export default connect(mapStateToProps, mapDispatchToProps)(RenderModal);
