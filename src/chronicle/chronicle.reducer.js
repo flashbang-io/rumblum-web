@@ -1,4 +1,5 @@
 import { createAction, handleActions, combineActions } from 'redux-actions';
+import { reset as resetForm } from 'redux-form';
 import { thunkify } from '../shared/util.helper';
 import {
   apiGetChronicles,
@@ -87,6 +88,7 @@ export const attemptCreateChronicle = templateId => thunk(async (dispatch, getSt
   dispatch(currentChronicle(chronicle));
   dispatch(addChronicle(chronicle));
   dispatch(successChronicle());
+  dispatch(resetForm(formName));
   return chronicle;
 });
 export const attemptUpdateChronicle = (chronicleId, data) => thunk(async (dispatch, getState) => {
