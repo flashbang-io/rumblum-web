@@ -45,7 +45,6 @@ class Checkbox extends Component {
 
   toggle() {
     const status = !this.state.status;
-    console.log(status);
     if (this.props.onChange) {
       this.props.onChange(status);
     } else {

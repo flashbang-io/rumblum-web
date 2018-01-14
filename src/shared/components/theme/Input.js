@@ -95,7 +95,6 @@ const Input = ({ type, input: { value, ...input }, ...props }) => {
     );
   }
   if (type === 'checkbox') {
-    console.log(input);
     return (
       <Checkbox
         type={ type }
