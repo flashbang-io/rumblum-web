@@ -6,6 +6,7 @@ const Wrap = styled.div`
   display: flex;
   padding: 0 0 10px;
   margin: 20px 0 0;
+  min-height: 50px;
   ${props => !props.noline && css`
     border-bottom: 1px solid ${props.theme.colors.greyer};
   `}

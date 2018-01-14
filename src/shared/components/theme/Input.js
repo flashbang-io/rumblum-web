@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import moment from 'moment';
 import { Icon, Button } from './index';
 import { sizeBig, sizeNormal, sizeSmall, sizeTiny } from './style';
+import Checkbox from './Checkbox';
 
 export const InputStyled = styled.input`
   background-color: ${props => props.theme.colors.dark};
@@ -11,9 +12,9 @@ export const InputStyled = styled.input`
   color: ${props => props.theme.colors.white};
   border-radius: ${props => props.theme.size.radius};
   outline: none;
-  width: 100%;
   box-sizing: border-box;
   margin-bottom: 10px;
+  width: 100%;
   min-width: 300px;
   max-width: 100%;
   ${sizeNormal}
@@ -88,6 +89,18 @@ const Input = ({ type, input: { value, ...input }, ...props }) => {
       <InputFile
         type={ type }
         active={ value && !!value.length }
+        { ...input }
+        { ...props }
+      />
+    );
+  }
+  if (type === 'checkbox') {
+    console.log(input);
+    return (
+      <Checkbox
+        type={ type }
+        checked={ value }
+        value={ value }
         { ...input }
         { ...props }
       />
