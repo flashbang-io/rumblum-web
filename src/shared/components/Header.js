@@ -7,7 +7,7 @@ import {
   MODAL_SETTINGS_TAB_PROFILE,
   MODAL_SETTINGS_TAB_SECURITY,
   MODAL_SETTINGS_TAB_BILLING,
-  MODAL_SPACE_TAB_EDIT,
+  MODAL_SETTINGS_TAB_EDIT,
 } from '../../shared/shared.constants';
 
 const Wrap = styled.div`
@@ -69,7 +69,7 @@ class Bar extends Component {
   }
 
   render() {
-    const { handleShare, handleSettings, handleLogout, handleSpace } = this.props;
+    const { handleShare, handleSettings, handleLogout } = this.props;
     const { open } = this.state;
     return (
       <Wrap>
@@ -91,11 +91,11 @@ class Bar extends Component {
                   <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_PROFILE }) }>
                     <Icon name="user" /> Profile
                   </DropItem>
-                  <DropItem onClick={ () => handleSpace({ tab: MODAL_SPACE_TAB_EDIT }) }>
-                    <Icon name="suitcase" /> Workspace
-                  </DropItem>
                   <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_SECURITY }) }>
                     <Icon name="lock" /> Security
+                  </DropItem>
+                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_EDIT }) }>
+                    <Icon name="suitcase" /> Workspace
                   </DropItem>
                   <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_BILLING }) }>
                     <Icon name="credit-card" /> Billing
@@ -117,7 +117,6 @@ Bar.propTypes = {
   handleLogout: PropTypes.func.isRequired,
   handleShare: PropTypes.func.isRequired,
   handleSettings: PropTypes.func.isRequired,
-  handleSpace: PropTypes.func.isRequired,
 };
 
 export default Bar;

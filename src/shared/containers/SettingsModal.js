@@ -9,10 +9,16 @@ import {
   MODAL_SETTINGS_TAB_PROFILE,
   MODAL_SETTINGS_TAB_SECURITY,
   MODAL_SETTINGS_TAB_BILLING,
+  MODAL_SETTINGS_TAB_MEMBERS,
+  MODAL_SETTINGS_TAB_EDIT,
+  MODAL_SETTINGS_TAB_PLAN,
 } from '../shared.constants';
 import SettingsTab from '../../player/containers/SettingsTab';
 import PasswordTab from '../../player/containers/PasswordTab';
 import BillingTab from '../../player/containers/BillingTab';
+import SpaceTab from '../../workspace/containers/SpaceTab';
+import PlanTab from '../../workspace/containers/PlanTab';
+import MemberTab from '../../membership/containers/MemberTab';
 
 class SettingsModal extends Component {
 
@@ -42,10 +48,28 @@ class SettingsModal extends Component {
             component={ PasswordTab }
           />
           <Tab
+            id={ MODAL_SETTINGS_TAB_EDIT }
+            title="Workspace"
+            icon="suitcase"
+            component={ SpaceTab }
+          />
+          <Tab
+            id={ MODAL_SETTINGS_TAB_MEMBERS }
+            title="Members"
+            icon="users"
+            component={ MemberTab }
+          />
+          <Tab
             id={ MODAL_SETTINGS_TAB_BILLING }
             title="Billing"
             icon="credit-card"
             component={ BillingTab }
+          />
+          <Tab
+            id={ MODAL_SETTINGS_TAB_PLAN }
+            title="Plan"
+            icon="trophy"
+            component={ PlanTab }
           />
         </Popup>
       </Modal>
