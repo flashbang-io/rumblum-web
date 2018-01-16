@@ -12,6 +12,7 @@ import {
   apiForgotPassword,
   apiResetPassword,
   apiUpdateBilling,
+  apiShare,
 } from './player.service';
 
 /**
@@ -167,12 +168,13 @@ export const attemptUpdateBilling = (playerId, source) => thunk(async (dispatch,
 });
 export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
   const state = getState();
+  const { token, userId } = state.player.auth;
   const formName = 'share';
-  const { message, people } = state.form[formName].values;
-  if (!people || !people.length) {
+  const { message, contacts } = state.form[formName].values;
+  if (!contacts || !contacts.length) {
     throw new Error('Must have at least one person to share to');
   }
-  console.log(message);
+  await apiShare(token, userId, { message, contacts });
   dispatch(successPlayer());
 });
 

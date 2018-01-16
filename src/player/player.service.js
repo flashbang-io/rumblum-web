@@ -65,3 +65,9 @@ export const apiUpdateBilling = (token, playerId, body) => fetch(`${config.endpo
   headers: standardHeaders({ 'Authorization': token }),
   body: JSON.stringify(body),
 }).then(handleResponse);
+
+export const apiShare = (token, playerId, body) => fetch(`${config.endpoint}/players/${playerId}/share`, {
+  method: 'POST',
+  headers: standardHeaders({ 'Authorization': token }),
+  body: JSON.stringify(body),
+}).then(handleResponse);

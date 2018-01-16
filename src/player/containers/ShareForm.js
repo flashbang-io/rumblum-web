@@ -14,17 +14,17 @@ const PersonFields = ({ fields }) => (
           placeholder="First Name"
           component={ Input }
         />
-        <Field
+        {/* <Field
           name={ `${person}.lastName` }
           type="text"
           placeholder="Last Name (Optional)"
           component={ Input }
-        />
+        /> */}
         <Field
           name={ `${person}.email` }
           type="email"
           placeholder="Email"
-          style={{ minWidth: '45%' }}
+          style={{ minWidth: '60%' }}
           component={ Input }
         />
         { fields && fields.length > 1 && (
@@ -43,7 +43,7 @@ PersonFields.propTypes = {
 
 const ShareForm = ({ handleSubmit, loading, problem }) => (
   <Form onSubmit={ handleSubmit }>
-    <FieldArray name="people" component={ PersonFields } />
+    <FieldArray name="contacts" component={ PersonFields } />
     <div>
       <Control
         label="Message"

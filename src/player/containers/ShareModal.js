@@ -22,7 +22,7 @@ class ShareModal extends Component {
       message: `Hi {firstName},
 
 I wanted to share a cool little app I found that I think you may be interested in.`,
-      people: [{}],
+      contacts: [{}],
     };
     return (
       <Modal handleClose={ this.props.handleClose }>
