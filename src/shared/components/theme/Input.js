@@ -16,6 +16,10 @@ export const InputStyled = styled.input`
   margin-bottom: 10px;
   width: 100%;
   max-width: 100%;
+  &:disabled {
+    background-color: ${props => props.theme.colors.darklesser};
+    cursor: default;
+  }
   ${sizeNormal}
   ${props => props.big && sizeBig}
   ${props => props.small && sizeSmall}
