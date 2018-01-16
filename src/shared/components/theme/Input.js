@@ -16,9 +16,13 @@ export const InputStyled = styled.input`
   margin-bottom: 10px;
   width: 100%;
   max-width: 100%;
+  transition: .2s;
   &:disabled {
     background-color: ${props => props.theme.colors.darklesser};
     cursor: default;
+  }
+  &:hover:not(:disabled) {
+    background-color: ${props => props.theme.colors.darkover};
   }
   ${sizeNormal}
   ${props => props.big && sizeBig}

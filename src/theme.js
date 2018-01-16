@@ -10,6 +10,7 @@ const theme = {
     off: chroma('#ffffff').darken(0.5),
     offer: chroma('#ffffff').darken(1),
     dark: '#16191A',
+    darkover: chroma('#16191A').brighten(0.1),
     darkless: '#202426',
     darklesser: chroma('#202426').brighten(0.5),
     darker: '#151515',
