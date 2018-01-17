@@ -11,7 +11,6 @@ import { Container } from '../components/theme/index';
 import Header from './Header';
 import Footer from '../components/Footer';
 import TemplateList from '../../template/containers/TemplateList';
-import SpaceList from '../../workspace/containers/SpaceList';
 import ShareModal from '../../player/containers/ShareModal';
 import SettingsModal from './SettingsModal';
 import InspectModal from './InspectModal';
@@ -42,7 +41,6 @@ class Frame extends Component {
         <Container>
           <Switch>
             <Route path="/templates" exact component={ TemplateList } />
-            <Route path="/workspaces" exact component={ SpaceList } />
             <Redirect to="/templates" />
           </Switch>
         </Container>

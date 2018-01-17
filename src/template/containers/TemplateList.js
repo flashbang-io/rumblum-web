@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { attemptGetTemplates, attemptGetTemplate, currentTemplate } from '../template.reducer';
 import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
-import { Spread, Info, Sidebar } from '../components/Info';
+import { Spread, Sidebar } from '../components/Sidebar';
 import { MODAL_TEMPLATE, MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER } from '../../shared/shared.constants';
 import { Icon, Button } from '../../shared/components/theme';
+import SpaceList from '../../workspace/containers/SpaceList';
 
 class TemplateList extends Component {
 
@@ -26,16 +27,6 @@ class TemplateList extends Component {
   }
 
   render() {
-    const articles = [];
-    // const articles = [{
-    //   id: 1,
-    //   title: 'Tesla Motors',
-    //   sub: 'This app was inspired by the Tesla motor company.',
-    // }, {
-    //   id: 2,
-    //   title: 'Elon Musk',
-    //   sub: 'Elon is a cool cat the does cool things.',
-    // }];
     return (
       <Spread>
         <Templates
@@ -47,7 +38,7 @@ class TemplateList extends Component {
           <Button onClick={ () => this.props.modalCampaign(MODAL_TEMPLATE) }>
             <Icon name="plus" /> Template
           </Button>
-          { articles.map(article => <Info key={ article.id } article={ article } />) }
+          <SpaceList />
         </Sidebar>
       </Spread>
     );
