@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
+import DocumentTitle from 'react-document-title';
 import Frame from '../components/Frame';
 
 class RenderPage extends Component {
@@ -27,11 +28,13 @@ class RenderPage extends Component {
   render() {
     const { url } = this.state;
     return (
-      <Frame
-        handleDownload={ () => this.handleDownload() }
-        src={ `https://docs.google.com/viewer?url=${url}&embedded=true` }
-        title="Rumblum Document"
-      />
+      <DocumentTitle title="Preview | Rumblum">
+        <Frame
+          handleDownload={ () => this.handleDownload() }
+          src={ `https://docs.google.com/viewer?url=${url}&embedded=true` }
+          title="Rumblum Document"
+        />
+      </DocumentTitle>
     );
   }
 

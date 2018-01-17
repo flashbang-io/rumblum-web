@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import DocumentTitle from 'react-document-title';
 import { attemptCreateRender, resetRender } from '../render.reducer';
 import { attemptGetTemplate, resetTemplate } from '../../template/template.reducer';
 import { Heading, Container } from '../../shared/components/theme';
@@ -41,16 +42,18 @@ class RenderPage extends Component {
   render() {
     const { template } = this.props;
     return (
-      <Page>
-        <Container>
-          <Heading inverted>Render Document</Heading>
-          { template && <RenderForm
-            handleSubmit={ event => this.handleSubmit(event) }
-            tags={ template && template.tags ? template.tags : [] }
-            { ...this.props }
-          /> }
-        </Container>
-      </Page>
+      <DocumentTitle title={ `${template && template.name ? template.name : 'Render Document'} | Rumblum` }>
+        <Page>
+          <Container>
+            <Heading inverted>Render Document</Heading>
+            { template && <RenderForm
+              handleSubmit={ event => this.handleSubmit(event) }
+              tags={ template && template.tags ? template.tags : [] }
+              { ...this.props }
+            /> }
+          </Container>
+        </Page>
+      </DocumentTitle>
     );
   }
 
