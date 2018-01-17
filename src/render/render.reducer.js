@@ -88,10 +88,12 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
     .reduce((accum, next) => ({ ...accum, [next]: '' }), {});
   const body = { ...values, data: { ...empty, ...data } };
   const render = await apiCreateRender(token, templateId, body);
-  const a = document.createElement('a');
-  a.href = render.location;
-  a.download = true;
-  a.click();
+  if (!body.send) {
+    const a = document.createElement('a');
+    a.href = render.location;
+    a.download = true;
+    a.click();
+  }
   dispatch(currentRender(render));
   dispatch(successRender());
   return render;

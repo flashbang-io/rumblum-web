@@ -9,6 +9,7 @@ import {
   apiRemoveChronicle,
 } from './chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
+import { currentTemplate, replaceTemplate } from '../template/template.reducer';
 
 /**
  * Initial state
@@ -84,10 +85,12 @@ export const attemptCreateChronicle = templateId => thunk(async (dispatch, getSt
   const formName = 'chronicle';
   const formData = new FormData();
   formData.append('file', state.form[formName].values.file[0]);
-  const chronicle = await apiCreateChronicle(token, templateId, formData);
+  const { chronicle, template } = await apiCreateChronicle(token, templateId, formData);
   dispatch(currentChronicle(chronicle));
   dispatch(addChronicle(chronicle));
   dispatch(successChronicle());
+  dispatch(currentTemplate(template));
+  dispatch(replaceTemplate(template));
   dispatch(resetForm(formName));
   return chronicle;
 });
