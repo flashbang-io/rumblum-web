@@ -26,15 +26,16 @@ class TemplateList extends Component {
   }
 
   render() {
-    const articles = [{
-      id: 1,
-      title: 'Tesla Motors',
-      sub: 'This app was inspired by the Tesla motor company.',
-    }, {
-      id: 2,
-      title: 'Elon Musk',
-      sub: 'Elon is a cool cat the does cool things.',
-    }];
+    const articles = [];
+    // const articles = [{
+    //   id: 1,
+    //   title: 'Tesla Motors',
+    //   sub: 'This app was inspired by the Tesla motor company.',
+    // }, {
+    //   id: 2,
+    //   title: 'Elon Musk',
+    //   sub: 'Elon is a cool cat the does cool things.',
+    // }];
     return (
       <Spread>
         <Templates

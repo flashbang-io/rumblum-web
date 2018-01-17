@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { attemptGetChronicles } from '../chronicle.reducer';
 import Level from '../../shared/components/Level';
-import { Button, Heading, Subheading } from '../../shared/components/theme';
+import { Button, Heading, Subheading, Group } from '../../shared/components/theme';
 
 class ChronicleList extends Component {
 
@@ -22,7 +22,10 @@ class ChronicleList extends Component {
               <Heading inverted flatten>{ id }</Heading>
               <Subheading style={{ marginBottom: 0 }}>Created on { moment(createdAt).format('ll') }</Subheading>
             </div>
-            <Button tiny flatten href={ location } download>Download</Button>
+            <Group>
+              <Button tiny flatten to={ `/preview?url=${location}` } target="_blank">Preview</Button>
+              <Button tiny flatten href={ location } download>Download</Button>
+            </Group>
           </Level>
         )) }
       </div>

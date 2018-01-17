@@ -17,10 +17,21 @@ class RenderPage extends Component {
     this.state = { url };
   }
 
+  handleDownload() {
+    const a = document.createElement('a');
+    a.href = this.state.url;
+    a.download = true;
+    a.click();
+  }
+
   render() {
     const { url } = this.state;
     return (
-      <Frame src={ `https://docs.google.com/viewer?url=${url}&embedded=true` } title="Rumblum Document" />
+      <Frame
+        handleDownload={ () => this.handleDownload() }
+        src={ `https://docs.google.com/viewer?url=${url}&embedded=true` }
+        title="Rumblum Document"
+      />
     );
   }
 

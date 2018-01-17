@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Window = styled.div`
@@ -35,35 +36,59 @@ const Square = styled.div`
   color: ${props => props.theme.colors.white};
 `;
 
-const Badge = styled.a`
-  padding: 6px;
-  background-color: ${props => props.theme.colors.white};
-  border: 1px solid #c1c1c1;
-  color: ${props => props.theme.colors.dark};
+const Download = styled.button`
+  border: none;
+  background-color: ${props => props.theme.colors.dark};
+  color: ${props => props.theme.colors.white};
+  padding: 6px 10px;
+  margin-left: 10px;
   border-radius: 3px;
   font-size: 11px;
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: .2s;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 30px 1px rgba(0, 0, 0, 0.3);
+    background-color: ${props => props.theme.colors.darkless};
+  }
+`;
+
+const Badge = Download.withComponent('a').extend`
+  border: 1px solid #c1c1c1;
+  background-color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.dark};
+  font-weight: bold;
+  &:hover {
+    background-color: ${props => props.theme.colors.white};
+  }
+`;
+
+const Group = styled.div`
   position: absolute;
   bottom: 20px;
   right: 30px;
   display: flex;
-  align-items: center;
-  font-weight: bold;
-  transition: .2s;
-  &:hover {
-    box-shadow: 0 0 30px 1px rgba(0, 0, 0, 0.3);
-  }
 `;
 
-const Frame = ({ ...props }) => (
+const Frame = ({ handleDownload, ...props }) => (
   <Window>
     <IFrame { ...props } />
-    <Badge href="/">
-      <Square>R</Square>
-      Powered by Rumblum
-    </Badge>
+    <Group>
+      <Download onClick={ handleDownload }>Download</Download>
+      <Badge href="/">
+        <Square>R</Square>
+        Powered by Rumblum
+      </Badge>
+    </Group>
   </Window>
 );
+
+Frame.propTypes = {
+  handleDownload: PropTypes.func.isRequired,
+};
 
 export default Frame;
