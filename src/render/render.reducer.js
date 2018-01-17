@@ -79,7 +79,7 @@ export const attemptGetRender = renderId => thunk(async (dispatch, getState) => 
 });
 export const attemptCreateRender = templateId => thunk(async (dispatch, getState) => {
   const state = getState();
-  const { token } = state.player.auth;
+  const { token } = state.player.auth || { token: null };
   const formName = 'render';
   const { data, ...values } = { ...state.form[formName].values };
   const empty = Object.keys(state.form[formName].registeredFields)

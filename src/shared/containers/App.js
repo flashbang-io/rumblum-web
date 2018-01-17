@@ -11,6 +11,7 @@ import ForgotPage from '../../player/containers/ForgotPage';
 import ResetPage from '../../player/containers/ResetPage';
 import Frame from './Frame';
 import Splash from '../components/Splash';
+import RenderPage from '../../render/containers/RenderPage';
 
 class App extends Component {
 
@@ -38,6 +39,7 @@ class App extends Component {
         <Route path="/register" component={ RegisterPage } />
         <Route path="/forgot" component={ ForgotPage } />
         <Route path="/reset" component={ ResetPage } />
+        <Route path="/share/:templateId" component={ RenderPage } />
         <Route path="/" component={ Frame } />
         <Redirect to="/templates" />
       </Switch>

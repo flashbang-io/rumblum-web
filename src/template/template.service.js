@@ -12,7 +12,7 @@ export const apiGetTemplates = (token, workspaceId) => fetch(`${config.endpoint}
 }).then(handleResponse);
 
 export const apiGetTemplate = (token, templateId) => fetch(`${config.endpoint}/templates/${templateId}`, {
-  headers: standardHeaders({ 'Authorization': token }),
+  headers: standardHeaders(token ? { 'Authorization': token } : {}),
 }).then(handleResponse);
 
 export const apiUpdateTemplate = (token, templateId, body) => fetch(`${config.endpoint}/templates/${templateId}`, {

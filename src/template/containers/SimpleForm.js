@@ -8,7 +8,7 @@ const SimpleForm = ({ handleSubmit, loading, problem }) => (
     <div>
       <Control
         label="Name"
-        help="It helps to give a descriptive name."
+        help="This helps you identify the template."
       >
         <Field
           name="name"
@@ -19,12 +19,22 @@ const SimpleForm = ({ handleSubmit, loading, problem }) => (
       </Control>
       <Control
         label="Default Filename"
-        help="You can use custom tags e.g. {example}. These will appear in the render form."
+        help="The name of rendered documents. Custom tags e.g. {example} will appear in the render form."
       >
         <Field
           name="filename"
           type="text"
           placeholder="my-{example}-file"
+          component={ Input }
+        />
+      </Control>
+      <Control
+        label="Public"
+        help="Let anyone who has a link to the render form create documents."
+      >
+        <Field
+          name="public"
+          type="checkbox"
           component={ Input }
         />
       </Control>

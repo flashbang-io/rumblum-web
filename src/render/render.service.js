@@ -3,7 +3,7 @@ import { handleResponse, standardHeaders } from '../shared/util.helper';
 
 export const apiCreateRender = (token, templateId, body) => fetch(`${config.endpoint}/templates/${templateId}/renders`, {
   method: 'POST',
-  headers: standardHeaders({ 'Authorization': token }),
+  headers: standardHeaders(token ? { 'Authorization': token } : {}),
   body: JSON.stringify(body),
 }).then(handleResponse);
 
