@@ -1,5 +1,6 @@
 {
   "environment": "sandbox",
+  "url": "https://sandbox.rumblum.com",
   "endpoint": "https://stage.rumblum.com/api",
   "stripeKey": "",
   "ravenDSN": "",

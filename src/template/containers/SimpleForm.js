@@ -33,7 +33,7 @@ const SimpleForm = ({ handleSubmit, loading, problem }) => (
         help="Let anyone who has a link to the render form create documents."
       >
         <Field
-          name="public"
+          name="accessPublic"
           type="checkbox"
           component={ Input }
         />

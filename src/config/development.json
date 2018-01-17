@@ -1,5 +1,6 @@
 {
   "environment": "development",
+  "url": "http://localhost:3200",
   "endpoint": "http://localhost:3000/api",
   "stripeKey": "pk_test_7iwdGKGGspOf4rdCQ1uHa3Fu",
   "ravenDSN": "",

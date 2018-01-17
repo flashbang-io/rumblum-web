@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Icon, Button, Group } from '../../shared/components/theme';
 import Level, { Ghost } from '../../shared/components/Level';
+import config from '../../config';
 
 const Badge = styled.div`
   height: 80px;
@@ -38,7 +39,7 @@ const Meta = styled.div`
   flex-grow: 1;
 `;
 
-const Template = ({ handleInspect, handleRender, template: { id, name, updatedAt, currentChronicleId } }) => (
+const Template = ({ handleInspect, handleRender, template: { id, name, updatedAt, currentChronicleId, accessPublic } }) => (
   <Level across>
     <Badge>
       <Icon name="file-word-o" />
@@ -49,6 +50,7 @@ const Template = ({ handleInspect, handleRender, template: { id, name, updatedAt
       <Group>
         <Button flatten tiny onClick={ () => handleInspect({ id }) }>Edit</Button>
         { currentChronicleId && <Button flatten tiny onClick={ () => handleRender({ id }) }>Render Document</Button> }
+        { accessPublic && <Button flatten tiny href={ `${config.url}/share/${id}` } target="_blank">Share</Button>}
       </Group>
     </Content>
   </Level>

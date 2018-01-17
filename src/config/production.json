@@ -1,5 +1,6 @@
 {
   "environment": "production",
+  "url": "https://app.rumblum.com",
   "endpoint": "https://api.rumblum.com/api",
   "stripeKey": "pk_live_Ah92lmdXtGFZq5B7SPh94YC9",
   "ravenDSN": "https://7a30ef4b69eb4236b51d752d15fd466b@sentry.io/235198",
