@@ -17,6 +17,17 @@ const SimpleForm = ({ handleSubmit, loading, problem }) => (
           component={ Input }
         />
       </Control>
+      <Control
+        label="Default Filename"
+        help="You can use custom tags e.g. {example}. These will appear in the render form."
+      >
+        <Field
+          name="filename"
+          type="text"
+          placeholder="my-{example}-file"
+          component={ Input }
+        />
+      </Control>
     </div>
     { problem && <Error>{ problem.message || problem }</Error> }
     <Group>

@@ -11,7 +11,7 @@ export const apiGetTemplates = (token, workspaceId) => fetch(`${config.endpoint}
   headers: standardHeaders({ 'Authorization': token }),
 }).then(handleResponse);
 
-export const apiGetTemplate = (token, templateId) => fetch(`${config.endpoint}/templates/${templateId}?filter[include]=currentChronicle`, {
+export const apiGetTemplate = (token, templateId) => fetch(`${config.endpoint}/templates/${templateId}`, {
   headers: standardHeaders({ 'Authorization': token }),
 }).then(handleResponse);
 

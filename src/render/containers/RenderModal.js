@@ -29,7 +29,7 @@ class RenderModal extends Component {
           <Heading inverted>Render Document</Heading>
           { template && <RenderForm
             handleSubmit={ event => this.handleSubmit(event) }
-            tags={ template && template.currentChronicle ? template.currentChronicle.tags : [] }
+            tags={ template && template.tags ? template.tags : [] }
             { ...this.props }
           /> }
         </Popup>
