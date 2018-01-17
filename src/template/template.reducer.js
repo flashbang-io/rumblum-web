@@ -89,10 +89,8 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   }
   formData.append('file', file);
   const body = { ...state.form[formName].values, id: undefined };
-  const template = await apiCreateTemplate(token, workspaceId, body);
-  const chronicle = await apiCreateChronicle(token, template.id, formData);
-  template.currentChronicle = chronicle;
-  template.currentChronicleId = chronicle.id;
+  const { id } = await apiCreateTemplate(token, workspaceId, body);
+  const { chronicle, template } = await apiCreateChronicle(token, id, formData);
   dispatch(currentTemplate(template));
   dispatch(addTemplate(template));
   dispatch(successTemplate());

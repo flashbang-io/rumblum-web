@@ -16,10 +16,10 @@ class RenderList extends Component {
     const { renders } = this.props;
     return (
       <div>
-        { renders.map(({ id, location, createdAt }) => (
+        { renders.map(({ id, filename, extension, location, createdAt }) => (
           <Level key={ id } across center>
             <div style={{ marginRight: 'auto' }}>
-              <Heading inverted flatten>{ id }</Heading>
+              <Heading inverted flatten>{ filename ? `${filename}${extension}` : id }</Heading>
               <Subheading style={{ marginBottom: 0 }}>Created on { moment(createdAt).format('ll') }</Subheading>
             </div>
             <Button tiny flatten href={ location } download>Download</Button>
