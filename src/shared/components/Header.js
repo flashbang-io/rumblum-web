@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { Container, Icon } from '../components/theme';
 import Dropdown, { DropItem } from './Dropdown';
 import {
@@ -37,6 +38,9 @@ const Brand = styled.div`
 const Menu = styled.div`
   margin-left: auto;
   display: flex;
+  a {
+    text-decoration: none;
+  }
 `;
 
 const MenuItem = styled.div`
@@ -45,6 +49,7 @@ const MenuItem = styled.div`
   padding: 5px 7px;
   cursor: pointer;
   position: relative;
+  color: ${props => props.theme.colors.off};
   border-radius: ${props => props.theme.size.radius};
   i {
     margin-right: 3px;
@@ -81,6 +86,9 @@ class Bar extends Component {
               <span>Document Templates</span>
             </Brand>
             <Menu>
+              <NavLink to="/workspaces">
+                <MenuItem>Spaces</MenuItem>
+              </NavLink>
               <MenuItem onClick={ handleShare }>Share</MenuItem>
               <MenuItem onClick={ () => this.toggleDropdown() }>
                 <Icon name="cog" /> Settings
