@@ -1,79 +1,87 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Button } from '../../shared/components/theme';
+import styled, { css } from 'styled-components';
+import { Button, Icon } from '../../shared/components/theme';
+import LoadingCircles from '../../shared/components/LoadingCircles';
 
 const Wrap = styled.div`
-  background-color: ${props => props.theme.colors.off};
-  border-radius: ${props => props.theme.size.radius};
-  border: 1px solid ${props => props.theme.colors.offer};
-  color: ${props => props.theme.colors.grey};
-  padding: 10px 0;
-  font-size: 12px;
   margin-bottom: 10px;
-  box-sizing: border-box;
   position: relative;
   flex-grow: 1;
 `;
 
-const Space = styled.div`
-  border-bottom: 1px solid ${props => props.theme.colors.offer};
-  margin: 0 10px;
-  padding: 10px;
+const Segment = styled.div`
+  border-radius: ${props => props.theme.size.radius};
+  background-color: ${props => props.theme.colors.white};
+  border: 1px solid ${props => props.theme.colors.offer};
+  color: ${props => props.theme.colors.grey};
+  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.05);
+  padding: 14px;
+  box-sizing: border-box;
 `;
 
-const Popup = Wrap.extend`
-  background-color: ${props => props.theme.colors.white};
-  padding: 20px;
+const Space = Segment.extend`
+  font-weight: bold;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: .2s;
+  display: flex;
+  align-items: center;
+  &:hover {
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.01);
+  }
+  ${props => props.active && css`
+    background-color: ${props.theme.colors.electric};
+    color: ${props.theme.colors.white};
+    font-weight: normal;
+  `}
+`;
+
+export const Popup = Segment.extend`
   position: absolute;
   right: 10px;
   bottom: 10px;
 `;
 
-class Spaces extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      popup: false,
-    };
-  }
-
-  togglePopup() {
-    this.setState({ popup: !this.state.popup });
-  }
-
-  render() {
-    const { popup } = this.state;
-    const { workspaces, handleSelect, children } = this.props;
-    return (
-      <Wrap>
-        { workspaces.map(({ id, name }) => (
-          <Space
-            key={ id }
-            onClick={ () => handleSelect(id) }
-          >
-            { name }
-          </Space>
-        )) }
-        <Button onClick={ () => this.togglePopup() }>Edit</Button>
-        { popup && <Popup>{ children }</Popup> }
-      </Wrap>
-    );
-  }
-
-}
+const Spaces = ({ workspaces, handleSelect, handleOpen, children, workspace, loading }) => (
+  <Wrap>
+    { workspaces.map(({ id, name }) => (
+      <Space
+        key={ id }
+        onClick={ () => handleSelect(id) }
+        active={ workspace && id === workspace.id }
+      >
+        { name }
+        { loading && workspace && id === workspace.id && <LoadingCircles color="white" /> }
+      </Space>
+    )) }
+    <Button onClick={ handleOpen }>
+      <Icon name="plus" /> Workspace
+    </Button>
+    { children }
+  </Wrap>
+);
 
 Spaces.propTypes = {
   handleSelect: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  handleOpen: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  children: PropTypes.node,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   })),
+  workspace: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
+
 };
 
 Spaces.defaultProps = {
   workspaces: [],
+  workspace: null,
+  children: null,
 };
 
 export default Spaces;

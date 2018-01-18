@@ -29,17 +29,17 @@ class TemplateList extends Component {
   render() {
     return (
       <Spread>
-        <Templates
-          handleInspect={ (...args) => this.handleInspect(...args) }
-          handleRender={ (...args) => this.handleRender(...args) }
-          { ...this.props }
-        />
         <Sidebar>
           <Button onClick={ () => this.props.modalCampaign(MODAL_TEMPLATE) }>
             <Icon name="plus" /> Template
           </Button>
           <SpaceList />
         </Sidebar>
+        <Templates
+          handleInspect={ (...args) => this.handleInspect(...args) }
+          handleRender={ (...args) => this.handleRender(...args) }
+          { ...this.props }
+        />
       </Spread>
     );
   }

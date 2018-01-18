@@ -4,9 +4,16 @@ import PropTypes from 'prop-types';
 import { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace } from '../workspace.reducer';
 import { attemptGetTemplates } from '../../template/template.reducer';
 import Spaces from '../components/Spaces';
-import SpaceForm from './SpaceForm';
+import CreateForm from './CreateForm';
 
 class SpaceList extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      form: false,
+    };
+  }
 
   componentDidMount() {
     this.props.attemptGetWorkspaces();
@@ -14,7 +21,8 @@ class SpaceList extends Component {
 
   handleCreate(event) {
     event.preventDefault();
-    this.props.attemptCreateWorkspace();
+    this.props.attemptCreateWorkspace()
+      .then(workspace => workspace && this.toggleForm());
   }
 
   handleSelect(id) {
@@ -22,16 +30,23 @@ class SpaceList extends Component {
       .then(workspace => workspace && this.props.attemptGetTemplates(id));
   }
 
+  toggleForm(status) {
+    this.setState({ form: status || !this.state.form });
+  }
+
   render() {
-    const { workspaces } = this.props;
+    const { form } = this.state;
     return (
       <Spaces
-        workspaces={ workspaces }
         handleSelect={ (...args) => this.handleSelect(...args) }
+        handleOpen={ () => this.toggleForm() }
+        { ...this.props }
       >
-        <SpaceForm
+        { form && <CreateForm
           handleSubmit={ (...args) => this.handleCreate(...args) }
-        />
+          handleClose={ () => this.toggleForm() }
+          { ...this.props }
+        /> }
       </Spaces>
     );
   }
@@ -50,11 +65,12 @@ SpaceList.propTypes = {
 };
 
 const mapStateToProps = ({
-  workspace: { workspaces, loading, problem },
+  workspace: { workspaces, loading, problem, current },
 }) => ({
   workspaces,
   loading,
   problem,
+  workspace: current,
 });
 const mapDispatchToProps = { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, attemptGetTemplates };
 export default connect(mapStateToProps, mapDispatchToProps)(SpaceList);

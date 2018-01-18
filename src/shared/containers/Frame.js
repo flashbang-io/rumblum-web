@@ -17,6 +17,7 @@ import InspectModal from './InspectModal';
 import TemplateModal from '../../template/containers/TemplateModal';
 import RenderModal from '../../render/containers/RenderModal';
 import Splash from '../components/Splash';
+import FrameWrapper from '../components/FrameWrapper';
 
 class Frame extends Component {
 
@@ -36,7 +37,7 @@ class Frame extends Component {
       return <Splash />;
     }
     return (
-      <div>
+      <FrameWrapper>
         <Header />
         <Container>
           <Switch>
@@ -50,7 +51,7 @@ class Frame extends Component {
         { modal && modal === MODAL_TEMPLATE && <TemplateModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_INSPECT && <InspectModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_RENDER && <RenderModal handleClose={ () => this.props.modalCampaign() } /> }
-      </div>
+      </FrameWrapper>
     );
   }
 

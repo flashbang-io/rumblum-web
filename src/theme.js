@@ -7,8 +7,8 @@ const theme = {
   colors: {
     white: '#ffffff',
     black: '#000000',
-    off: chroma('#ffffff').darken(0.5),
-    offer: chroma('#ffffff').darken(1),
+    off: chroma('#ffffff').darken(0.25),
+    offer: chroma('#ffffff').darken(0.5),
     dark: '#16191A',
     darkover: chroma('#16191A').brighten(0.1),
     darkless: '#202426',
