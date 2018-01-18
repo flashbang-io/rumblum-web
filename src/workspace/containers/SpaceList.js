@@ -26,8 +26,8 @@ class SpaceList extends Component {
   }
 
   handleSelect(id) {
-    this.props.attemptGetWorkspace(id)
-      .then(workspace => workspace && this.props.attemptGetTemplates(id));
+    this.props.attemptGetWorkspace(id);
+    this.props.attemptGetTemplates(id);
   }
 
   toggleForm(status) {
