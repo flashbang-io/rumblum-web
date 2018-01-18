@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const Spread = styled.div`
   display: flex;
   & > * {
-    margin-right: 20px;
+    margin-right: 10px;
     &:last-child {
       margin-right: 0;
     }

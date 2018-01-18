@@ -41,8 +41,8 @@ const Space = Segment.extend`
 
 export const Popup = Segment.extend`
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  left: 10px;
+  bottom: 20px;
 `;
 
 const Spaces = ({ workspaces, handleSelect, handleOpen, children, workspace, loading }) => (

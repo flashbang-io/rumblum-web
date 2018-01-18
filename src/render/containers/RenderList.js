@@ -23,7 +23,7 @@ class RenderList extends Component {
               <Subheading style={{ marginBottom: 0 }}>Created on { moment(createdAt).format('ll') }</Subheading>
             </div>
             <Group>
-              <Button tiny flatten to={ `/preview?url=${location}` } target="_blank">Preview</Button>
+              <Button tiny="true" flatten="true" to={ `/preview?url=${location}` } target="_blank">Preview</Button>
               <Button tiny flatten href={ location } download>Download</Button>
             </Group>
           </Level>
