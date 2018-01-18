@@ -25,7 +25,8 @@ class ResetPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.attemptResetPassword(this.state.token);
+    this.props.attemptResetPassword(this.state.token)
+      .then(data => data && this.props.history.push('/login'));
   }
 
   render() {
@@ -34,7 +35,7 @@ class ResetPage extends Component {
       <DocumentTitle title="Reset Password | Rumblum">
         <Page>
           <Container>
-            <Title>Forgot Password</Title>
+            <Title>Reset Password</Title>
             <ResetForm
               handleSubmit={ event => this.handleSubmit(event) }
               initialValues={{ email }}
@@ -55,6 +56,9 @@ ResetPage.propTypes = {
   cleanPlayer: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 

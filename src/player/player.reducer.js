@@ -157,7 +157,7 @@ export const attemptResetPassword = token => thunk(async (dispatch, getState) =>
   const formName = 'reset';
   const { newPassword } = state.form[formName].values;
   await apiResetPassword(token, { newPassword });
-  dispatch(attemptAlert({ message: 'Password updated.' }));
+  dispatch(attemptAlert({ message: 'Password updated. Please login.' }));
 });
 export const attemptUpdateBilling = (playerId, source) => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
