@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Icon } from './theme';
 
 const hook = document.getElementById('hook');
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const Wrap = styled.div`
   position: fixed;
@@ -12,6 +23,7 @@ const Wrap = styled.div`
   bottom: 20px;
   display: flex;
   flex-direction: column;
+  z-index: 1500;
 `;
 
 const Item = styled.div`
@@ -25,6 +37,7 @@ const Item = styled.div`
   align-items: center;
   margin-top: 10px;
   font-size: 12px;
+  animation: ${fadeIn} .5s;
   i {
     margin-left: 10px;
     cursor: pointer;

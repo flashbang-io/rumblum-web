@@ -59,7 +59,7 @@ export const attemptAlert = alert => thunk(async (dispatch) => {
   dispatch(addCampaign(campaign));
   setTimeout(() => {
     dispatch(removeCampaign(campaign.id));
-  }, 5000);
+  }, 8000);
 });
 
 /**

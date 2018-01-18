@@ -17,7 +17,7 @@ const Shadow = styled.div`
   display: ${props => props.hidden ? 'none' : 'flex'};
   justify-content: center;
   align-items: flex-start;
-  z-index: 2000;
+  z-index: 1000;
 `;
 
 class Modal extends Component {
