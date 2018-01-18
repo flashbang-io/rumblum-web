@@ -108,6 +108,7 @@ export const attemptRemoveWorkspace = workspaceId => thunk(async (dispatch, getS
   await apiRemoveWorkspace(token, workspaceId);
   dispatch(removeWorkspace(workspaceId));
   dispatch(successWorkspace());
+  return workspaceId;
 });
 export const attemptUpdateSubscription = (workspaceId, data) => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;

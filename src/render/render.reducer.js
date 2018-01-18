@@ -114,6 +114,7 @@ export const attemptRemoveRender = renderId => thunk(async (dispatch, getState) 
   await apiRemoveRender(token, renderId);
   dispatch(removeRender(renderId));
   dispatch(successRender());
+  return renderId;
 });
 
 /**

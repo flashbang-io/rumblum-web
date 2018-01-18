@@ -106,6 +106,7 @@ export const attemptRemoveMembership = membershipId => thunk(async (dispatch, ge
   await apiRemoveMembership(token, membershipId);
   dispatch(removeMembership(membershipId));
   dispatch(successMembership());
+  return membershipId;
 });
 
 /**

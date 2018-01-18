@@ -110,6 +110,7 @@ export const attemptRemoveChronicle = chronicleId => thunk(async (dispatch, getS
   await apiRemoveChronicle(token, chronicleId);
   dispatch(removeChronicle(chronicleId));
   dispatch(successChronicle());
+  return chronicleId;
 });
 
 /**

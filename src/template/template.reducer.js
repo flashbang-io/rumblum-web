@@ -113,6 +113,7 @@ export const attemptRemoveTemplate = templateId => thunk(async (dispatch, getSta
   await apiRemoveTemplate(token, templateId);
   dispatch(removeTemplate(templateId));
   dispatch(successTemplate());
+  return templateId;
 });
 
 /**
