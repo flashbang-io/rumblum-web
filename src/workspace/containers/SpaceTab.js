@@ -29,6 +29,10 @@ class SpaceTab extends Component {
     }
   }
 
+  toggleSure() {
+    this.setState({ sure: !this.state.sure });
+  }
+
   render() {
     const { workspace } = this.props;
     return (
