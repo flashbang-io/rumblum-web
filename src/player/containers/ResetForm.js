@@ -13,7 +13,7 @@ const ResetForm = ({ handleSubmit, loading, problem, email }) => (
       disabled
     /> }
     <Field
-      name="password"
+      name="newPassword"
       type="password"
       placeholder="Password"
       component={ Input }
