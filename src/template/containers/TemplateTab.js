@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { attemptUpdateTemplate, attemptRemoveTemplate } from '../template.reducer';
 import { modalCampaign } from '../../shared/campaign.reducer';
 import SimpleForm from './SimpleForm';
-import { Control } from '../../shared/components/theme';
-import Button from '../../shared/components/theme/Button';
-import Group from '../../shared/components/theme/Group';
+import { Control, Button, Group } from '../../shared/components/theme';
 
 class SettingsTab extends Component {
 
