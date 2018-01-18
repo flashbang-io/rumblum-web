@@ -1,6 +1,5 @@
-import { createAction, handleActions, combineActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 import { thunkify } from '../shared/util.helper';
-import { PLAYER_LOGOUT } from '../player/player.reducer';
 
 /**
  * Initial state
@@ -8,7 +7,8 @@ import { PLAYER_LOGOUT } from '../player/player.reducer';
 const initialState = {
   problem: null,
   loading: false,
-  success: false,
+  success: null,
+  campaigns: [],
   modal: null,
   tab: null,
 };
@@ -22,6 +22,8 @@ export const CAMPAIGN_SUCCESS = 'rumblum/campaign/SUCCESS';
 export const CAMPAIGN_ERRORED = 'rumblum/campaign/ERRORED';
 export const CAMPAIGN_MODAL = 'rumblum/campaign/MODAL';
 export const CAMPAIGN_TAB = 'rumblum/campaign/TAB';
+export const CAMPAIGN_REMOVE = 'rumblum/campaign/REMOVE';
+export const CAMPAIGN_ADD = 'rumblum/campaign/ADD';
 
 /**
  * Actions
@@ -34,6 +36,8 @@ export const successCampaign = createAction(CAMPAIGN_SUCCESS);
 export const erroredCampaign = createAction(CAMPAIGN_ERRORED);
 export const modalCampaign = createAction(CAMPAIGN_MODAL);
 export const tabCampaign = createAction(CAMPAIGN_TAB);
+export const removeCampaign = createAction(CAMPAIGN_REMOVE);
+export const addCampaign = createAction(CAMPAIGN_ADD);
 
 /**
  * Config
@@ -50,8 +54,12 @@ const thunk = thunkify({
  * The return value of the inner function should be a promise. The dispatch function
  * returns the value of the function from within it. This allows us to chain dispatch functions.
  */
-export const attemptSomething = () => thunk(async (dispatch) => {
-  dispatch(resetCampaign());
+export const attemptAlert = alert => thunk(async (dispatch) => {
+  const campaign = { id: `${Date.now() * Math.random()}`, ...alert };
+  dispatch(addCampaign(campaign));
+  setTimeout(() => {
+    dispatch(removeCampaign(campaign.id));
+  }, 5000);
 });
 
 /**
@@ -61,7 +69,7 @@ export const attemptSomething = () => thunk(async (dispatch) => {
  */
 export default handleActions({
 
-  [combineActions(CAMPAIGN_RESET, PLAYER_LOGOUT)]: () => ({
+  [CAMPAIGN_RESET]: () => ({
     ...initialState,
   }),
 
@@ -69,12 +77,12 @@ export default handleActions({
     ...state,
     loading: payload,
     problem: payload ? null : state.problem,
-    success: payload ? false : state.success,
+    success: payload ? null : state.success,
   }),
 
-  [CAMPAIGN_SUCCESS]: (state, { payload = true }) => ({
+  [CAMPAIGN_SUCCESS]: (state, { payload = { status: true } }) => ({
     ...state,
-    success: false && payload,
+    success: payload,
   }),
 
   [CAMPAIGN_ERRORED]: (state, { payload = null }) => ({
@@ -90,6 +98,16 @@ export default handleActions({
   [CAMPAIGN_TAB]: (state, { payload = null }) => ({
     ...state,
     tab: payload,
+  }),
+
+  [CAMPAIGN_REMOVE]: (state, { payload }) => ({
+    ...state,
+    campaigns: state.campaigns.filter(campaign => campaign.id !== payload),
+  }),
+
+  [CAMPAIGN_ADD]: (state, { payload }) => ({
+    ...state,
+    campaigns: [...state.campaigns, payload],
   }),
 
 }, initialState);

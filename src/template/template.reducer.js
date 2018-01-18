@@ -9,6 +9,7 @@ import {
 } from './template.service';
 import { apiCreateChronicle } from '../chronicle/chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
+import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
  * Initial state
@@ -18,7 +19,7 @@ const initialState = {
   current: null,
   problem: null,
   loading: false,
-  success: false,
+  success: null,
 };
 
 /**
@@ -94,7 +95,7 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   const { chronicle, template } = await apiCreateChronicle(token, id, formData);
   dispatch(currentTemplate(template));
   dispatch(addTemplate(template));
-  dispatch(successTemplate());
+  dispatch(attemptAlert({ message: 'Template created.' }));
   return { template, chronicle };
 });
 export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch, getState) => {
@@ -105,14 +106,14 @@ export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch
   const template = await apiUpdateTemplate(token, templateId, body);
   dispatch(currentTemplate(template));
   dispatch(replaceTemplate(template));
-  dispatch(successTemplate());
+  dispatch(attemptAlert({ message: 'Template updated.' }));
   return template;
 });
 export const attemptRemoveTemplate = templateId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveTemplate(token, templateId);
   dispatch(removeTemplate(templateId));
-  dispatch(successTemplate());
+  dispatch(attemptAlert({ message: 'Template removed.' }));
   return templateId;
 });
 
@@ -131,12 +132,12 @@ export default handleActions({
     ...state,
     loading: payload,
     problem: payload ? null : state.problem,
-    success: payload ? false : state.success,
+    success: payload ? null : state.success,
   }),
 
-  [TEMPLATE_SUCCESS]: (state, { payload = true }) => ({
+  [TEMPLATE_SUCCESS]: (state, { payload = { status: true } }) => ({
     ...state,
-    success: false && payload,
+    success: payload,
   }),
 
   [TEMPLATE_ERRORED]: (state, { payload = null }) => ({

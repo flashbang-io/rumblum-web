@@ -14,6 +14,7 @@ import {
   apiUpdateBilling,
   apiShare,
 } from './player.service';
+import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
  * Initial state
@@ -26,7 +27,7 @@ const initialState = {
   authenticated: false,
   checked: false,
   loading: false,
-  success: false,
+  success: null,
 };
 
 /**
@@ -95,7 +96,6 @@ export const attemptCreatePlayer = () => thunk(async (dispatch, getState) => {
   const auth = await apiLoginPlayer(body);
   dispatch(currentPlayer(player));
   dispatch(authPlayer(auth));
-  dispatch(successPlayer());
   return { player, auth };
 });
 export const attemptUpdatePlayer = (playerId, data) => thunk(async (dispatch, getState) => {
@@ -106,7 +106,7 @@ export const attemptUpdatePlayer = (playerId, data) => thunk(async (dispatch, ge
   const player = await apiUpdatePlayer(token, playerId, body);
   dispatch(currentPlayer(player));
   dispatch(replacePlayer(player));
-  dispatch(successPlayer());
+  dispatch(attemptAlert({ message: 'User updated.' }));
   return player;
 });
 export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
@@ -143,27 +143,27 @@ export const attemptChangePassword = () => thunk(async (dispatch, getState) => {
   const formName = 'password';
   const body = { ...state.form[formName].values };
   await apiChangePassword(token, body);
-  dispatch(successPlayer());
+  dispatch(attemptAlert({ message: 'Password updated.' }));
 });
 export const attemptForgotPassword = () => thunk(async (dispatch, getState) => {
   const state = getState();
   const formName = 'forgot';
   const { email } = state.form[formName].values;
   await apiForgotPassword({ email });
-  dispatch(successPlayer());
+  dispatch(attemptAlert({ message: 'Reset password email sent.' }));
 });
 export const attemptResetPassword = token => thunk(async (dispatch, getState) => {
   const state = getState();
   const formName = 'reset';
   const { newPassword } = state.form[formName].values;
   await apiResetPassword(token, { newPassword });
-  dispatch(successPlayer());
+  dispatch(attemptAlert({ message: 'Password updated.' }));
 });
 export const attemptUpdateBilling = (playerId, source) => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   const player = await apiUpdateBilling(token, playerId, { source });
   dispatch(currentPlayer(player));
-  dispatch(successPlayer());
+  dispatch(attemptAlert({ message: 'Billing updated.' }));
   return player;
 });
 export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
@@ -175,7 +175,7 @@ export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
     throw new Error('Must have at least one person to share to');
   }
   await apiShare(token, userId, { message, contacts });
-  dispatch(successPlayer());
+  dispatch(attemptAlert({ message: 'Shared successfully.' }));
 });
 
 /**
@@ -193,19 +193,19 @@ export default handleActions({
   [PLAYER_CLEAN]: (state) => ({
     ...state,
     problem: null,
-    success: false,
+    success: null,
   }),
 
   [PLAYER_LOADING]: (state, { payload = true }) => ({
     ...state,
     loading: payload,
     problem: payload ? null : state.problem,
-    success: payload ? false : state.success,
+    success: payload ? null : state.success,
   }),
 
-  [PLAYER_SUCCESS]: (state, { payload = true }) => ({
+  [PLAYER_SUCCESS]: (state, { payload = { status: true } }) => ({
     ...state,
-    success: false && payload,
+    success: payload,
   }),
 
   [PLAYER_ERRORED]: (state, { payload = null }) => ({

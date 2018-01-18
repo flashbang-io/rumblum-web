@@ -13,6 +13,7 @@ import RenderPage from '../../render/containers/RenderPage';
 import Frame from './Frame';
 import Splash from '../components/Splash';
 import Preview from './Preview';
+import Helpers from './Helpers';
 
 class App extends Component {
 
@@ -35,16 +36,19 @@ class App extends Component {
       return <Splash />;
     }
     return (
-      <Switch>
-        <Route path="/login" component={ LoginPage } />
-        <Route path="/register" component={ RegisterPage } />
-        <Route path="/forgot" component={ ForgotPage } />
-        <Route path="/reset" component={ ResetPage } />
-        <Route path="/preview" component={ Preview } />
-        <Route path="/share/:templateId" component={ RenderPage } />
-        <Route path="/" component={ Frame } />
-        <Redirect to="/templates" />
-      </Switch>
+      <div>
+        <Switch>
+          <Route path="/login" component={ LoginPage } />
+          <Route path="/register" component={ RegisterPage } />
+          <Route path="/forgot" component={ ForgotPage } />
+          <Route path="/reset" component={ ResetPage } />
+          <Route path="/preview" component={ Preview } />
+          <Route path="/share/:templateId" component={ RenderPage } />
+          <Route path="/" component={ Frame } />
+          <Redirect to="/templates" />
+        </Switch>
+        <Helpers />
+      </div>
     );
   }
 }

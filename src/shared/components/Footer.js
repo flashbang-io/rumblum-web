@@ -7,8 +7,8 @@ const Wrap = styled.div`
 `;
 
 const Content = styled.div`
-  border-top: 1px solid ${props => props.theme.colors.off};
-  color: ${props => props.theme.colors.offer};
+  border-top: 1px solid ${props => props.theme.colors.grey};
+  color: ${props => props.theme.colors.grey};
   padding: 20px 0 50px;
   font-size: 11px;
   display: flex;
@@ -27,7 +27,7 @@ const MenuItem = styled.div`
   margin-left: 10px;
   transition: .2s;
   &:hover {
-    color: ${props => props.theme.colors.grey};
+    color: ${props => props.theme.colors.dark};
   }
 `;
 

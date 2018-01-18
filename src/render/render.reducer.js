@@ -8,6 +8,7 @@ import {
   apiRemoveRender,
 } from './render.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
+import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
  * Initial state
@@ -17,7 +18,7 @@ const initialState = {
   current: null,
   problem: null,
   loading: false,
-  success: false,
+  success: null,
 };
 
 /**
@@ -95,7 +96,7 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
     a.click();
   }
   dispatch(currentRender(render));
-  dispatch(successRender());
+  dispatch(attemptAlert({ message: 'Template render created.' }));
   return render;
 });
 export const attemptUpdateRender = (renderId, data) => thunk(async (dispatch, getState) => {
@@ -106,14 +107,14 @@ export const attemptUpdateRender = (renderId, data) => thunk(async (dispatch, ge
   const render = await apiUpdateRender(token, renderId, body);
   dispatch(currentRender(render));
   dispatch(replaceRender(render));
-  dispatch(successRender());
+  dispatch(attemptAlert({ message: 'Render updated.' }));
   return render;
 });
 export const attemptRemoveRender = renderId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveRender(token, renderId);
   dispatch(removeRender(renderId));
-  dispatch(successRender());
+  dispatch(attemptAlert({ message: 'Render removed.' }));
   return renderId;
 });
 
@@ -132,12 +133,12 @@ export default handleActions({
     ...state,
     loading: payload,
     problem: payload ? null : state.problem,
-    success: payload ? false : state.success,
+    success: payload ? null : state.success,
   }),
 
-  [RENDER_SUCCESS]: (state, { payload = true }) => ({
+  [RENDER_SUCCESS]: (state, { payload = { status: true } }) => ({
     ...state,
-    success: false && payload,
+    success: payload,
   }),
 
   [RENDER_ERRORED]: (state, { payload = null }) => ({
