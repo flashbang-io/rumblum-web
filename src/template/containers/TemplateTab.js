@@ -23,7 +23,7 @@ class SettingsTab extends Component {
   handleDelete() {
     if (this.state.sure) {
       this.props.attemptRemoveTemplate(this.props.template.id)
-        .then(templateId => templateId && this.props.modalCampaign());
+        .then(() => this.props.modalCampaign());
     } else {
       this.setState({ sure: true });
     }

@@ -26,7 +26,7 @@ class ResetPage extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.attemptResetPassword(this.state.token)
-      .then(data => data && this.props.history.push('/login'));
+      .then(() => this.props.history.push('/login'));
   }
 
   render() {

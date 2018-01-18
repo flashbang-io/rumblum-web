@@ -11,7 +11,7 @@ class TemplateModal extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.attemptCreateTemplate(this.props.workspace.id)
-      .then(template => template && this.props.handleClose());
+      .then(() => this.props.handleClose());
   }
 
   render() {

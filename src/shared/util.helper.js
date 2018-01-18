@@ -11,6 +11,7 @@ export const handleResponse = async res => {
 
 export const thunkify = ({ start, end, error }) => work => async (dispatch, getState) => {
   let result;
+  let problem;
   if (start) {
     start(dispatch, getState);
   }
@@ -18,12 +19,16 @@ export const thunkify = ({ start, end, error }) => work => async (dispatch, getS
     result = await work(dispatch, getState);
   } catch (e) {
     console.warn(e.message || e);
+    problem = e;
     if (error) {
       error(e, dispatch, getState);
     }
   }
   if (end) {
     end(dispatch, getState);
+  }
+  if (problem) {
+    throw problem;
   }
   return result;
 };

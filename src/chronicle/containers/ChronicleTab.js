@@ -10,7 +10,7 @@ class ChronicleTab extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.attemptCreateChronicle(this.props.template.id)
-      .then(chronicle => chronicle && this.props.modalCampaign());
+      .then(() => this.props.modalCampaign());
   }
 
   render() {
