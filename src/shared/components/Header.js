@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import { Container, Icon } from '../components/theme';
 import Dropdown, { DropItem } from './Dropdown';
 import {
@@ -86,9 +85,6 @@ class Bar extends Component {
               <span>Document Templates</span>
             </Brand>
             <Menu>
-              <NavLink to="/workspaces">
-                <MenuItem>Spaces</MenuItem>
-              </NavLink>
               <MenuItem onClick={ handleShare }>Share</MenuItem>
               <MenuItem onClick={ () => this.toggleDropdown() }>
                 <Icon name="cog" /> Settings
