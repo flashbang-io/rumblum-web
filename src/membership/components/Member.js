@@ -15,26 +15,34 @@ const Wrap = styled.div`
 
 const Name = styled.div`
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 `;
 
 const Email = styled.div`
   color: ${props => props.theme.colors.grey};
-  margin-bottom: 2px;
 `;
 
 const Role = styled.div`
-  color: ${props => props.theme.colors.grey};
-  margin-bottom: 10px;
+  border-radius: ${props => props.theme.size.radius};
+  background-color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.darkless};
+  font-weight: bold;
+  padding: 2px 4px;
+  font-size: 10px;
+  margin-left: 10px;
+  display: inline-block;
 `;
 
 const Member = ({ handleRole, handleRemove, playerMembership, membership: { id, role, email, name, player }, ...props }) => (
   <Wrap { ...props }>
-    <Name>{ player ? `${player.firstName} ${player.lastName}` : name || 'Unknown User' }{ !player && ' - Pending' }</Name>
-    <Email>Email: { player ? player.email : email }</Email>
-    <Role>Role: { titleCase(role) }</Role>
-    { playerMembership.role === MEMBERSHIP_ROLE_OWNER && (
-      <Group>
+    <Name>
+      { player ? `${player.firstName} ${player.lastName}` : name || 'Unknown User' }
+      { !player && ' - Pending' }
+      <Role>{ role }</Role>
+    </Name>
+    <Email>{ player ? player.email : email }</Email>
+    { (!player || playerMembership.playerId !== player.id) && playerMembership.role === MEMBERSHIP_ROLE_OWNER && (
+      <Group style={{ marginTop: '10px' }}>
         { role !== MEMBERSHIP_ROLE_USER && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_USER }) }>Make User</Button> }
         { role !== MEMBERSHIP_ROLE_EDITOR && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_EDITOR }) }>Make Editor</Button> }
         { role !== MEMBERSHIP_ROLE_OWNER && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_OWNER }) }>Make Owner</Button> }
