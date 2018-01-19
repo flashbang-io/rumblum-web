@@ -51,7 +51,7 @@ const SettingsForm = ({ handleSubmit, loading, problem }) => (
     </div>
     { problem && <Error>{ problem.message || problem }</Error> }
     <Group>
-      <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Update' }</Button>
+      <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Save' }</Button>
     </Group>
   </Form>
 );

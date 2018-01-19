@@ -82,7 +82,7 @@ class BillingForm extends Component {
         </div>
         { (error || problem) && <Error>{ (error || problem).message || (error || problem) }</Error> }
         <Group>
-          <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Update' }</Button>
+          <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Save' }</Button>
         </Group>
       </form>
     );
