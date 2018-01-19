@@ -26,7 +26,7 @@ class SpaceList extends Component {
   handleCreate(event) {
     event.preventDefault();
     this.props.attemptCreateWorkspace()
-      .then(() => this.toggleForm());
+      .then(({ error }) => !error && this.toggleForm());
   }
 
   handleSelect(id) {

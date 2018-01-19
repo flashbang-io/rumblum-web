@@ -27,7 +27,7 @@ class SpaceTab extends Component {
   handleDelete() {
     if (this.state.sure) {
       this.props.attemptRemoveWorkspace(this.props.workspace.id)
-        .then(() => this.props.modalCampaign());
+        .then(({ error }) => !error && this.props.modalCampaign());
     } else {
       this.setState({ sure: true });
     }

@@ -27,10 +27,7 @@ export const thunkify = ({ start, end, error }) => work => async (dispatch, getS
   if (end) {
     end(dispatch, getState);
   }
-  if (problem) {
-    throw problem;
-  }
-  return result;
+  return { error: problem, data: result };
 };
 
 export const standardHeaders = otherHeaders => Object.assign({

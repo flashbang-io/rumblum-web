@@ -14,7 +14,7 @@ class ChronicleTab extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.attemptCreateChronicle(this.props.template.id)
-      .then(() => this.props.modalCampaign());
+      .then(({ error }) => !error && this.props.modalCampaign());
   }
 
   render() {
