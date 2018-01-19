@@ -10,7 +10,6 @@ import { MODAL_SETTINGS, MODAL_SHARE, MODAL_TEMPLATE, MODAL_INSPECT, MODAL_RENDE
 import { Container } from '../components/theme/index';
 import Header from './Header';
 import Footer from '../components/Footer';
-import TemplateList from '../../template/containers/TemplateList';
 import ShareModal from '../../player/containers/ShareModal';
 import SettingsModal from './SettingsModal';
 import InspectModal from './InspectModal';
@@ -18,6 +17,7 @@ import TemplateModal from '../../template/containers/TemplateModal';
 import RenderModal from '../../render/containers/RenderModal';
 import Splash from '../components/Splash';
 import FrameWrapper from '../components/FrameWrapper';
+import MainPage from './MainPage';
 
 class Frame extends Component {
 
@@ -41,8 +41,8 @@ class Frame extends Component {
         <Header />
         <Container>
           <Switch>
-            { workspace && <Route path="/templates" exact component={ TemplateList } /> }
-            { workspace && <Redirect to="/templates" /> }
+            <Route path="/templates" exact component={ MainPage } />
+            <Redirect to="/templates" />
           </Switch>
         </Container>
         <Footer />

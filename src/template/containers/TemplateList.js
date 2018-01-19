@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 import { attemptGetTemplates, attemptGetTemplate, currentTemplate } from '../template.reducer';
 import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
-import { Spread, Sidebar } from '../components/Sidebar';
-import { MODAL_TEMPLATE, MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER } from '../../shared/shared.constants';
-import { Icon, Button } from '../../shared/components/theme';
-import SpaceList from '../../workspace/containers/SpaceList';
+import { MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER } from '../../shared/shared.constants';
 
 class TemplateList extends Component {
 
@@ -28,19 +25,11 @@ class TemplateList extends Component {
 
   render() {
     return (
-      <Spread>
-        <Sidebar>
-          <Button onClick={ () => this.props.modalCampaign(MODAL_TEMPLATE) }>
-            <Icon name="plus" /> Template
-          </Button>
-          <SpaceList />
-        </Sidebar>
-        <Templates
-          handleInspect={ (...args) => this.handleInspect(...args) }
-          handleRender={ (...args) => this.handleRender(...args) }
-          { ...this.props }
-        />
-      </Spread>
+      <Templates
+        handleInspect={ (...args) => this.handleInspect(...args) }
+        handleRender={ (...args) => this.handleRender(...args) }
+        { ...this.props }
+      />
     );
   }
 
@@ -54,7 +43,6 @@ TemplateList.propTypes = {
   tabCampaign: PropTypes.func.isRequired,
   templates: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
   })).isRequired,
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
