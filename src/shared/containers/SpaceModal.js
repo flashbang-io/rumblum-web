@@ -5,15 +5,17 @@ import { tabCampaign } from '../../shared/campaign.reducer';
 import { Modal } from '../../shared/components/theme';
 import Popup, { Tab } from '../../shared/components/Popup';
 import {
-  MODAL_SETTINGS_TAB_PROFILE,
-  MODAL_SETTINGS_TAB_SECURITY,
   MODAL_SETTINGS_TAB_BILLING,
+  MODAL_SETTINGS_TAB_MEMBERS,
+  MODAL_SETTINGS_TAB_EDIT,
+  MODAL_SETTINGS_TAB_PLAN,
 } from '../shared.constants';
-import SettingsTab from '../../player/containers/SettingsTab';
-import PasswordTab from '../../player/containers/PasswordTab';
 import BillingTab from '../../player/containers/BillingTab';
+import SpaceTab from '../../workspace/containers/SpaceTab';
+import PlanTab from '../../workspace/containers/PlanTab';
+import MemberTab from '../../membership/containers/MemberTab';
 
-const SettingsModal = ({ active, ...props }) => (
+const SpaceModal = ({ active, ...props }) => (
   <Modal handleClose={ props.handleClose }>
     <Popup
       tabs
@@ -21,16 +23,22 @@ const SettingsModal = ({ active, ...props }) => (
       handleTab={ (...args) => props.tabCampaign(...args) }
     >
       <Tab
-        id={ MODAL_SETTINGS_TAB_PROFILE }
-        title="Profile"
-        icon="user"
-        component={ SettingsTab }
+        id={ MODAL_SETTINGS_TAB_EDIT }
+        title="Workspace"
+        icon="suitcase"
+        component={ SpaceTab }
       />
       <Tab
-        id={ MODAL_SETTINGS_TAB_SECURITY }
-        title="Security"
-        icon="lock"
-        component={ PasswordTab }
+        id={ MODAL_SETTINGS_TAB_MEMBERS }
+        title="Members"
+        icon="users"
+        component={ MemberTab }
+      />
+      <Tab
+        id={ MODAL_SETTINGS_TAB_PLAN }
+        title="Plan"
+        icon="trophy"
+        component={ PlanTab }
       />
       <Tab
         id={ MODAL_SETTINGS_TAB_BILLING }
@@ -42,7 +50,7 @@ const SettingsModal = ({ active, ...props }) => (
   </Modal>
 );
 
-SettingsModal.propTypes = {
+SpaceModal.propTypes = {
   tabCampaign: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   active: PropTypes.string.isRequired,
@@ -54,4 +62,4 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   tabCampaign,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);
+export default connect(mapStateToProps, mapDispatchToProps)(SpaceModal);

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptLogoutPlayer } from '../../player/player.reducer';
 import { modalCampaign, tabCampaign } from '../campaign.reducer';
-import { MODAL_SETTINGS, MODAL_SHARE } from '../shared.constants';
-import Bar from '../components/Header';
+import HeaderBar from '../components/HeaderBar';
 
 class Header extends Component {
 
@@ -19,9 +18,8 @@ class Header extends Component {
 
   render() {
     return (
-      <Bar
-        handleShare={ () => this.props.modalCampaign(MODAL_SHARE) }
-        handleSettings={ ({ tab }) => this.handleTabbed({ tab, modal: MODAL_SETTINGS }) }
+      <HeaderBar
+        handleTabbed={ (...args) => this.handleTabbed(...args) }
         handleLogout={ () => this.handleLogout() }
         { ...this.props }
       />
