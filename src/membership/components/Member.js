@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { titleCase } from 'change-case';
 import { Group, Button } from '../../shared/components/theme';
 import { MEMBERSHIP_ROLE_USER, MEMBERSHIP_ROLE_EDITOR, MEMBERSHIP_ROLE_OWNER } from '../membership.constants';
 
