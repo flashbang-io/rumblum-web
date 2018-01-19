@@ -15,7 +15,6 @@ const Segment = styled.div`
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.offer};
   color: ${props => props.theme.colors.grey};
-  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.05);
   padding: 14px;
   box-sizing: border-box;
 `;
@@ -29,9 +28,6 @@ const Space = Segment.extend`
   transition: .2s;
   display: flex;
   align-items: center;
-  &:hover {
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.01);
-  }
   ${props => props.active && css`
     background-color: ${props.theme.colors.electric};
     color: ${props.theme.colors.white};

@@ -35,6 +35,8 @@ class PlanForm extends Component {
         <div>
           <Plan
             title="Basic Plan"
+            price="$29/month"
+            features={ ['500 Renders', 'Unlimited templates', 'Unlimited workspaces', 'Unlimited team members', 'Unlimited versions'] }
             active={ plan === SUBSCRIPTION_PLAN_BASIC }
             handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_BASIC }) }
           />

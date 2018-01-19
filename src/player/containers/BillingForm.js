@@ -7,6 +7,7 @@ import {
   injectStripe,
 } from 'react-stripe-elements';
 import { Input, Button, Error, Control, Group, InputStyled } from '../../shared/components/theme';
+import Info from '../components/Info';
 
 const CardNumber = InputStyled.withComponent(CardNumberElement);
 const CardExpiry = InputStyled.withComponent(CardExpiryElement);
@@ -40,7 +41,7 @@ class BillingForm extends Component {
   }
 
   render() {
-    const { loading, problem } = this.props;
+    const { loading, problem, player } = this.props;
     const { error, name } = this.state;
     const style = {
       base: {
@@ -49,6 +50,7 @@ class BillingForm extends Component {
     };
     return (
       <form onSubmit={ (...args) => this.handleSubmit(...args) }>
+        { player.customer && <Info>Payment card already linked to this account.</Info> }
         <div>
           <Control
             label="Name"
@@ -100,6 +102,7 @@ BillingForm.propTypes = {
   player: PropTypes.shape({
     firstName: PropTypes.string,
     lastName: PropTypes.string,
+    customer: PropTypes.string,
   }),
   stripe: PropTypes.shape({
     createToken: PropTypes.func.isRequired,
