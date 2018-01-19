@@ -32,8 +32,8 @@ class Frame extends Component {
   }
 
   render() {
-    const { workspace, modal } = this.props;
-    if (!workspace) {
+    const { workspace, loading, modal } = this.props;
+    if (!workspace && loading) {
       return <Splash />;
     }
     return (
@@ -41,8 +41,8 @@ class Frame extends Component {
         <Header />
         <Container>
           <Switch>
-            <Route path="/templates" exact component={ TemplateList } />
-            <Redirect to="/templates" />
+            { workspace && <Route path="/templates" exact component={ TemplateList } /> }
+            { workspace && <Redirect to="/templates" /> }
           </Switch>
         </Container>
         <Footer />
@@ -67,6 +67,7 @@ Frame.propTypes = {
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
+  loading: PropTypes.bool.isRequired,
   modal: PropTypes.string,
 };
 
@@ -76,11 +77,12 @@ Frame.defaultProps = {
 };
 
 const mapStateToProps = ({
-  workspace: { workspaces, current },
+  workspace: { workspaces, current, loading },
   campaign: { modal },
 }) => ({
   workspaces,
   workspace: current,
+  loading,
   modal,
 });
 const mapDispatchToProps = {
