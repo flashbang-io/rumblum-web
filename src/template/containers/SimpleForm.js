@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field, Form } from 'redux-form';
-import { Input, Button, Error, Control, Group } from '../../shared/components/theme';
+import { Input, Button, Error, Control, Group, Icon } from '../../shared/components/theme';
+import config from '../../config';
+import ExternalLink from '../components/ExternalLink';
 
-const SimpleForm = ({ handleSubmit, loading, problem }) => (
+const SimpleForm = ({ handleSubmit, handleCopy, loading, problem, template: { accessPublic, id } }) => (
   <Form onSubmit={ handleSubmit }>
     <div>
       <Control
@@ -38,6 +40,20 @@ const SimpleForm = ({ handleSubmit, loading, problem }) => (
           component={ Input }
         />
       </Control>
+      { accessPublic && (
+        <Control
+          label="Link"
+          help="Share this link for others to create documents."
+        >
+          <Input readOnly id="share-link-copy" value={ `${config.url}/share/${id}` } />
+          <ExternalLink href={ `${config.url}/share/${id}` } target="_blank">
+            <Icon name="external-link" />
+          </ExternalLink>
+          <ExternalLink onClick={ () => handleCopy('share-link-copy') }>
+            <Icon name="copy" />
+          </ExternalLink>
+        </Control>
+      ) }
     </div>
     { problem && <Error>{ problem.message || problem }</Error> }
     <Group>
@@ -48,10 +64,15 @@ const SimpleForm = ({ handleSubmit, loading, problem }) => (
 
 SimpleForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  handleCopy: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   problem: PropTypes.shape({
     message: PropTypes.string,
   }),
+  template: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    accessPublic: PropTypes.bool,
+  }).isRequired,
 };
 
 SimpleForm.defaultProps = {
