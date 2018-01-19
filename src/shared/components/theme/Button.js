@@ -7,14 +7,14 @@ import { sizeBig, sizeNormal, sizeSmall, sizeTiny } from './style';
 const ButtonStyled = styled.button`
   text-decoration: none;
   outline: none;
-  border-radius: ${props => props.theme.size.radius};
   margin-bottom: 10px;
   border: none;
   display: inline-block;
   cursor: pointer;
   transition: .2s;
-  color: ${props => props.theme.colors.white};
+  border-radius: ${props => props.theme.size.radius};
   background-color: ${props => props.theme.colors.info};
+  color: ${props => props.theme.colors.white};
   &:disabled {
     background-color: ${props => props.theme.colors.grey};
     cursor: default;

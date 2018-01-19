@@ -113,7 +113,7 @@ class RenderForm extends Component {
             />
           </Control>
         </div>
-        { problem && <Error>{ problem.message || problem }</Error> }
+        { problem && <Error problem={ problem } /> }
         <Group>
           { slide < 1 && <Button float onClick={ () => this.handleNext() }>Next</Button> }
           { slide > 0 && <Button onClick={ () => this.handlePrevious() }>Back</Button> }

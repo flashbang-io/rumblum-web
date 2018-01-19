@@ -85,6 +85,9 @@ export const attemptCreateChronicle = templateId => thunk(async (dispatch, getSt
   const { token } = state.player.auth;
   const formName = 'chronicle';
   const formData = new FormData();
+  if (!state.form[formName].values || !state.form[formName].values.file) {
+    throw new Error('Please add a file to upload.');
+  }
   formData.append('file', state.form[formName].values.file[0]);
   const { chronicle, template } = await apiCreateChronicle(token, templateId, formData);
   dispatch(currentChronicle(chronicle));

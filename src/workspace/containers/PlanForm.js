@@ -50,7 +50,7 @@ class PlanForm extends Component {
             />
           </Control>
         </div>
-        { problem && <Error>{ problem.message || problem }</Error> }
+        { problem && <Error problem={ problem } /> }
         <Group>
           <Button float type="submit" disabled={ loading || !plan }>{ loading ? 'Loading...' : 'Confirm' }</Button>
         </Group>

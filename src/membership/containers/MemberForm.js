@@ -26,7 +26,7 @@ const MemberForm = ({ handleSubmit, loading, problem }) => (
       />
       <Button type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Invite' }</Button>
     </Group>
-    { problem && <Error>{ problem.message || problem }</Error> }
+    { problem && <Error problem={ problem } /> }
   </Form>
 );
 

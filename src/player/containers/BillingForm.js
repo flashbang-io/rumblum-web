@@ -80,7 +80,7 @@ class BillingForm extends Component {
             <CardCVC style={ style } />
           </Control>
         </div>
-        { (error || problem) && <Error>{ (error || problem).message || (error || problem) }</Error> }
+        { (error || problem) && <Error problem={ error || problem } /> }
         <Group>
           <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Save' }</Button>
         </Group>

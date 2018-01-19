@@ -11,7 +11,7 @@ const ForgotForm = ({ handleSubmit, loading, problem }) => (
       placeholder="Email"
       component={ Input }
     />
-    { problem && <Error>{ problem.message || problem }</Error> }
+    { problem && <Error problem={ problem } /> }
     <Button type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Send Reset Email' }</Button>
   </Form>
 );

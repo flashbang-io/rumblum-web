@@ -33,9 +33,3 @@ export const Subheading = styled.div`
     color: ${props.theme.colors.white};
   `}
 `;
-
-export const Error = styled.div`
-  font-size: 12px;
-  color: red;
-  margin: 0 0 10px;
-`;

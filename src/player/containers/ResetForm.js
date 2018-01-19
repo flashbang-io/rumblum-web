@@ -18,7 +18,7 @@ const ResetForm = ({ handleSubmit, loading, problem, email }) => (
       placeholder="Password"
       component={ Input }
     />
-    { problem && <Error>{ problem.message || problem }</Error> }
+    { problem && <Error problem={ problem } /> }
     <Button type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Reset Password' }</Button>
   </Form>
 );

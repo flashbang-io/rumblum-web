@@ -18,7 +18,7 @@ const SpaceForm = ({ handleSubmit, loading, problem }) => (
         />
       </Control>
     </div>
-    { problem && <Error>{ problem.message || problem }</Error> }
+    { problem && <Error problem={ problem } /> }
     <Group>
       <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Save' }</Button>
     </Group>

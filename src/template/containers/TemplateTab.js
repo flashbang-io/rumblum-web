@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdateTemplate, attemptRemoveTemplate } from '../template.reducer';
+import { attemptUpdateTemplate, attemptRemoveTemplate, erroredTemplate } from '../template.reducer';
 import { modalCampaign, attemptAlert } from '../../shared/campaign.reducer';
 import SimpleForm from './SimpleForm';
 import { Control, Button, Group } from '../../shared/components/theme';
@@ -13,6 +13,10 @@ class SettingsTab extends Component {
     this.state = {
       sure: false,
     };
+  }
+
+  componentWillUnmount() {
+    this.props.erroredTemplate();
   }
 
   handleSubmit(event) {
@@ -70,6 +74,7 @@ class SettingsTab extends Component {
 SettingsTab.propTypes = {
   attemptUpdateTemplate: PropTypes.func.isRequired,
   attemptRemoveTemplate: PropTypes.func.isRequired,
+  erroredTemplate: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
   attemptAlert: PropTypes.func.isRequired,
   template: PropTypes.shape({
@@ -80,5 +85,5 @@ SettingsTab.propTypes = {
 const mapStateToProps = ({
   template: { current, loading, problem },
 }) => ({ loading, problem, template: current });
-const mapDispatchToProps = { attemptUpdateTemplate, attemptRemoveTemplate, modalCampaign, attemptAlert };
+const mapDispatchToProps = { attemptUpdateTemplate, attemptRemoveTemplate, erroredTemplate, modalCampaign, attemptAlert };
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsTab);
