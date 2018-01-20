@@ -31,11 +31,10 @@ class RenderForm extends Component {
     const { slide, send } = this.state;
     const { handleSubmit, tags, loading, problem } = this.props;
     const inputs = tags.filter(({ type }) => ['string', 'open', 'negated'].indexOf(type) >= 0)
-      .map(({ type, name, origin }) => ({
-        name,
-        type: type === 'string' ? 'text' : 'checkbox',
-        title: changeCase.titleCase(name),
-        origin,
+      .map((tag) => ({
+        ...tag,
+        type: tag.type === 'string' ? 'text' : 'checkbox',
+        title: changeCase.titleCase(tag.name),
       }));
     return (
       <Form onSubmit={ handleSubmit }>

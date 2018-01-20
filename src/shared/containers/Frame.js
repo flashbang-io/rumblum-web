@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { redirectUnauthenticatedGuard } from '../../guards';
 import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
 import { modalCampaign } from '../campaign.reducer';
-import { MODAL_SETTINGS, MODAL_SHARE, MODAL_TEMPLATE, MODAL_INSPECT, MODAL_RENDER, MODAL_SPACE } from '../shared.constants';
+import { MODAL_SETTINGS, MODAL_SHARE, MODAL_TEMPLATE, MODAL_INSPECT, MODAL_RENDER, MODAL_SPACE, MODAL_TEMPLATE_DEFAULTS } from '../shared.constants';
 import { Container } from '../components/theme/index';
 import Header from './Header';
 import Footer from '../components/Footer';
@@ -15,6 +15,7 @@ import SettingsModal from './SettingsModal';
 import SpaceModal from './SpaceModal';
 import InspectModal from './InspectModal';
 import TemplateModal from '../../template/containers/TemplateModal';
+import DefaultsModal from '../../template/containers/DefaultsModal';
 import RenderModal from '../../render/containers/RenderModal';
 import Splash from '../components/Splash';
 import FrameWrapper from '../components/FrameWrapper';
@@ -51,6 +52,7 @@ class Frame extends Component {
         { modal && modal === MODAL_SETTINGS && <SettingsModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_SPACE && <SpaceModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_TEMPLATE && <TemplateModal handleClose={ () => this.props.modalCampaign() } /> }
+        { modal && modal === MODAL_TEMPLATE_DEFAULTS && <DefaultsModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_INSPECT && <InspectModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_RENDER && <RenderModal handleClose={ () => this.props.modalCampaign() } /> }
       </FrameWrapper>

@@ -23,13 +23,19 @@ class RenderModal extends Component {
 
   render() {
     const { template } = this.props;
+    const tags = template && template.tags ? template.tags : [];
+    const data = tags.reduce((accum, next) => ({
+      ...accum,
+      [next.name]: next.placeholder || '',
+    }), {});
     return (
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
           <Heading inverted>Render Document</Heading>
           { template && <RenderForm
             handleSubmit={ event => this.handleSubmit(event) }
-            tags={ template && template.tags ? template.tags : [] }
+            initialValues={{ data }}
+            tags={ tags }
             { ...this.props }
           /> }
         </Popup>

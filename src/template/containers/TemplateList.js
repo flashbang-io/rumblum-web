@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { attemptGetTemplates, attemptGetTemplate, currentTemplate } from '../template.reducer';
 import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
-import { MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER } from '../../shared/shared.constants';
+import { MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER, MODAL_TEMPLATE_DEFAULTS } from '../../shared/shared.constants';
 
 class TemplateList extends Component {
 
@@ -23,11 +23,17 @@ class TemplateList extends Component {
     this.props.modalCampaign(MODAL_RENDER);
   }
 
+  handleDefaults({ id }) {
+    this.props.attemptGetTemplate(id);
+    this.props.modalCampaign(MODAL_TEMPLATE_DEFAULTS);
+  }
+
   render() {
     return (
       <Templates
         handleInspect={ (...args) => this.handleInspect(...args) }
         handleRender={ (...args) => this.handleRender(...args) }
+        handleDefaults={ (...args) => this.handleDefaults(...args) }
         { ...this.props }
       />
     );

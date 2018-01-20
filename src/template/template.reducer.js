@@ -6,6 +6,7 @@ import {
   apiCreateTemplate,
   apiUpdateTemplate,
   apiRemoveTemplate,
+  apiUpdateTemplateDefaults,
 } from './template.service';
 import { apiCreateChronicle } from '../chronicle/chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
@@ -107,6 +108,17 @@ export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch
   dispatch(currentTemplate(template));
   dispatch(replaceTemplate(template));
   dispatch(attemptAlert({ message: 'Template updated.' }));
+  return template;
+});
+export const attemptUpdateTemplateDefaults = (templateId, data) => thunk(async (dispatch, getState) => {
+  const state = getState();
+  const { token } = state.player.auth;
+  const formName = 'defaults';
+  const body = { ...(data || state.form[formName].values), id: undefined };
+  const template = await apiUpdateTemplateDefaults(token, templateId, body);
+  dispatch(currentTemplate(template));
+  dispatch(replaceTemplate(template));
+  dispatch(attemptAlert({ message: 'Template default values updated.' }));
   return template;
 });
 export const attemptRemoveTemplate = templateId => thunk(async (dispatch, getState) => {
