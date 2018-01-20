@@ -28,7 +28,7 @@ class PlanForm extends Component {
   }
 
   render() {
-    const { loading, problem } = this.props;
+    const { loading, problem, workspace } = this.props;
     const { plan, coupon } = this.state;
     return (
       <form onSubmit={ (...args) => this.handleSubmit(...args) }>
@@ -73,7 +73,7 @@ class PlanForm extends Component {
         </div>
         { problem && <Error problem={ problem } /> }
         <Group>
-          <Button float type="submit" disabled={ loading || !plan }>{ loading ? 'Loading...' : 'Confirm' }</Button>
+          <Button float type="submit" disabled={ loading || !plan || plan === workspace.plan }>{ loading ? 'Loading...' : 'Confirm' }</Button>
         </Group>
       </form>
     );
