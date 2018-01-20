@@ -32,24 +32,27 @@ const Role = styled.div`
   display: inline-block;
 `;
 
-const Member = ({ handleRole, handleRemove, playerMembership, membership: { id, role, email, name, player }, ...props }) => (
-  <Wrap { ...props }>
-    <Name>
-      { player ? `${player.firstName} ${player.lastName}` : name || 'Unknown User' }
-      { !player && ' - Pending' }
-      <Role>{ role }</Role>
-    </Name>
-    <Email>{ player ? player.email : email }</Email>
-    { (!player || playerMembership.playerId !== player.id) && playerMembership.role === MEMBERSHIP_ROLE_OWNER && (
+const Member = ({ handleRole, handleRemove, playerMembership, membership: { id, role, email, name, player }, ...props }) => {
+  const isOwner = playerMembership.role === MEMBERSHIP_ROLE_OWNER;
+  const notOwner = playerMembership.role !== MEMBERSHIP_ROLE_OWNER;
+  const notCurrentUser = playerMembership.id !== id;
+  return (
+    <Wrap { ...props }>
+      <Name>
+        { player ? `${player.firstName} ${player.lastName}` : name || 'Unknown User' }
+        { !player && ' - Pending' }
+        <Role>{ role }</Role>
+      </Name>
+      <Email>{ player ? player.email : email }</Email>
       <Group style={{ marginTop: '10px' }}>
-        { role !== MEMBERSHIP_ROLE_USER && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_USER }) }>Make User</Button> }
-        { role !== MEMBERSHIP_ROLE_EDITOR && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_EDITOR }) }>Make Editor</Button> }
-        { role !== MEMBERSHIP_ROLE_OWNER && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_OWNER }) }>Make Owner</Button> }
-        <Button flatten tiny uppercase danger float onClick={ () => handleRemove(id) }>Remove</Button>
+        { isOwner && notCurrentUser && role !== MEMBERSHIP_ROLE_USER && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_USER }) }>Make User</Button> }
+        { isOwner && notCurrentUser && role !== MEMBERSHIP_ROLE_EDITOR && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_EDITOR }) }>Make Editor</Button> }
+        { isOwner && notCurrentUser && role !== MEMBERSHIP_ROLE_OWNER && <Button flatten tiny uppercase onClick={ () => handleRole(id, { role: MEMBERSHIP_ROLE_OWNER }) }>Make Owner</Button> }
+        { ((isOwner && notCurrentUser) || notOwner) && <Button flatten tiny uppercase danger float onClick={ () => handleRemove(id) }>Remove</Button> }
       </Group>
-    ) }
-  </Wrap>
-);
+    </Wrap>
+  );
+};
 
 Member.propTypes = {
   handleRole: PropTypes.func.isRequired,
