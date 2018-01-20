@@ -11,6 +11,7 @@ const ButtonStyled = styled.button`
   border: none;
   display: inline-block;
   cursor: pointer;
+  text-align: center;
   transition: .2s;
   border-radius: ${props => props.theme.size.radius};
   background-color: ${props => props.theme.colors.info};
@@ -44,6 +45,9 @@ const ButtonStyled = styled.button`
   `}
   ${props => props.flatten && css`
     margin-bottom: 0;
+  `}
+  ${props => props.grow && css`
+    flex-grow: 1;
   `}
 `;
 

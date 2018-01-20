@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field, Form } from 'redux-form';
 import { Input, Button, Error, Control, Group } from '../../shared/components/theme';
+import Example, { ExampleWrap } from '../components/Example';
+import examples from '../../shared/examples.json';
 
 const TemplateForm = ({ handleSubmit, loading, problem }) => (
   <Form onSubmit={ handleSubmit }>
@@ -27,6 +29,20 @@ const TemplateForm = ({ handleSubmit, loading, problem }) => (
           accept=".doc,.docx,.ppt,.pptx"
           component={ Input }
         />
+      </Control>
+      <Control
+        label="Templates"
+        help="Or choose from one of our templates."
+      >
+        <ExampleWrap>
+          { examples.map(document => (
+            <Example
+              key={ document.id }
+              document={ document }
+              handleSelect={ console.log }
+            />
+          )) }
+        </ExampleWrap>
       </Control>
     </div>
     { problem && <Error problem={ problem } /> }
