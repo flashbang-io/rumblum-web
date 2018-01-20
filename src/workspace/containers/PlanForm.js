@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Error, Control, Input, Group } from '../../shared/components/theme';
 import Plan, { PlanGroup } from '../components/Plan';
-import { SUBSCRIPTION_PLAN_MONTHLY_29, SUBSCRIPTION_PLAN_MONTHLY_49, SUBSCRIPTION_PLAN_MONTHLY_99 } from '../workspace.constants';
+import { SUBSCRIPTION_PLAN_500_MONTHLY_29, SUBSCRIPTION_PLAN_1000_MONTHLY_49, SUBSCRIPTION_PLAN_2500_MONTHLY_99 } from '../workspace.constants';
 
 class PlanForm extends Component {
 
@@ -38,8 +38,8 @@ class PlanForm extends Component {
             price="$29/month"
             icon="trophy"
             features={ ['500 Renders a month', 'Unlimited templates', 'Unlimited workspaces', 'Unlimited team members', 'Unlimited versions'] }
-            active={ plan === SUBSCRIPTION_PLAN_MONTHLY_29 }
-            handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_MONTHLY_29 }) }
+            active={ plan === SUBSCRIPTION_PLAN_500_MONTHLY_29 }
+            handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_500_MONTHLY_29 }) }
           />
           <PlanGroup>
             <Plan
@@ -47,16 +47,16 @@ class PlanForm extends Component {
               price="$49/month"
               icon="bolt"
               features={ ['1000 Renders a month', 'Unlimited templates', 'Unlimited workspaces', 'Unlimited team members', 'Unlimited versions'] }
-              active={ plan === SUBSCRIPTION_PLAN_MONTHLY_49 }
-              handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_MONTHLY_49 }) }
+              active={ plan === SUBSCRIPTION_PLAN_1000_MONTHLY_49 }
+              handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_1000_MONTHLY_49 }) }
             />
             <Plan
               title="Growth Plan"
               price="$99/month"
               icon="globe"
               features={ ['2500 Renders a month', 'Unlimited templates', 'Unlimited workspaces', 'Unlimited team members', 'Unlimited versions'] }
-              active={ plan === SUBSCRIPTION_PLAN_MONTHLY_99 }
-              handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_MONTHLY_99 }) }
+              active={ plan === SUBSCRIPTION_PLAN_2500_MONTHLY_99 }
+              handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_2500_MONTHLY_99 }) }
             />
           </PlanGroup>
           <Control

@@ -53,6 +53,7 @@ const Watermark = styled.div`
   transition: .2s;
   ${props => props.active && css`
     font-size: 220px;
+    color: ${props.theme.colors.dark};
   `}
 `;
 
