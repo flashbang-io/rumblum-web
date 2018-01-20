@@ -9,6 +9,7 @@ const Wrap = styled.div`
   margin-bottom: 20px;
   border-radius: ${props => props.theme.size.radius};
   background-color: ${props => props.theme.colors.darklesser};
+  border: 1px solid ${props => props.theme.colors.darkless};
   box-sizing: border-box;
   cursor: pointer;
   display: flex;
@@ -18,7 +19,6 @@ const Wrap = styled.div`
   ${props => props.active ? css`
     background-color: ${props.theme.colors.electric};
     border: 1px solid ${props.theme.colors.info};
-    padding: 19px;
   ` : css`
     &:hover {
       background-color: #344148;
@@ -44,6 +44,8 @@ const Price = styled.div`
 
 const Watermark = styled.div`
   font-size: 200px;
+  width: 200px;
+  text-align: center;
   color: ${props => props.theme.colors.darkless};
   position: absolute;
   left: 10%;
@@ -58,6 +60,7 @@ const Features = styled.div`
   margin-left: auto;
   text-align: right;
   color: #b3b3b3;
+  position: relative;
 `;
 
 const Feature = styled.div`
@@ -68,10 +71,10 @@ const Feature = styled.div`
   }
 `;
 
-const Plan = ({ handleClick, title, price, features, ...props }) => (
+const Plan = ({ handleClick, title, price, icon, features, ...props }) => (
   <Wrap onClick={ handleClick } { ...props }>
-    <Watermark { ...props }>
-      <Icon name="trophy" />
+    <Watermark className="watermark" { ...props }>
+      <Icon name={ icon } />
     </Watermark>
     <Content>
       <Title>{ title }</Title>
@@ -87,6 +90,7 @@ Plan.propTypes = {
   handleClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
   features: PropTypes.arrayOf(PropTypes.string),
 };
 
@@ -95,3 +99,23 @@ Plan.defaultProps = {
 };
 
 export default Plan;
+
+export const PlanGroup = styled.div`
+  display: flex;
+  & > * {
+    flex-direction: column;
+    flex-grow: 1;
+    margin-right: 20px;
+    .watermark {
+      left: 60%;
+    }
+    & > * {
+      text-align: left;
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
