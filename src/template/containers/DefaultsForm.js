@@ -8,7 +8,7 @@ const DefaultsForm = ({ handleSubmit, tags, loading, problem }) => {
   const inputs = tags.filter(({ type }) => ['string', 'open', 'negated'].indexOf(type) >= 0)
     .map((tag) => ({
       ...tag,
-      type: tag.type === 'string' ? 'text' : 'checkbox',
+      type: tag.type === 'string' ? 'textarea' : 'checkbox',
       title: changeCase.titleCase(tag.name),
     }));
   return (
@@ -25,6 +25,7 @@ const DefaultsForm = ({ handleSubmit, tags, loading, problem }) => {
               type={ type }
               placeholder={ title }
               component={ Input }
+              dynamic
             />
           </Control>
         )) }
