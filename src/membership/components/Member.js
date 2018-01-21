@@ -32,15 +32,15 @@ const Role = styled.div`
   display: inline-block;
 `;
 
-const Member = ({ handleRole, handleRemove, playerMembership, membership: { id, role, email, name, player }, ...props }) => {
+const Member = ({ handleRole, handleRemove, playerMembership, membership: { id, role, email, name, player, playerId }, ...props }) => {
   const isOwner = playerMembership.role === MEMBERSHIP_ROLE_OWNER;
   const notOwner = playerMembership.role !== MEMBERSHIP_ROLE_OWNER;
   const notCurrentUser = playerMembership.id !== id;
   return (
     <Wrap { ...props }>
       <Name>
-        { player ? `${player.firstName} ${player.lastName}` : name || 'Unknown User' }
-        { !player && ' - Pending' }
+        { player ? `${player.firstName} ${player.lastName}` : name || 'Name Unknown' }
+        { !player && !playerId && ' - Pending' }
         <Role>{ role }</Role>
       </Name>
       <Email>{ player ? player.email : email }</Email>
