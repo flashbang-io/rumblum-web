@@ -80,7 +80,7 @@ App.propTypes = {
 
 App.defaultProps = {
   player: null,
-}
+};
 
 const mapStateToProps = ({ player: { checked, current, loading } }) => ({ checked, player: current, loading });
 const mapDispatchToProps = { attemptCheckPlayer, attemptLogoutPlayer };
