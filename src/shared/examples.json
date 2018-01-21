@@ -1,26 +1,18 @@
 [
   {
     "id": "0",
-    "title": "Proposal",
-    "description": "Used as a base for preparing a clients requirements.",
-    "location": ""
+    "title": "Basic Cover Letter",
+    "description": "Encourage job applicants to fill this out before submitting.",
+    "location": "https://s3-us-west-1.amazonaws.com/rumblumcalifornia/static/templates/basic-cover-letter.docx",
+    "bucket": "rumblumcalifornia",
+    "key": "static/templates/basic-cover-letter.docx"
   },
   {
     "id": "1",
-    "title": "Proposal",
-    "description": "Used as a base for preparing a clients requirements.",
-    "location": ""
-  },
-  {
-    "id": "2",
-    "title": "Proposal",
-    "description": "Used as a base for preparing a clients requirements.",
-    "location": ""
-  },
-  {
-    "id": "3",
-    "title": "Proposal",
-    "description": "Used as a base for preparing a clients requirements.",
-    "location": ""
+    "title": "Sales Quote",
+    "description": "Used to quote a customer for a service.",
+    "location": "https://s3-us-west-1.amazonaws.com/rumblumcalifornia/static/templates/sales-quote.docx",
+    "bucket": "rumblumcalifornia",
+    "key": "static/templates/sales-quote.docx"
   }
 ]

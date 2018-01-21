@@ -8,7 +8,7 @@ import {
   apiRemoveTemplate,
   apiUpdateTemplateDefaults,
 } from './template.service';
-import { apiCreateChronicle } from '../chronicle/chronicle.service';
+import { apiCreateChronicle, apiCreateChroniclePremade } from '../chronicle/chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
 import { attemptAlert } from '../shared/campaign.reducer';
 
@@ -86,16 +86,24 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   const { token } = state.player.auth;
   const formName = 'template';
   const formData = new FormData();
-  if (!state.form[formName].values || !state.form[formName].values.file) {
-    throw new Error('Please add a file to upload.');
+  const { values } = state.form[formName];
+  if (!values || (!values.file && !values.premade)) {
+    throw new Error('Please complete the form before submitting.');
   }
-  const file = state.form[formName].values.file[0];
-  formData.append('file', file);
   const body = { ...state.form[formName].values, id: undefined };
-  const { id } = await apiCreateTemplate(token, workspaceId, body);
-  const { chronicle, template } = await apiCreateChronicle(token, id, formData);
+  const temporary = await apiCreateTemplate(token, workspaceId, body);
+  const { id } = temporary;
+  dispatch(addTemplate(temporary));
+  let models;
+  if (values.file) {
+    formData.append('file', values.file[0]);
+    models = await apiCreateChronicle(token, id, formData);
+  } else {
+    models = await apiCreateChroniclePremade(token, id, { data: values.premade });
+  }
+  const { chronicle, template } = models;
   dispatch(currentTemplate(template));
-  dispatch(addTemplate(template));
+  dispatch(replaceTemplate(template));
   dispatch(attemptAlert({ message: 'Template created.' }));
   return { template, chronicle };
 });

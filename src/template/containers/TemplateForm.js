@@ -4,6 +4,7 @@ import { reduxForm, Field, Form } from 'redux-form';
 import { Input, Button, Error, Control, Group } from '../../shared/components/theme';
 import Example, { ExampleWrap } from '../components/Example';
 import examples from '../../shared/examples.json';
+import Icon from '../../shared/components/theme/Icon';
 
 const Examples = ({ input: { onChange, value } }) => (
   <ExampleWrap>
@@ -74,7 +75,7 @@ class TemplateForm extends Component {
               help="Or choose from one of our templates."
             >
               <Field
-                name="template"
+                name="premade"
                 component={ Examples }
               />
             </Control>
@@ -82,7 +83,7 @@ class TemplateForm extends Component {
         </div>
         { problem && <Error problem={ problem } /> }
         <Group>
-          <Button onClick={ () => this.toggleCustom() }>{ custom ? 'Use Template' : 'Upload Custom File' }</Button>
+          <Button onClick={ () => this.toggleCustom() }>{ custom ? 'Use Template' : <div><Icon name="upload" /> Upload Custom File</div> }</Button>
           <Button float type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Create' }</Button>
         </Group>
       </Form>
