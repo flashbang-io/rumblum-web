@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Button, Group } from '../../shared/components/theme';
 import config from '../../config';
 
@@ -22,6 +22,9 @@ const Wrap = styled.div`
   border-radius: ${props => props.theme.size.radius};
   flex-basis: 0;
   flex-grow: 1;
+  ${props => props.active && css`
+    border: 1px solid ${props.theme.colors.info};
+  `}
 `;
 
 const Heading = styled.div`
@@ -35,8 +38,8 @@ const Subheading = styled.div`
   margin-bottom: 40px;
 `;
 
-const Example = ({ document: { id, title, location, description }, handleSelect }) => (
-  <Wrap>
+const Example = ({ document: { id, title, location, description }, handleSelect, ...props }) => (
+  <Wrap { ...props }>
     <Heading>{ title }</Heading>
     <Subheading>{ description }</Subheading>
     <Group>
