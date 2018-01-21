@@ -40,7 +40,7 @@ class App extends Component {
     if (!checked) {
       return <Splash />;
     }
-    if (player && player.pending) {
+    if (player && !player.invitation) {
       return (
         <Pending
           handleLogout={ () => this.handleLogout() }
