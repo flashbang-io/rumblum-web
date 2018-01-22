@@ -13,12 +13,12 @@ const ResetForm = ({ handleSubmit, loading, problem, email }) => (
       disabled
     /> }
     <Field
-      name="password"
+      name="newPassword"
       type="password"
       placeholder="Password"
       component={ Input }
     />
-    { problem && <Error>{ problem.message || problem }</Error> }
+    { problem && <Error problem={ problem } /> }
     <Button type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Reset Password' }</Button>
   </Form>
 );

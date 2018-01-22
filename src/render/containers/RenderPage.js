@@ -41,6 +41,11 @@ class RenderPage extends Component {
 
   render() {
     const { template } = this.props;
+    const tags = template && template.tags ? template.tags : [];
+    const data = tags.reduce((accum, next) => ({
+      ...accum,
+      [next.name]: next.placeholder || '',
+    }), {});
     return (
       <DocumentTitle title={ `${template && template.name ? template.name : 'Render Document'} | Rumblum` }>
         <Page>
@@ -48,7 +53,8 @@ class RenderPage extends Component {
             <Heading inverted>Render Document</Heading>
             { template && <RenderForm
               handleSubmit={ event => this.handleSubmit(event) }
-              tags={ template && template.tags ? template.tags : [] }
+              initialValues={{ data }}
+              tags={ tags }
               { ...this.props }
             /> }
           </Container>

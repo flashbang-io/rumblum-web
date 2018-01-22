@@ -31,11 +31,10 @@ class RenderForm extends Component {
     const { slide, send } = this.state;
     const { handleSubmit, tags, loading, problem } = this.props;
     const inputs = tags.filter(({ type }) => ['string', 'open', 'negated'].indexOf(type) >= 0)
-      .map(({ type, name, origin }) => ({
-        name,
-        type: type === 'string' ? 'text' : 'checkbox',
-        title: changeCase.titleCase(name),
-        origin,
+      .map((tag) => ({
+        ...tag,
+        type: tag.type === 'string' ? 'textarea' : 'checkbox',
+        title: changeCase.titleCase(tag.name),
       }));
     return (
       <Form onSubmit={ handleSubmit }>
@@ -51,6 +50,7 @@ class RenderForm extends Component {
                 type={ type }
                 placeholder={ title }
                 component={ Input }
+                dynamic
               />
             </Control>
           )) }
@@ -113,7 +113,7 @@ class RenderForm extends Component {
             />
           </Control>
         </div>
-        { problem && <Error>{ problem.message || problem }</Error> }
+        { problem && <Error problem={ problem } /> }
         <Group>
           { slide < 1 && <Button float onClick={ () => this.handleNext() }>Next</Button> }
           { slide > 0 && <Button onClick={ () => this.handlePrevious() }>Back</Button> }

@@ -27,7 +27,7 @@ class LoginPage extends Component {
     event.preventDefault();
     const { redirect } = this.state;
     this.props.attemptLoginPlayer()
-      .then(player => player && redirect && this.props.history.push(redirect));
+      .then(({ error }) => !error && redirect && this.props.history.push(redirect));
   }
 
   render() {

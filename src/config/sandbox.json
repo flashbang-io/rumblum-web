@@ -2,7 +2,7 @@
   "environment": "sandbox",
   "url": "https://sandbox.rumblum.com",
   "endpoint": "https://stage.rumblum.com/api",
-  "stripeKey": "",
+  "stripeKey": "pk_test_7iwdGKGGspOf4rdCQ1uHa3Fu",
   "ravenDSN": "",
-  "intercom": ""
+  "intercom": false
 }

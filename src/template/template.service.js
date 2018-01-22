@@ -21,6 +21,12 @@ export const apiUpdateTemplate = (token, templateId, body) => fetch(`${config.en
   body: JSON.stringify(body),
 }).then(handleResponse);
 
+export const apiUpdateTemplateDefaults = (token, templateId, body) => fetch(`${config.endpoint}/templates/${templateId}/defaults`, {
+  method: 'PATCH',
+  headers: standardHeaders({ 'Authorization': token }),
+  body: JSON.stringify(body),
+}).then(handleResponse);
+
 export const apiRemoveTemplate = (token, templateId) => fetch(`${config.endpoint}/templates/${templateId}`, {
   method: 'DELETE',
   headers: standardHeaders({ 'Authorization': token }),

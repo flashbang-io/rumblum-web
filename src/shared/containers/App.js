@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { attemptCheckPlayer } from '../../player/player.reducer';
+import { attemptCheckPlayer, attemptLogoutPlayer } from '../../player/player.reducer';
 import config from '../../config';
 import LoginPage from '../../player/containers/LoginPage';
 import RegisterPage from '../../player/containers/RegisterPage';
@@ -13,6 +13,8 @@ import RenderPage from '../../render/containers/RenderPage';
 import Frame from './Frame';
 import Splash from '../components/Splash';
 import Preview from './Preview';
+import Helpers from './Helpers';
+import Pending from '../components/Pending';
 
 class App extends Component {
 
@@ -29,36 +31,59 @@ class App extends Component {
     }
   }
 
+  handleLogout() {
+    this.props.attemptLogoutPlayer();
+  }
+
   render() {
-    const { checked } = this.props;
+    const { checked, player } = this.props;
     if (!checked) {
       return <Splash />;
     }
+    if (player && !player.invitation) {
+      return (
+        <Pending
+          handleLogout={ () => this.handleLogout() }
+          { ...this.props }
+        />
+      );
+    }
     return (
-      <Switch>
-        <Route path="/login" component={ LoginPage } />
-        <Route path="/register" component={ RegisterPage } />
-        <Route path="/forgot" component={ ForgotPage } />
-        <Route path="/reset" component={ ResetPage } />
-        <Route path="/preview" component={ Preview } />
-        <Route path="/share/:templateId" component={ RenderPage } />
-        <Route path="/" component={ Frame } />
-        <Redirect to="/templates" />
-      </Switch>
+      <div>
+        <Switch>
+          <Route path="/login" component={ LoginPage } />
+          <Route path="/register" component={ RegisterPage } />
+          <Route path="/forgot" component={ ForgotPage } />
+          <Route path="/reset" component={ ResetPage } />
+          <Route path="/preview" component={ Preview } />
+          <Route path="/share/:templateId" component={ RenderPage } />
+          <Route path="/" component={ Frame } />
+          <Redirect to="/templates" />
+        </Switch>
+        <Helpers />
+      </div>
     );
   }
 }
 
 App.propTypes = {
   attemptCheckPlayer: PropTypes.func.isRequired,
+  attemptLogoutPlayer: PropTypes.func.isRequired,
   checked: PropTypes.bool.isRequired,
+  player: PropTypes.shape({
+    pending: PropTypes.bool,
+  }),
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-const mapStateToProps = ({ player: { checked } }) => ({ checked });
-const mapDispatchToProps = { attemptCheckPlayer };
+App.defaultProps = {
+  player: null,
+};
+
+const mapStateToProps = ({ player: { checked, current, loading } }) => ({ checked, player: current, loading });
+const mapDispatchToProps = { attemptCheckPlayer, attemptLogoutPlayer };
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),

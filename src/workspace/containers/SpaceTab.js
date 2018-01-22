@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdateWorkspace, attemptRemoveWorkspace } from '../workspace.reducer';
+import { attemptUpdateWorkspace, attemptRemoveWorkspace, erroredWorkspace } from '../workspace.reducer';
 import { modalCampaign } from '../../shared/campaign.reducer';
 import SpaceForm from './SpaceForm';
 import { Control, Button, Group } from '../../shared/components/theme';
@@ -15,6 +15,10 @@ class SpaceTab extends Component {
     };
   }
 
+  componentWillUnmount() {
+    this.props.erroredWorkspace();
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     this.props.attemptUpdateWorkspace(this.props.workspace.id);
@@ -23,10 +27,14 @@ class SpaceTab extends Component {
   handleDelete() {
     if (this.state.sure) {
       this.props.attemptRemoveWorkspace(this.props.workspace.id)
-        .then(workspaceId => workspaceId && this.props.modalCampaign());
+        .then(({ error }) => !error && this.props.modalCampaign());
     } else {
       this.setState({ sure: true });
     }
+  }
+
+  toggleSure() {
+    this.setState({ sure: !this.state.sure });
   }
 
   render() {
@@ -57,6 +65,7 @@ class SpaceTab extends Component {
 SpaceTab.propTypes = {
   attemptUpdateWorkspace: PropTypes.func.isRequired,
   attemptRemoveWorkspace: PropTypes.func.isRequired,
+  erroredWorkspace: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -66,5 +75,5 @@ SpaceTab.propTypes = {
 const mapStateToProps = ({
   workspace: { current, loading, problem },
 }) => ({ loading, problem, workspace: current });
-const mapDispatchToProps = { attemptUpdateWorkspace, attemptRemoveWorkspace, modalCampaign };
+const mapDispatchToProps = { attemptUpdateWorkspace, attemptRemoveWorkspace, erroredWorkspace, modalCampaign };
 export default connect(mapStateToProps, mapDispatchToProps)(SpaceTab);

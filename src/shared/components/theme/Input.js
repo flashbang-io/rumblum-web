@@ -31,8 +31,12 @@ export const InputStyled = styled.input`
 `;
 
 const InputTextarea = InputStyled.withComponent('textarea').extend`
-  height: 130px;
+  background-color: ${props => props.theme.colors.dark};
   resize: none;
+  height: 130px;
+  ${props => props.dynamic && !props.higher && css`
+    height: 39px;
+  `}
 `;
 
 const File = styled.input`
@@ -117,6 +121,7 @@ const Input = ({ type, input: { value, ...input }, ...props }) => {
       <InputTextarea
         type={ type }
         value={ value }
+        higher={ props.dynamic && value && (value.length >= 26 || value.indexOf('\n') >= 0) }
         { ...input }
         { ...props }
       />
@@ -135,11 +140,13 @@ const Input = ({ type, input: { value, ...input }, ...props }) => {
 Input.propTypes = {
   type: PropTypes.string,
   input: PropTypes.object,
+  dynamic: PropTypes.bool,
 };
 
 Input.defaultProps = {
   type: 'text',
   input: {},
+  dynamic: false,
 };
 
 export default Input;

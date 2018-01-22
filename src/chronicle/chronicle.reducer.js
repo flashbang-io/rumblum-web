@@ -10,6 +10,7 @@ import {
 } from './chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
 import { currentTemplate, replaceTemplate } from '../template/template.reducer';
+import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
  * Initial state
@@ -19,7 +20,7 @@ const initialState = {
   current: null,
   problem: null,
   loading: false,
-  success: false,
+  success: null,
 };
 
 /**
@@ -84,14 +85,17 @@ export const attemptCreateChronicle = templateId => thunk(async (dispatch, getSt
   const { token } = state.player.auth;
   const formName = 'chronicle';
   const formData = new FormData();
+  if (!state.form[formName].values || !state.form[formName].values.file) {
+    throw new Error('Please add a file to upload.');
+  }
   formData.append('file', state.form[formName].values.file[0]);
   const { chronicle, template } = await apiCreateChronicle(token, templateId, formData);
   dispatch(currentChronicle(chronicle));
   dispatch(addChronicle(chronicle));
-  dispatch(successChronicle());
   dispatch(currentTemplate(template));
   dispatch(replaceTemplate(template));
   dispatch(resetForm(formName));
+  dispatch(attemptAlert({ message: 'New version created.' }));
   return chronicle;
 });
 export const attemptUpdateChronicle = (chronicleId, data) => thunk(async (dispatch, getState) => {
@@ -102,14 +106,14 @@ export const attemptUpdateChronicle = (chronicleId, data) => thunk(async (dispat
   const chronicle = await apiUpdateChronicle(token, chronicleId, body);
   dispatch(currentChronicle(chronicle));
   dispatch(replaceChronicle(chronicle));
-  dispatch(successChronicle());
+  dispatch(attemptAlert({ message: 'Template version updated.' }));
   return chronicle;
 });
 export const attemptRemoveChronicle = chronicleId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveChronicle(token, chronicleId);
   dispatch(removeChronicle(chronicleId));
-  dispatch(successChronicle());
+  dispatch(attemptAlert({ message: 'Template version removed.' }));
   return chronicleId;
 });
 
@@ -128,12 +132,12 @@ export default handleActions({
     ...state,
     loading: payload,
     problem: payload ? null : state.problem,
-    success: payload ? false : state.success,
+    success: payload ? null : state.success,
   }),
 
-  [CHRONICLE_SUCCESS]: (state, { payload = true }) => ({
+  [CHRONICLE_SUCCESS]: (state, { payload = { status: true } }) => ({
     ...state,
-    success: false && payload,
+    success: payload,
   }),
 
   [CHRONICLE_ERRORED]: (state, { payload = null }) => ({

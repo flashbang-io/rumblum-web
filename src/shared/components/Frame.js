@@ -44,7 +44,6 @@ const Download = styled.button`
   margin-left: 10px;
   border-radius: 3px;
   font-size: 11px;
-  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.15);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -52,7 +51,6 @@ const Download = styled.button`
   outline: none;
   cursor: pointer;
   &:hover {
-    box-shadow: 0 0 30px 1px rgba(0, 0, 0, 0.3);
     background-color: ${props => props.theme.colors.darkless};
   }
 `;

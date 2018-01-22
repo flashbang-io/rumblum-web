@@ -6,9 +6,11 @@ import {
   apiCreateTemplate,
   apiUpdateTemplate,
   apiRemoveTemplate,
+  apiUpdateTemplateDefaults,
 } from './template.service';
-import { apiCreateChronicle } from '../chronicle/chronicle.service';
+import { apiCreateChronicle, apiCreateChroniclePremade } from '../chronicle/chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
+import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
  * Initial state
@@ -18,7 +20,7 @@ const initialState = {
   current: null,
   problem: null,
   loading: false,
-  success: false,
+  success: null,
 };
 
 /**
@@ -84,17 +86,25 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   const { token } = state.player.auth;
   const formName = 'template';
   const formData = new FormData();
-  const file = state.form[formName].values.file[0];
-  if (!file) {
-    throw new Error('Please add a file to upload');
+  const { values } = state.form[formName];
+  if (!values || (!values.file && !values.premade)) {
+    throw new Error('Please complete the form before submitting.');
   }
-  formData.append('file', file);
   const body = { ...state.form[formName].values, id: undefined };
-  const { id } = await apiCreateTemplate(token, workspaceId, body);
-  const { chronicle, template } = await apiCreateChronicle(token, id, formData);
+  const temporary = await apiCreateTemplate(token, workspaceId, body);
+  const { id } = temporary;
+  dispatch(addTemplate(temporary));
+  let models;
+  if (values.file) {
+    formData.append('file', values.file[0]);
+    models = await apiCreateChronicle(token, id, formData);
+  } else {
+    models = await apiCreateChroniclePremade(token, id, { data: values.premade });
+  }
+  const { chronicle, template } = models;
   dispatch(currentTemplate(template));
-  dispatch(addTemplate(template));
-  dispatch(successTemplate());
+  dispatch(replaceTemplate(template));
+  dispatch(attemptAlert({ message: 'Template created.' }));
   return { template, chronicle };
 });
 export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch, getState) => {
@@ -105,14 +115,25 @@ export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch
   const template = await apiUpdateTemplate(token, templateId, body);
   dispatch(currentTemplate(template));
   dispatch(replaceTemplate(template));
-  dispatch(successTemplate());
+  dispatch(attemptAlert({ message: 'Template updated.' }));
+  return template;
+});
+export const attemptUpdateTemplateDefaults = (templateId, data) => thunk(async (dispatch, getState) => {
+  const state = getState();
+  const { token } = state.player.auth;
+  const formName = 'defaults';
+  const body = { ...(data || state.form[formName].values), id: undefined };
+  const template = await apiUpdateTemplateDefaults(token, templateId, body);
+  dispatch(currentTemplate(template));
+  dispatch(replaceTemplate(template));
+  dispatch(attemptAlert({ message: 'Template default values updated.' }));
   return template;
 });
 export const attemptRemoveTemplate = templateId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveTemplate(token, templateId);
   dispatch(removeTemplate(templateId));
-  dispatch(successTemplate());
+  dispatch(attemptAlert({ message: 'Template removed.' }));
   return templateId;
 });
 
@@ -131,12 +152,12 @@ export default handleActions({
     ...state,
     loading: payload,
     problem: payload ? null : state.problem,
-    success: payload ? false : state.success,
+    success: payload ? null : state.success,
   }),
 
-  [TEMPLATE_SUCCESS]: (state, { payload = true }) => ({
+  [TEMPLATE_SUCCESS]: (state, { payload = { status: true } }) => ({
     ...state,
-    success: false && payload,
+    success: payload,
   }),
 
   [TEMPLATE_ERRORED]: (state, { payload = null }) => ({

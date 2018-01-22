@@ -1,6 +1,7 @@
 import chroma from 'chroma-js';
 import { keyframes } from 'styled-components';
 import { NO_CONTENT } from 'http-status';
+import config from '../config';
 
 export const handleResponse = async res => {
   if (res.status === NO_CONTENT) return {};
@@ -11,21 +12,32 @@ export const handleResponse = async res => {
 
 export const thunkify = ({ start, end, error }) => work => async (dispatch, getState) => {
   let result;
+  let problem;
   if (start) {
     start(dispatch, getState);
   }
   try {
     result = await work(dispatch, getState);
   } catch (e) {
-    console.warn(e.message || e);
+    if (config.environment !== 'production') {
+      console.warn(e);
+    }
+    if (e.code === 'AUTHORIZATION_REQUIRED') {
+      problem = {
+        ...e,
+        message: 'User does not have sufficient privileges to make action.',
+      };
+    } else {
+      problem = e;
+    }
     if (error) {
-      error(e, dispatch, getState);
+      error(problem, dispatch, getState);
     }
   }
   if (end) {
     end(dispatch, getState);
   }
-  return result;
+  return { error: problem, data: result };
 };
 
 export const standardHeaders = otherHeaders => Object.assign({

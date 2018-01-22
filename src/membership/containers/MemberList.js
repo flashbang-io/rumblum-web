@@ -23,13 +23,15 @@ class MemberList extends Component {
   }
 
   render() {
-    const { memberships } = this.props;
+    const { memberships, auth } = this.props;
+    const playerMembership = memberships.find(membership => membership.player.id === auth.userId);
     return (
       <div>
         { memberships.map(membership => (
           <Member
             key={ membership.id }
             membership={ membership }
+            playerMembership={ playerMembership }
             handleRole={ (...args) => this.handleRole(...args) }
             handleRemove={ (...args) => this.handleRemove(...args) }
           />
@@ -49,12 +51,16 @@ MemberList.propTypes = {
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
+  auth: PropTypes.shape({
+    userId: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = ({
   membership: { memberships, loading, problem },
   workspace: { current },
-}) => ({ memberships, loading, problem, workspace: current });
+  player: { auth },
+}) => ({ memberships, loading, problem, workspace: current, auth });
 const mapDispatchToProps = {
   attemptGetMemberships,
   attemptUpdateMembership,

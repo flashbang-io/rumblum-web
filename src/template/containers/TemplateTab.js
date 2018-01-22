@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdateTemplate, attemptRemoveTemplate } from '../template.reducer';
-import { modalCampaign } from '../../shared/campaign.reducer';
+import { attemptUpdateTemplate, attemptRemoveTemplate, erroredTemplate } from '../template.reducer';
+import { modalCampaign, attemptAlert } from '../../shared/campaign.reducer';
 import SimpleForm from './SimpleForm';
 import { Control, Button, Group } from '../../shared/components/theme';
 
@@ -15,6 +15,10 @@ class SettingsTab extends Component {
     };
   }
 
+  componentWillUnmount() {
+    this.props.erroredTemplate();
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     this.props.attemptUpdateTemplate(this.props.template.id);
@@ -23,10 +27,18 @@ class SettingsTab extends Component {
   handleDelete() {
     if (this.state.sure) {
       this.props.attemptRemoveTemplate(this.props.template.id)
-        .then(templateId => templateId && this.props.modalCampaign());
+        .then(({ error }) => !error && this.props.modalCampaign());
     } else {
       this.setState({ sure: true });
     }
+  }
+
+  handleCopy(id) {
+    const target = document.getElementById(id);
+    target.focus();
+    target.select();
+    document.execCommand('copy');
+    this.props.attemptAlert({ message: 'Link copied to clipboard.' });
   }
 
   toggleSure() {
@@ -39,6 +51,7 @@ class SettingsTab extends Component {
       <div>
         <SimpleForm
           handleSubmit={ event => this.handleSubmit(event) }
+          handleCopy={ (...args) => this.handleCopy(...args) }
           initialValues={ template }
           { ...this.props }
         />
@@ -61,7 +74,9 @@ class SettingsTab extends Component {
 SettingsTab.propTypes = {
   attemptUpdateTemplate: PropTypes.func.isRequired,
   attemptRemoveTemplate: PropTypes.func.isRequired,
+  erroredTemplate: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
+  attemptAlert: PropTypes.func.isRequired,
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
@@ -70,5 +85,5 @@ SettingsTab.propTypes = {
 const mapStateToProps = ({
   template: { current, loading, problem },
 }) => ({ loading, problem, template: current });
-const mapDispatchToProps = { attemptUpdateTemplate, attemptRemoveTemplate, modalCampaign };
+const mapDispatchToProps = { attemptUpdateTemplate, attemptRemoveTemplate, erroredTemplate, modalCampaign, attemptAlert };
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsTab);

@@ -8,21 +8,26 @@ import {
   MODAL_SETTINGS_TAB_SECURITY,
   MODAL_SETTINGS_TAB_BILLING,
   MODAL_SETTINGS_TAB_EDIT,
+  MODAL_SETTINGS,
+  MODAL_SHARE,
+  MODAL_SPACE,
 } from '../../shared/shared.constants';
 
 const Wrap = styled.div`
-  background-color: ${props => props.theme.colors.dark};
-  border-bottom: 1px solid ${props => props.theme.colors.darker};
-  color: ${props => props.theme.colors.off};
-  margin: 0 0 50px;
+  padding: 30px 0 50px;
 `;
 
 const Content = styled.div`
+  background-color: ${props => props.theme.colors.dark};
+  color: ${props => props.theme.colors.off};
+  border-radius: ${props => props.theme.size.radius};
   height: 50px;
   display: flex;
   align-items: center;
   font-size: 12px;
   text-transform: uppercase;
+  padding: 0 10px;
+  padding-left: 15px;
 `;
 
 const Brand = styled.div`
@@ -59,7 +64,7 @@ const MenuItem = styled.div`
   }
 `;
 
-class Bar extends Component {
+class HeaderBar extends Component {
 
   constructor(props) {
     super(props);
@@ -73,7 +78,7 @@ class Bar extends Component {
   }
 
   render() {
-    const { handleShare, handleSettings, handleLogout } = this.props;
+    const { handleTabbed, handleLogout } = this.props;
     const { open } = this.state;
     return (
       <Wrap>
@@ -85,24 +90,24 @@ class Bar extends Component {
               <span>Document Templates</span>
             </Brand>
             <Menu>
-              <MenuItem onClick={ handleShare }>Share</MenuItem>
+              <MenuItem onClick={ () => handleTabbed({ modal: MODAL_SHARE }) }>Share</MenuItem>
               <MenuItem onClick={ () => this.toggleDropdown() }>
                 <Icon name="cog" /> Settings
                 <Dropdown
                   handleClose={ () => this.toggleDropdown() }
                   active={ open }
                 >
-                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_PROFILE }) }>
+                  <DropItem onClick={ () => handleTabbed({ modal: MODAL_SETTINGS, tab: MODAL_SETTINGS_TAB_PROFILE }) }>
                     <Icon name="user" /> Profile
                   </DropItem>
-                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_SECURITY }) }>
+                  <DropItem onClick={ () => handleTabbed({ modal: MODAL_SETTINGS, tab: MODAL_SETTINGS_TAB_SECURITY }) }>
                     <Icon name="lock" /> Security
                   </DropItem>
-                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_EDIT }) }>
-                    <Icon name="suitcase" /> Workspace
-                  </DropItem>
-                  <DropItem onClick={ () => handleSettings({ tab: MODAL_SETTINGS_TAB_BILLING }) }>
+                  <DropItem onClick={ () => handleTabbed({ modal: MODAL_SETTINGS, tab: MODAL_SETTINGS_TAB_BILLING }) }>
                     <Icon name="credit-card" /> Billing
+                  </DropItem>
+                  <DropItem onClick={ () => handleTabbed({ modal: MODAL_SPACE, tab: MODAL_SETTINGS_TAB_EDIT }) }>
+                    <Icon name="suitcase" /> Workspace
                   </DropItem>
                   <DropItem onClick={ handleLogout }>
                     <Icon name="sign-out" /> Logout
@@ -117,10 +122,9 @@ class Bar extends Component {
   }
 }
 
-Bar.propTypes = {
+HeaderBar.propTypes = {
   handleLogout: PropTypes.func.isRequired,
-  handleShare: PropTypes.func.isRequired,
-  handleSettings: PropTypes.func.isRequired,
+  handleTabbed: PropTypes.func.isRequired,
 };
 
-export default Bar;
+export default HeaderBar;

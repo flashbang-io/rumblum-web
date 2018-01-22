@@ -6,18 +6,20 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { redirectUnauthenticatedGuard } from '../../guards';
 import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
 import { modalCampaign } from '../campaign.reducer';
-import { MODAL_SETTINGS, MODAL_SHARE, MODAL_TEMPLATE, MODAL_INSPECT, MODAL_RENDER } from '../shared.constants';
+import { MODAL_SETTINGS, MODAL_SHARE, MODAL_TEMPLATE, MODAL_INSPECT, MODAL_RENDER, MODAL_SPACE, MODAL_TEMPLATE_DEFAULTS } from '../shared.constants';
 import { Container } from '../components/theme/index';
 import Header from './Header';
 import Footer from '../components/Footer';
-import TemplateList from '../../template/containers/TemplateList';
 import ShareModal from '../../player/containers/ShareModal';
 import SettingsModal from './SettingsModal';
+import SpaceModal from './SpaceModal';
 import InspectModal from './InspectModal';
 import TemplateModal from '../../template/containers/TemplateModal';
+import DefaultsModal from '../../template/containers/DefaultsModal';
 import RenderModal from '../../render/containers/RenderModal';
 import Splash from '../components/Splash';
 import FrameWrapper from '../components/FrameWrapper';
+import MainPage from './MainPage';
 
 class Frame extends Component {
 
@@ -32,8 +34,8 @@ class Frame extends Component {
   }
 
   render() {
-    const { workspace, modal } = this.props;
-    if (!workspace) {
+    const { workspace, loading, modal } = this.props;
+    if (!workspace && loading) {
       return <Splash />;
     }
     return (
@@ -41,14 +43,16 @@ class Frame extends Component {
         <Header />
         <Container>
           <Switch>
-            <Route path="/templates" exact component={ TemplateList } />
+            <Route path="/templates" exact component={ MainPage } />
             <Redirect to="/templates" />
           </Switch>
         </Container>
         <Footer />
         { modal && modal === MODAL_SHARE && <ShareModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_SETTINGS && <SettingsModal handleClose={ () => this.props.modalCampaign() } /> }
+        { modal && modal === MODAL_SPACE && <SpaceModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_TEMPLATE && <TemplateModal handleClose={ () => this.props.modalCampaign() } /> }
+        { modal && modal === MODAL_TEMPLATE_DEFAULTS && <DefaultsModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_INSPECT && <InspectModal handleClose={ () => this.props.modalCampaign() } /> }
         { modal && modal === MODAL_RENDER && <RenderModal handleClose={ () => this.props.modalCampaign() } /> }
       </FrameWrapper>
@@ -67,6 +71,7 @@ Frame.propTypes = {
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
+  loading: PropTypes.bool.isRequired,
   modal: PropTypes.string,
 };
 
@@ -76,11 +81,12 @@ Frame.defaultProps = {
 };
 
 const mapStateToProps = ({
-  workspace: { workspaces, current },
+  workspace: { workspaces, current, loading },
   campaign: { modal },
 }) => ({
   workspaces,
   workspace: current,
+  loading,
   modal,
 });
 const mapDispatchToProps = {

@@ -1,2 +1,3 @@
-export const SUBSCRIPTION_PLAN_BASIC = 'basic_monthly';
-export const SUBSCRIPTION_PLAN_BETTER = 'better_monthly';
+export const PLAN_500_MONTHLY_29_USD = 'PLAN_500_MONTHLY_29_USD';
+export const PLAN_1000_MONTHLY_49_USD = 'PLAN_1000_MONTHLY_49_USD';
+export const PLAN_2500_MONTHLY_99_USD = 'PLAN_2500_MONTHLY_99_USD';

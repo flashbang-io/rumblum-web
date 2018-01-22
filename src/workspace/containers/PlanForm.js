@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Error, Control, Input, Group } from '../../shared/components/theme';
-import Plan from '../components/Plan';
-import { SUBSCRIPTION_PLAN_BASIC } from '../workspace.constants';
+import Plan, { PlanGroup } from '../components/Plan';
+import { PLAN_500_MONTHLY_29_USD, PLAN_1000_MONTHLY_49_USD, PLAN_2500_MONTHLY_99_USD } from '../workspace.constants';
 
 class PlanForm extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      plan: null,
+      plan: props.workspace && props.workspace.plan ? props.workspace.plan : null,
       coupon: '',
     };
   }
@@ -28,16 +28,37 @@ class PlanForm extends Component {
   }
 
   render() {
-    const { loading, problem } = this.props;
+    const { loading, problem, workspace } = this.props;
     const { plan, coupon } = this.state;
     return (
       <form onSubmit={ (...args) => this.handleSubmit(...args) }>
         <div>
           <Plan
             title="Basic Plan"
-            active={ plan === SUBSCRIPTION_PLAN_BASIC }
-            handleClick={ () => this.handleSelect({ plan: SUBSCRIPTION_PLAN_BASIC }) }
+            price="$29/month"
+            icon="trophy"
+            features={ ['500 Renders a month', 'Unlimited templates', 'Unlimited workspaces', 'Unlimited team members', 'Unlimited versions'] }
+            active={ plan === PLAN_500_MONTHLY_29_USD }
+            handleClick={ () => this.handleSelect({ plan: PLAN_500_MONTHLY_29_USD }) }
           />
+          <PlanGroup>
+            <Plan
+              title="Power Plan"
+              price="$49/month"
+              icon="bolt"
+              features={ ['1000 Renders a month', 'Unlimited templates', 'Unlimited workspaces', 'Unlimited team members', 'Unlimited versions'] }
+              active={ plan === PLAN_1000_MONTHLY_49_USD }
+              handleClick={ () => this.handleSelect({ plan: PLAN_1000_MONTHLY_49_USD }) }
+            />
+            <Plan
+              title="Growth Plan"
+              price="$99/month"
+              icon="globe"
+              features={ ['2500 Renders a month', 'Unlimited templates', 'Unlimited workspaces', 'Unlimited team members', 'Unlimited versions'] }
+              active={ plan === PLAN_2500_MONTHLY_99_USD }
+              handleClick={ () => this.handleSelect({ plan: PLAN_2500_MONTHLY_99_USD }) }
+            />
+          </PlanGroup>
           <Control
             label="Coupon Code"
             help="This is optional."
@@ -50,9 +71,9 @@ class PlanForm extends Component {
             />
           </Control>
         </div>
-        { problem && <Error>{ problem.message || problem }</Error> }
+        { problem && <Error problem={ problem } /> }
         <Group>
-          <Button float type="submit" disabled={ loading || !plan }>{ loading ? 'Loading...' : 'Confirm' }</Button>
+          <Button float type="submit" disabled={ loading || !plan || plan === workspace.plan }>{ loading ? 'Loading...' : 'Confirm' }</Button>
         </Group>
       </form>
     );
@@ -66,6 +87,9 @@ PlanForm.propTypes = {
   problem: PropTypes.shape({
     message: PropTypes.string,
   }),
+  workspace: PropTypes.shape({
+    plan: PropTypes.string,
+  }).isRequired,
 };
 
 PlanForm.defaultProps = {

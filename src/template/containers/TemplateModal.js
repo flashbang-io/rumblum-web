@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptCreateTemplate } from '../template.reducer';
+import { attemptCreateTemplate, erroredTemplate } from '../template.reducer';
 import { Heading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
 import TemplateForm from './TemplateForm';
 
 class TemplateModal extends Component {
 
+  componentWillUnmount() {
+    this.props.erroredTemplate();
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     this.props.attemptCreateTemplate(this.props.workspace.id)
-      .then(template => template && this.props.handleClose());
+      .then(({ error }) => !error && this.props.handleClose());
   }
 
   render() {
@@ -32,6 +36,7 @@ class TemplateModal extends Component {
 
 TemplateModal.propTypes = {
   attemptCreateTemplate: PropTypes.func.isRequired,
+  erroredTemplate: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -42,5 +47,5 @@ const mapStateToProps = ({
   template: { loading, problem },
   workspace,
 }) => ({ loading, problem, workspace: workspace.current });
-const mapDispatchToProps = { attemptCreateTemplate };
+const mapDispatchToProps = { attemptCreateTemplate, erroredTemplate };
 export default connect(mapStateToProps, mapDispatchToProps)(TemplateModal);

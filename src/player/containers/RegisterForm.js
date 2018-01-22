@@ -29,7 +29,7 @@ const RegisterForm = ({ handleSubmit, loading, problem }) => (
       placeholder="Password"
       component={ Input }
     />
-    { problem && <Error>{ problem.message || problem }</Error> }
+    { problem && <Error problem={ problem } /> }
     <Button type="submit" disabled={ loading }>{ loading ? 'Loading...' : 'Sign Up' }</Button>
   </Form>
 );

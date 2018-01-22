@@ -9,6 +9,7 @@ import {
   apiRemoveMembership,
 } from './membership.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
+import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
  * Initial state
@@ -18,7 +19,7 @@ const initialState = {
   current: null,
   problem: null,
   loading: false,
-  success: false,
+  success: null,
 };
 
 /**
@@ -87,7 +88,7 @@ export const attemptCreateMembership = workspaceId => thunk(async (dispatch, get
   dispatch(currentMembership(membership));
   dispatch(addMembership(membership));
   dispatch(resetForm(formName));
-  dispatch(successMembership());
+  dispatch(attemptAlert({ message: 'Membership created.' }));
   return membership;
 });
 export const attemptUpdateMembership = (membershipId, data) => thunk(async (dispatch, getState) => {
@@ -98,14 +99,14 @@ export const attemptUpdateMembership = (membershipId, data) => thunk(async (disp
   const membership = await apiUpdateMembership(token, membershipId, body);
   dispatch(currentMembership(membership));
   dispatch(replaceMembership(membership));
-  dispatch(successMembership());
+  dispatch(attemptAlert({ message: 'Membership updated.' }));
   return membership;
 });
 export const attemptRemoveMembership = membershipId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveMembership(token, membershipId);
   dispatch(removeMembership(membershipId));
-  dispatch(successMembership());
+  dispatch(attemptAlert({ message: 'Membership removed.' }));
   return membershipId;
 });
 
@@ -124,12 +125,12 @@ export default handleActions({
     ...state,
     loading: payload,
     problem: payload ? null : state.problem,
-    success: payload ? false : state.success,
+    success: payload ? null : state.success,
   }),
 
-  [MEMBERSHIP_SUCCESS]: (state, { payload = true }) => ({
+  [MEMBERSHIP_SUCCESS]: (state, { payload = { status: true } }) => ({
     ...state,
-    success: false && payload,
+    success: payload,
   }),
 
   [MEMBERSHIP_ERRORED]: (state, { payload = null }) => ({

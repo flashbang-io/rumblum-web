@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace } from '../workspace.reducer';
+import { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, erroredWorkspace } from '../workspace.reducer';
 import { attemptGetTemplates } from '../../template/template.reducer';
 import Spaces from '../components/Spaces';
 import CreateForm from './CreateForm';
@@ -19,10 +19,14 @@ class SpaceList extends Component {
     this.props.attemptGetWorkspaces();
   }
 
+  componentWillUnmount() {
+    this.props.erroredWorkspace();
+  }
+
   handleCreate(event) {
     event.preventDefault();
     this.props.attemptCreateWorkspace()
-      .then(workspace => workspace && this.toggleForm());
+      .then(({ error }) => !error && this.toggleForm());
   }
 
   handleSelect(id) {
@@ -57,6 +61,7 @@ SpaceList.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   attemptGetWorkspace: PropTypes.func.isRequired,
   attemptCreateWorkspace: PropTypes.func.isRequired,
+  erroredWorkspace: PropTypes.func.isRequired,
   attemptGetTemplates: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -72,5 +77,5 @@ const mapStateToProps = ({
   problem,
   workspace: current,
 });
-const mapDispatchToProps = { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, attemptGetTemplates };
+const mapDispatchToProps = { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, erroredWorkspace, attemptGetTemplates };
 export default connect(mapStateToProps, mapDispatchToProps)(SpaceList);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptSharePlayer, cleanPlayer } from '../player.reducer';
+import { modalCampaign } from '../../shared/campaign.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
 import ShareForm from './ShareForm';
@@ -14,7 +15,8 @@ class ShareModal extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.attemptSharePlayer();
+    this.props.attemptSharePlayer()
+      .then(({ error }) => !error && this.props.modalCampaign());
   }
 
   render() {
@@ -44,11 +46,12 @@ I wanted to share a cool little app I found that I think you may be interested i
 ShareModal.propTypes = {
   attemptSharePlayer: PropTypes.func.isRequired,
   cleanPlayer: PropTypes.func.isRequired,
+  modalCampaign: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({
   player: { loading, problem },
 }) => ({ loading, problem });
-const mapDispatchToProps = { attemptSharePlayer, cleanPlayer };
+const mapDispatchToProps = { attemptSharePlayer, cleanPlayer, modalCampaign };
 export default connect(mapStateToProps, mapDispatchToProps)(ShareModal);

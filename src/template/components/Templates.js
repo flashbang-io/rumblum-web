@@ -39,7 +39,7 @@ const Meta = styled.div`
   flex-grow: 1;
 `;
 
-const Template = ({ handleInspect, handleRender, template: { id, name, updatedAt, currentChronicleId, accessPublic } }) => (
+const Template = ({ handleInspect, handleRender, handleDefaults, template: { id, name, updatedAt, currentChronicleId, accessPublic } }) => (
   <Level across>
     <Badge>
       <Icon name="file-word-o" />
@@ -50,7 +50,8 @@ const Template = ({ handleInspect, handleRender, template: { id, name, updatedAt
       <Group>
         <Button flatten tiny onClick={ () => handleInspect({ id }) }>Edit</Button>
         { currentChronicleId && <Button flatten tiny onClick={ () => handleRender({ id }) }>Render Document</Button> }
-        { accessPublic && <Button flatten tiny href={ `${config.url}/share/${id}` } target="_blank">Share</Button>}
+        { currentChronicleId && <Button flatten tiny onClick={ () => handleDefaults({ id }) }>Default Tags</Button> }
+        { accessPublic && <Button flatten tiny href={ `${config.url}/share/${id}` } target="_blank">Share</Button> }
       </Group>
     </Content>
   </Level>
@@ -59,6 +60,7 @@ const Template = ({ handleInspect, handleRender, template: { id, name, updatedAt
 Template.propTypes = {
   handleInspect: PropTypes.func.isRequired,
   handleRender: PropTypes.func.isRequired,
+  handleDefaults: PropTypes.func.isRequired,
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,

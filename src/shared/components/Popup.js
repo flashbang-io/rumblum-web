@@ -48,6 +48,7 @@ const MenuItem = styled.div`
 
 const Padding = styled.div`
   padding: 20px 20px 10px;
+  position: relative;
   flex-grow: 1;
 `;
 
