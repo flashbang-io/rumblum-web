@@ -14,18 +14,20 @@ import {
 } from '../../shared/shared.constants';
 
 const Wrap = styled.div`
-  background-color: ${props => props.theme.colors.dark};
-  border-bottom: 1px solid ${props => props.theme.colors.darker};
-  color: ${props => props.theme.colors.off};
-  margin: 0 0 50px;
+  padding: 30px 0 50px;
 `;
 
 const Content = styled.div`
+  background-color: ${props => props.theme.colors.dark};
+  color: ${props => props.theme.colors.off};
+  border-radius: ${props => props.theme.size.radius};
   height: 50px;
   display: flex;
   align-items: center;
   font-size: 12px;
   text-transform: uppercase;
+  padding: 0 10px;
+  padding-left: 15px;
 `;
 
 const Brand = styled.div`
