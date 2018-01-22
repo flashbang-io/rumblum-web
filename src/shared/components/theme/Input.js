@@ -34,7 +34,7 @@ const InputTextarea = InputStyled.withComponent('textarea').extend`
   background-color: ${props => props.theme.colors.dark};
   resize: none;
   height: 130px;
-  ${props => props.lower && css`
+  ${props => props.dynamic && !props.higher && css`
     height: 39px;
   `}
 `;
@@ -121,7 +121,7 @@ const Input = ({ type, input: { value, ...input }, ...props }) => {
       <InputTextarea
         type={ type }
         value={ value }
-        lower={ props.dynamic && (!value || value.length < 26 || value.indexOf('\n') >= -1) }
+        higher={ props.dynamic && value && (value.length >= 26 || value.indexOf('\n') >= 0) }
         { ...input }
         { ...props }
       />
