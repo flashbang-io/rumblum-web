@@ -1,50 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { modalCampaign } from '../../shared/campaign.reducer';
-import { Spread, Sidebar } from '../components/Sidebar';
+import { Spread, Sidebar, Main } from '../components/Sidebar';
 import { MODAL_TEMPLATE } from '../../shared/shared.constants';
-import { Icon, Button } from '../components/theme';
+import { Icon, Button, Group } from '../components/theme';
 import SpaceList from '../../workspace/containers/SpaceList';
 import TemplateList from '../../template/containers/TemplateList';
 
-class MainPage extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-    };
-  }
-
-  toggleShow() {
-    this.setState({ show: !this.state.show });
-  }
-
-  render() {
-    const { workspace } = this.props;
-    const { show } = this.state;
-    return (
-      <Spread>
-        <Sidebar>
-          { workspace && (
-            <Button onClick={ () => this.props.modalCampaign(MODAL_TEMPLATE) }>
-              <Icon name="plus" /> Template
-            </Button>
-          ) }
-          <Button onClick={ () => this.toggleShow() }>Workspaces</Button>
-          { show && (
-            <SpaceList
-              handleClose={ () => this.toggleShow() }
-            />
-          ) }
-        </Sidebar>
-        { workspace && <TemplateList /> }
-      </Spread>
-    );
-  }
-
-}
+const MainPage = ({ workspace, ...props }) => (
+  <Spread>
+    <Sidebar>
+      <SpaceList />
+    </Sidebar>
+    <Main>
+      <Group>
+        { workspace && (
+          <Button onClick={ () => props.modalCampaign(MODAL_TEMPLATE) }>
+            <Icon name="plus" /> Template
+          </Button>
+        ) }
+      </Group>
+      { workspace && <TemplateList /> }
+    </Main>
+  </Spread>
+);
 
 MainPage.propTypes = {
   modalCampaign: PropTypes.func.isRequired,

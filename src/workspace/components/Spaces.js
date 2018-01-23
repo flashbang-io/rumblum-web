@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 import styled, { css } from 'styled-components';
 import { Icon } from '../../shared/components/theme';
 import LoadingCircles from '../../shared/components/LoadingCircles';
@@ -12,9 +13,13 @@ const Wrap = styled.div`
   border: 1px solid #dee8f1;
   padding: 10px;
   position: relative;
-  flex-grow: 1;
+  z-index: 500;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  min-width: 260px;
 `;
 
 const Space = styled.div`
@@ -77,31 +82,43 @@ const SpaceButton = styled.button`
   }
 `;
 
-const Spaces = ({ workspaces, handleSelect, handleOpen, workspace, loading }) => (
-  <Wrap>
-    { workspaces.map(({ id, name, subscription }) => (
-      <Space
-        key={ id }
-        onClick={ () => handleSelect(id) }
-        active={ workspace && id === workspace.id }
-      >
-        <Square />
-        <Content>
-          { name }
-          <br />
-          <span>{ subscription ? 'No Plan' : 'Subscribed' }</span>
-        </Content>
-      </Space>
-    )) }
-    <SpaceButton disabled={ loading } onClick={ handleOpen }>
-      { loading ? <LoadingCircles color="white" /> : <div><Icon name="plus" /> Workspace</div> }
-    </SpaceButton>
-  </Wrap>
-);
+class Spaces extends Component {
+
+  handleClickOutside() {
+    this.props.handleClose();
+  }
+
+  render() {
+    const { workspaces, handleSelect, handleOpen, workspace, loading } = this.props;
+    return (
+      <Wrap>
+        { workspaces.map(({ id, name, subscription }) => (
+          <Space
+            key={ id }
+            onClick={ () => handleSelect(id) }
+            active={ workspace && id === workspace.id }
+          >
+            <Square />
+            <Content>
+              { name }
+              <br />
+              <span>{ subscription ? 'No Plan' : 'Subscribed' }</span>
+            </Content>
+          </Space>
+        )) }
+        <SpaceButton disabled={ loading } onClick={ handleOpen }>
+          { loading ? <LoadingCircles color="white" /> : <div><Icon name="plus" /> Workspace</div> }
+        </SpaceButton>
+      </Wrap>
+    );
+  }
+
+}
 
 Spaces.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -117,4 +134,4 @@ Spaces.defaultProps = {
   workspace: null,
 };
 
-export default Spaces;
+export default onClickOutside(Spaces);

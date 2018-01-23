@@ -12,7 +12,9 @@ export const Spread = styled.div`
   }
 `;
 
-export const Sidebar = styled.div`
+export const Sidebar = styled.div``;
+
+export const Main = styled.div`
   flex-grow: 1;
 `;
 

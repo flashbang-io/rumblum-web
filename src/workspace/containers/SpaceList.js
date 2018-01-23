@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import onClickOutside from 'react-onclickoutside';
 import PropTypes from 'prop-types';
 import { attemptGetWorkspaces, attemptGetWorkspace } from '../workspace.reducer';
 import { attemptGetTemplates } from '../../template/template.reducer';
 import { modalCampaign } from '../../shared/campaign.reducer';
 import Spaces from '../components/Spaces';
 import { MODAL_CREATE_SPACE } from '../../shared/shared.constants';
+import { SpaceWrap } from '../components/Prep';
+import { Button } from '../../shared/components/theme';
 
 class SpaceList extends Component {
 
-  componentDidMount() {
-    this.props.attemptGetWorkspaces();
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+    };
   }
 
-  handleClickOutside() {
-    this.props.handleClose();
+  componentDidMount() {
+    this.props.attemptGetWorkspaces();
   }
 
   handleSelect(id) {
@@ -25,17 +28,26 @@ class SpaceList extends Component {
   }
 
   handleForm() {
-    this.props.handleClose();
+    this.toggleShow();
     this.props.modalCampaign(MODAL_CREATE_SPACE);
   }
 
+  toggleShow() {
+    this.setState({ show: !this.state.show });
+  }
+
   render() {
+    const { show } = this.state;
     return (
-      <Spaces
-        handleSelect={ (...args) => this.handleSelect(...args) }
-        handleOpen={ () => this.handleForm() }
-        { ...this.props }
-      />
+      <SpaceWrap>
+        <Button onClick={ () => this.toggleShow() }>Workspaces</Button>
+        { show && <Spaces
+          handleSelect={ (...args) => this.handleSelect(...args) }
+          handleOpen={ () => this.handleForm() }
+          handleClose={ () => this.toggleShow() }
+          { ...this.props }
+        /> }
+      </SpaceWrap>
     );
   }
 
@@ -46,7 +58,6 @@ SpaceList.propTypes = {
   attemptGetWorkspace: PropTypes.func.isRequired,
   attemptGetTemplates: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -67,7 +78,4 @@ const mapDispatchToProps = {
   attemptGetTemplates,
   modalCampaign,
 };
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  onClickOutside,
-)(SpaceList);
+export default connect(mapStateToProps, mapDispatchToProps)(SpaceList);

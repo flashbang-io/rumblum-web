@@ -2,9 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Icon, Button, Group } from '../../shared/components/theme';
-import Level, { Ghost } from '../../shared/components/Level';
+import { Icon, Group, Label } from '../../shared/components/theme';
+import { Ghost } from '../../shared/components/Level';
 import config from '../../config';
+
+const Item = styled.div`
+  box-shadow: ${props => props.theme.shadows.off};
+  background-color: ${props => props.theme.colors.white};
+  border-radius: ${props => props.theme.size.radius};
+  colors: ${props => props.theme.size.greyer};
+  border: 1px solid #dee8f1;
+  display: flex;
+  padding: 15px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+`;
 
 const Badge = styled.div`
   height: 80px;
@@ -13,23 +25,21 @@ const Badge = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: ${props => props.theme.colors.darker};
+  background-color: ${props => props.theme.colors.offer};
   border-radius: ${props => props.theme.size.radius};
-  border: 1px solid ${props => props.theme.colors.black};
-  color: ${props => props.theme.colors.grey};
-  font-size: 25px;
+  color: ${props => props.theme.colors.greyless};
+  font-size: 30px;
 `;
 
 const Content = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  margin-right: 10px;
 `;
 
 const Name = styled.div`
   font-size: 16px;
-  color: ${props => props.theme.colors.white};
   margin-bottom: 4px;
 `;
 
@@ -39,22 +49,62 @@ const Meta = styled.div`
   flex-grow: 1;
 `;
 
+const Action = styled.a`
+  height: 30px;
+  width: 30px;
+  background-color: ${props => props.theme.colors.offer};
+  color: ${props => props.theme.colors.greyless};
+  font-size: 14px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    background-color: ${props => props.theme.colors.offest};
+  }
+`;
+
 const Template = ({ handleInspect, handleRender, handleDefaults, template: { id, name, updatedAt, currentChronicleId, accessPublic } }) => (
-  <Level across>
-    <Badge>
-      <Icon name="file-word-o" />
-    </Badge>
+  <Item>
     <Content>
       <Name>{ name }</Name>
       <Meta>Last updated { moment(updatedAt).format('ll') }</Meta>
       <Group>
-        <Button flatten tiny onClick={ () => handleInspect({ id }) }>Edit</Button>
-        { currentChronicleId && <Button flatten tiny onClick={ () => handleRender({ id }) }>Render Document</Button> }
-        { currentChronicleId && <Button flatten tiny onClick={ () => handleDefaults({ id }) }>Default Tags</Button> }
-        { accessPublic && <Button flatten tiny href={ `${config.url}/share/${id}` } target="_blank">Share</Button> }
+        <Label title="Edit">
+          <Action onClick={ () => handleInspect({ id }) }>
+            <Icon name="edit" />
+          </Action>
+        </Label>
+        { currentChronicleId && (
+          <Label title="Render Document">
+            <Action onClick={ () => handleRender({ id }) }>
+              <Icon name="plus" />
+            </Action>
+          </Label>
+        ) }
+        { currentChronicleId && (
+          <Label title="Default Tags">
+            <Action onClick={ () => handleDefaults({ id }) }>
+              <Icon name="bars" />
+            </Action>
+          </Label>
+        ) }
+        { accessPublic && (
+          <Label title="Share">
+            <Action href={ `${config.url}/share/${id}` } target="_blank">
+              <Icon name="share-alt" />
+            </Action>
+          </Label>
+        ) }
       </Group>
     </Content>
-  </Level>
+    <Badge>
+      <Icon name="file-word-o" />
+    </Badge>
+  </Item>
 );
 
 Template.propTypes = {

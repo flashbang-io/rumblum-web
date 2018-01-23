@@ -7,4 +7,5 @@ export { default as Button } from './Button';
 export { default as Group } from './Group';
 export { default as Progress } from './Progress';
 export { default as Error } from './Error';
+export { default as Label } from './Label';
 export * from './Text';

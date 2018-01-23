@@ -57,12 +57,12 @@ const ButtonLink = ButtonStyled.withComponent('a');
 
 const Button = ({ children, to, href, ...props }) => {
   if (to) {
-    return <ButtonRoute to={ to } { ...props }>{ children }</ButtonRoute>;
+    return <ButtonRoute title="" to={ to } { ...props }>{ children }</ButtonRoute>;
   }
   if (href) {
-    return <ButtonLink href={ href } { ...props }>{ children }</ButtonLink>;
+    return <ButtonLink title="" href={ href } { ...props }>{ children }</ButtonLink>;
   }
-  return <ButtonStyled type="button" { ...props }>{ children }</ButtonStyled>;
+  return <ButtonStyled title="" type="button" { ...props }>{ children }</ButtonStyled>;
 };
 
 Button.propTypes = {
