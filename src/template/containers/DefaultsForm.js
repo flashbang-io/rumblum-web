@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field, Form } from 'redux-form';
-import changeCase from 'change-case';
 import { Input, Button, Error, Control, Group } from '../../shared/components/theme';
+import { tagsToInputs } from '../template.helper';
 
 const DefaultsForm = ({ handleSubmit, tags, loading, problem }) => {
-  const inputs = tags.filter(({ type }) => ['string', 'text', 'open', 'negated'].indexOf(type) >= 0)
-    .map((tag) => ({
-      ...tag,
-      type: tag.type === 'string' || tag.type === 'text' ? 'textarea' : 'checkbox',
-      title: changeCase.titleCase(tag.name),
-    }));
+  const inputs = tagsToInputs(tags);
   return (
     <Form onSubmit={ handleSubmit }>
       <div>
@@ -25,7 +20,6 @@ const DefaultsForm = ({ handleSubmit, tags, loading, problem }) => {
               type={ type }
               placeholder={ title }
               component={ Input }
-              dynamic
             />
           </Control>
         )) }

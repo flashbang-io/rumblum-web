@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Field, Form } from 'redux-form';
-import changeCase from 'change-case';
 import { Input, Button, Error, Control, Group } from '../../shared/components/theme';
+import { tagsToInputs } from '../../template/template.helper';
 
 class RenderForm extends Component {
 
@@ -30,12 +30,7 @@ class RenderForm extends Component {
   render() {
     const { slide, send } = this.state;
     const { handleSubmit, tags, loading, problem } = this.props;
-    const inputs = tags.filter(({ type }) => ['string', 'text', 'open', 'negated'].indexOf(type) >= 0)
-      .map((tag) => ({
-        ...tag,
-        type: tag.type === 'string' || tag.type === 'text' ? 'textarea' : 'checkbox',
-        title: changeCase.titleCase(tag.name),
-      }));
+    const inputs = tagsToInputs(tags);
     return (
       <Form onSubmit={ handleSubmit }>
         <div style={{ display: this.state.slide !== 0 && 'none' }}>
@@ -50,7 +45,6 @@ class RenderForm extends Component {
                 type={ type }
                 placeholder={ title }
                 component={ Input }
-                dynamic
               />
             </Control>
           )) }
