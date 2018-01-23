@@ -11,6 +11,7 @@ const Wrap = styled.div`
   width: 70px;
   border-radius: ${props => props.theme.size.radius};
   background-color: ${props => props.theme.colors.grey};
+  box-shadow: ${props => props.theme.shadows.off};
   cursor: pointer;
   transition: .2s;
   display: flex;

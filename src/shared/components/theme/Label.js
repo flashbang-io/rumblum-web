@@ -29,7 +29,7 @@ const Bubble = styled.div`
   letter-spacing: 1px;
   text-transform: uppercase;
   box-sizing: border-box;
-  padding: 6px 10px;
+  padding: 10px 14px;
   text-align: center;
 `;
 
