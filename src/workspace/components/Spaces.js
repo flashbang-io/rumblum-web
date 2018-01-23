@@ -1,62 +1,101 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Button, Icon } from '../../shared/components/theme';
+import { Icon } from '../../shared/components/theme';
 import LoadingCircles from '../../shared/components/LoadingCircles';
 
 const Wrap = styled.div`
-  margin-bottom: 10px;
+  box-shadow: ${props => props.theme.shadows.off};
+  background-color: ${props => props.theme.colors.white};
+  border-radius: ${props => props.theme.size.radius};
+  colors: ${props => props.theme.size.greyer};
+  border: 1px solid #dee8f1;
+  padding: 10px;
   position: relative;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
-const Segment = styled.div`
+const Space = styled.div`
   border-radius: ${props => props.theme.size.radius};
-  background-color: ${props => props.theme.colors.white};
-  border: 1px solid ${props => props.theme.colors.offer};
-  color: ${props => props.theme.colors.grey};
-  padding: 14px;
+  color: ${props => props.theme.colors.greyer};
+  padding: 10px;
   box-sizing: border-box;
-`;
-
-const Space = Segment.extend`
-  font-weight: bold;
-  font-size: 11px;
-  text-transform: uppercase;
+  font-size: 13px;
   margin-bottom: 10px;
   cursor: pointer;
   transition: .2s;
   display: flex;
   align-items: center;
   ${props => props.active && css`
-    background-color: ${props.theme.colors.electric};
-    color: ${props.theme.colors.white};
-    font-weight: normal;
+    background-color: ${props.theme.colors.off};
   `}
 `;
 
-export const Popup = Segment.extend`
+const Square = styled.div`
+  background-color: blue;
+  border-radius: ${props => props.theme.size.radius};
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+`;
+
+const Content = styled.div`
+  span {
+    color: ${props => props.theme.colors.grey};
+    font-size: 11px;
+  }
+`;
+
+export const Popup = styled.div`
+  background-color: ${props => props.theme.colors.off};
+  border-radius: ${props => props.theme.size.radius};
+  border: 1px solid ${props => props.theme.colors.offer};
+  color: ${props => props.theme.colors.grey};
   position: absolute;
   left: 10px;
   bottom: 20px;
+  padding: 20px;
 `;
 
-const Spaces = ({ workspaces, handleSelect, handleOpen, children, workspace, loading }) => (
+const SpaceButton = styled.button`
+  font-size: 13px;
+  background-color: ${props => props.theme.colors.pinch};
+  border-radius: ${props => props.theme.size.radius};
+  color: ${props => props.theme.colors.white};
+  padding: 15px 0;
+  border: none;
+  margin: 0 10px 10px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: .2s;
+  &:hover {
+    background-color: ${props => props.theme.colors.pinchHover};
+  }
+`;
+
+const Spaces = ({ workspaces, handleSelect, handleOpen, workspace, loading }) => (
   <Wrap>
-    { workspaces.map(({ id, name }) => (
+    { workspaces.map(({ id, name, subscription }) => (
       <Space
         key={ id }
         onClick={ () => handleSelect(id) }
         active={ workspace && id === workspace.id }
       >
-        { name }
-        { loading && workspace && id === workspace.id && <LoadingCircles color="white" /> }
+        <Square />
+        <Content>
+          { name }
+          <br />
+          <span>{ subscription ? 'No Plan' : 'Subscribed' }</span>
+        </Content>
       </Space>
     )) }
-    <Button onClick={ handleOpen }>
-      <Icon name="plus" /> Workspace
-    </Button>
-    { children }
+    <SpaceButton disabled={ loading } onClick={ handleOpen }>
+      { loading ? <LoadingCircles color="white" /> : <div><Icon name="plus" /> Workspace</div> }
+    </SpaceButton>
   </Wrap>
 );
 
@@ -64,7 +103,6 @@ Spaces.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  children: PropTypes.node,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   })),
@@ -77,7 +115,6 @@ Spaces.propTypes = {
 Spaces.defaultProps = {
   workspaces: [],
   workspace: null,
-  children: null,
 };
 
 export default Spaces;

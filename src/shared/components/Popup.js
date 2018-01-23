@@ -8,7 +8,7 @@ const Wrap = styled.div`
   color: ${props => props.theme.colors.off};
   border-radius: ${props => props.theme.size.radius};
   width: 100%;
-  max-width: 800px;
+  max-width: ${props => props.thin ? '600px' : '800px'};
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -21,9 +21,10 @@ const Menu = styled.div`
 `;
 
 const MenuItem = styled.div`
-  padding: 6px 10px;
+  padding: 10px;
   margin-bottom: 4px;
-  font-size: 16px;
+  font-size: 12px;
+  text-transform: uppercase;
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
@@ -73,12 +74,12 @@ class Popup extends Component {
   }
 
   render() {
-    const { children, tabs, active, handleTab, title } = this.props;
+    const { children, tabs, active, handleTab, title, thin } = this.props;
     const { items } = this.state;
     if (tabs) {
       const current = items.find(tab => tab.id === active) || {};
       return (
-        <Wrap>
+        <Wrap thin={ thin }>
           <Menu>
             <Heading inverted>Menu</Heading>
             { items.map(item => (
@@ -99,7 +100,7 @@ class Popup extends Component {
       );
     }
     return (
-      <Wrap>
+      <Wrap thin={ thin }>
         <Padding>
           { title && <Heading inverted>{ title }</Heading> }
           { children }
@@ -116,6 +117,7 @@ Popup.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
   tabs: PropTypes.bool,
+  thin: PropTypes.bool,
   active: PropTypes.string,
   title: PropTypes.string,
   handleTab: PropTypes.func,
@@ -123,6 +125,7 @@ Popup.propTypes = {
 
 Popup.defaultProps = {
   tabs: false,
+  thin: false,
   active: null,
   title: null,
   handleTab: () => {},

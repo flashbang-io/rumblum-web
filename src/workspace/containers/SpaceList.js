@@ -1,32 +1,22 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import onClickOutside from 'react-onclickoutside';
 import PropTypes from 'prop-types';
-import { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, erroredWorkspace } from '../workspace.reducer';
+import { attemptGetWorkspaces, attemptGetWorkspace } from '../workspace.reducer';
 import { attemptGetTemplates } from '../../template/template.reducer';
+import { modalCampaign } from '../../shared/campaign.reducer';
 import Spaces from '../components/Spaces';
-import CreateForm from './CreateForm';
+import { MODAL_CREATE_SPACE } from '../../shared/shared.constants';
 
 class SpaceList extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      form: false,
-    };
-  }
 
   componentDidMount() {
     this.props.attemptGetWorkspaces();
   }
 
-  componentWillUnmount() {
-    this.props.erroredWorkspace();
-  }
-
-  handleCreate(event) {
-    event.preventDefault();
-    this.props.attemptCreateWorkspace()
-      .then(({ error }) => !error && this.toggleForm());
+  handleClickOutside() {
+    this.props.handleClose();
   }
 
   handleSelect(id) {
@@ -34,24 +24,18 @@ class SpaceList extends Component {
     this.props.attemptGetTemplates(id);
   }
 
-  toggleForm(status) {
-    this.setState({ form: status || !this.state.form });
+  handleForm() {
+    this.props.handleClose();
+    this.props.modalCampaign(MODAL_CREATE_SPACE);
   }
 
   render() {
-    const { form } = this.state;
     return (
       <Spaces
         handleSelect={ (...args) => this.handleSelect(...args) }
-        handleOpen={ () => this.toggleForm() }
+        handleOpen={ () => this.handleForm() }
         { ...this.props }
-      >
-        { form && <CreateForm
-          handleSubmit={ (...args) => this.handleCreate(...args) }
-          handleClose={ () => this.toggleForm() }
-          { ...this.props }
-        /> }
-      </Spaces>
+      />
     );
   }
 
@@ -60,9 +44,9 @@ class SpaceList extends Component {
 SpaceList.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   attemptGetWorkspace: PropTypes.func.isRequired,
-  attemptCreateWorkspace: PropTypes.func.isRequired,
-  erroredWorkspace: PropTypes.func.isRequired,
   attemptGetTemplates: PropTypes.func.isRequired,
+  modalCampaign: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -77,5 +61,13 @@ const mapStateToProps = ({
   problem,
   workspace: current,
 });
-const mapDispatchToProps = { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, erroredWorkspace, attemptGetTemplates };
-export default connect(mapStateToProps, mapDispatchToProps)(SpaceList);
+const mapDispatchToProps = {
+  attemptGetWorkspaces,
+  attemptGetWorkspace,
+  attemptGetTemplates,
+  modalCampaign,
+};
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  onClickOutside,
+)(SpaceList);

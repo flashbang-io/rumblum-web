@@ -66,13 +66,13 @@ Template.propTypes = {
   }).isRequired,
 };
 
-const List = styled.div`
-  min-width: 70%;
+const Wrap = styled.div`
   flex-grow: 1;
+  min-width: 70%;
 `;
 
 const Templates = ({ templates, loading, ...props }) => (
-  <List>
+  <Wrap>
     { templates.map(template => (
       <Template
         key={ template.id }
@@ -81,7 +81,7 @@ const Templates = ({ templates, loading, ...props }) => (
       />
     )) }
     { loading && (!templates || !templates.length) && <Ghost /> }
-  </List>
+  </Wrap>
 );
 
 Templates.propTypes = {
