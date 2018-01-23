@@ -6,8 +6,7 @@ import { attemptGetTemplates } from '../../template/template.reducer';
 import { modalCampaign } from '../../shared/campaign.reducer';
 import Spaces from '../components/Spaces';
 import { MODAL_CREATE_SPACE } from '../../shared/shared.constants';
-import { SpaceWrap } from '../components/Prep';
-import { Button } from '../../shared/components/theme';
+import Prep, { SpaceWrap } from '../components/Prep';
 
 class SpaceList extends Component {
 
@@ -40,7 +39,7 @@ class SpaceList extends Component {
     const { show } = this.state;
     return (
       <SpaceWrap>
-        <Button onClick={ () => this.toggleShow() }>Workspaces</Button>
+        <Prep onClick={ () => this.toggleShow() } />
         { show && <Spaces
           handleSelect={ (...args) => this.handleSelect(...args) }
           handleOpen={ () => this.handleForm() }

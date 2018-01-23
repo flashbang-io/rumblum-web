@@ -5,7 +5,7 @@ const theme = {
     radius: '3px',
   },
   shadows: {
-    off: '0 0 5px 0 rgba(211, 225, 236, 0.6)',
+    off: '0 0 5px 0 rgba(90, 90, 90, 0.10)',
   },
   colors: {
     white: '#ffffff',
