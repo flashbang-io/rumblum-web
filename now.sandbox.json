@@ -1,3 +1,6 @@
 {
-  "alias": "sandbox.rumblum.com"
+  "alias": "sandbox.rumblum.com",
+  "name": "rumblum-web",
+  "cache": 60000,
+  "static": true
 }

@@ -1,3 +1,6 @@
 {
-  "alias": "app.rumblum.com"
+  "alias": "app.rumblum.com",
+  "name": "rumblum-web",
+  "cache": 60000,
+  "static": true
 }

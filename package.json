@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy:sandbox": "REACT_APP_NODE_ENV=sandbox yarn run build && now ./build --name=rumblum-web --cache=60000 && now alias --local-config=now.sandbox.json",
-    "deploy:production": "REACT_APP_NODE_ENV=production yarn run build && now ./build --name=rumblum-web --cache=60000 && now alias --local-config=now.production.json",
+    "deploy:sandbox": "REACT_APP_NODE_ENV=sandbox yarn run build && now ./build --local-config=now.sandbox.json && now alias --local-config=now.sandbox.json",
+    "deploy:production": "REACT_APP_NODE_ENV=production yarn run build && now ./build --local-config=now.production.json && now alias --local-config=now.production.json",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
