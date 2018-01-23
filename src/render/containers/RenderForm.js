@@ -30,10 +30,10 @@ class RenderForm extends Component {
   render() {
     const { slide, send } = this.state;
     const { handleSubmit, tags, loading, problem } = this.props;
-    const inputs = tags.filter(({ type }) => ['string', 'open', 'negated'].indexOf(type) >= 0)
+    const inputs = tags.filter(({ type }) => ['string', 'text', 'open', 'negated'].indexOf(type) >= 0)
       .map((tag) => ({
         ...tag,
-        type: tag.type === 'string' ? 'textarea' : 'checkbox',
+        type: tag.type === 'string' || tag.type === 'text' ? 'textarea' : 'checkbox',
         title: changeCase.titleCase(tag.name),
       }));
     return (

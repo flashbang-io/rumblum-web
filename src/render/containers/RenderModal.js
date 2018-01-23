@@ -24,7 +24,7 @@ class RenderModal extends Component {
   render() {
     const { template } = this.props;
     const tags = template && template.tags ? template.tags : [];
-    const data = tags.reduce((accum, next) => ({
+    const defaults = tags.reduce((accum, next) => ({
       ...accum,
       [next.name]: next.placeholder || '',
     }), {});
@@ -34,7 +34,7 @@ class RenderModal extends Component {
           <Heading inverted>Render Document</Heading>
           { template && <RenderForm
             handleSubmit={ event => this.handleSubmit(event) }
-            initialValues={{ data }}
+            initialValues={{ defaults }}
             tags={ tags }
             { ...this.props }
           /> }

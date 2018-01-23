@@ -5,10 +5,10 @@ import changeCase from 'change-case';
 import { Input, Button, Error, Control, Group } from '../../shared/components/theme';
 
 const DefaultsForm = ({ handleSubmit, tags, loading, problem }) => {
-  const inputs = tags.filter(({ type }) => ['string', 'open', 'negated'].indexOf(type) >= 0)
+  const inputs = tags.filter(({ type }) => ['string', 'text', 'open', 'negated'].indexOf(type) >= 0)
     .map((tag) => ({
       ...tag,
-      type: tag.type === 'string' ? 'textarea' : 'checkbox',
+      type: tag.type === 'string' || tag.type === 'text' ? 'textarea' : 'checkbox',
       title: changeCase.titleCase(tag.name),
     }));
   return (

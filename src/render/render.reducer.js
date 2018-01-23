@@ -83,11 +83,7 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
   const { token } = state.player.auth || { token: null };
   const formName = 'render';
   const { data, ...values } = { ...state.form[formName].values };
-  const empty = Object.keys(state.form[formName].registeredFields)
-    .filter(field => field.startsWith('data.'))
-    .map(field => field.replace('data.', ''))
-    .reduce((accum, next) => ({ ...accum, [next]: '' }), {});
-  const body = { ...values, data: { ...empty, ...data } };
+  const body = { ...values, data };
   const render = await apiCreateRender(token, templateId, body);
   if (!body.send) {
     const a = document.createElement('a');
