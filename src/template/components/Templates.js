@@ -19,8 +19,8 @@ const Item = styled.div`
 `;
 
 const Badge = styled.div`
-  height: 80px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
   display: flex;
   align-items: center;
   justify-content: center;

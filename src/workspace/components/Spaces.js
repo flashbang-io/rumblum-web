@@ -28,13 +28,17 @@ const Space = styled.div`
   padding: 10px;
   box-sizing: border-box;
   font-size: 13px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   cursor: pointer;
   transition: .2s;
   display: flex;
   align-items: center;
-  ${props => props.active && css`
+  ${props => props.active ? css`
     background-color: ${props.theme.colors.off};
+  ` : css`
+    &:hover {
+      background-color: ${props.theme.colors.offer};
+    }
   `}
 `;
 
@@ -71,7 +75,7 @@ const SpaceButton = styled.button`
   color: ${props => props.theme.colors.white};
   padding: 15px 0;
   border: none;
-  margin: 0 10px 10px;
+  margin: 15px 10px 10px;
   display: flex;
   justify-content: center;
   cursor: pointer;
