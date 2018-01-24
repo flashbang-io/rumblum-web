@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Container, Icon } from '../components/theme';
+import { Container, Icon, Label } from '../components/theme';
 import Dropdown, { DropItem } from './Dropdown';
 import {
   MODAL_SETTINGS_TAB_PROFILE,
@@ -11,56 +11,51 @@ import {
   MODAL_SETTINGS,
   MODAL_SHARE,
   MODAL_SPACE,
+  MODAL_TEMPLATE,
 } from '../../shared/shared.constants';
 
-const Wrap = styled.div`
-  padding: 30px 0 50px;
-`;
-
 const Content = styled.div`
-  background-color: ${props => props.theme.colors.dark};
-  color: ${props => props.theme.colors.off};
-  border-radius: ${props => props.theme.size.radius};
-  height: 50px;
   display: flex;
   align-items: center;
-  font-size: 12px;
-  text-transform: uppercase;
-  padding: 0 10px;
-  padding-left: 15px;
+  margin-bottom: 10px;
 `;
 
 const Brand = styled.div`
-  font-weight: bold;
-  font-size: 13px;
+  font-size: 14px;
+  margin-left: auto;
+  text-align: right;
   span {
-    font-size: 11px;
-    color: ${props => props.theme.colors.grey};
+    font-size: 12px;
+    color: ${props => props.theme.colors.greyless};
   }
 `;
 
 const Menu = styled.div`
-  margin-left: auto;
   display: flex;
   a {
     text-decoration: none;
   }
+  & > * {
+    margin-left: 10px;
+  }
 `;
 
-const MenuItem = styled.div`
-  margin-left: 10px;
-  transition: .2s;
-  padding: 5px 7px;
-  cursor: pointer;
-  position: relative;
-  color: ${props => props.theme.colors.off};
+const Profile = styled.div`
+  color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors.dark};
   border-radius: ${props => props.theme.size.radius};
-  i {
-    margin-right: 3px;
-  }
+  height: 50px;
+  width: 50px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: .2s;
   &:hover {
     color: ${props => props.theme.colors.white};
-    background-color: ${props => props.theme.colors.darkless};
+    background-color: ${props => props.theme.colors.darklesser};
   }
 `;
 
@@ -78,21 +73,30 @@ class HeaderBar extends Component {
   }
 
   render() {
-    const { handleTabbed, handleLogout } = this.props;
+    const { handleTabbed, handleLogout, player: { firstName, lastName, email } } = this.props;
     const { open } = this.state;
     return (
-      <Wrap>
-        <Container>
-          <Content>
-            <Brand>
-              Rumblum
-              <br />
-              <span>Document Templates</span>
-            </Brand>
-            <Menu>
-              <MenuItem onClick={ () => handleTabbed({ modal: MODAL_SHARE }) }>Share</MenuItem>
-              <MenuItem onClick={ () => this.toggleDropdown() }>
-                <Icon name="cog" /> Settings
+      <Container>
+        <Content>
+          <Brand>
+            { firstName } { lastName }
+            <br />
+            <span>{ email }</span>
+          </Brand>
+          <Menu>
+            <Label title="Invite New Users">
+              <Profile onClick={ () => handleTabbed({ modal: MODAL_SHARE }) }>
+                <Icon name="share-alt" />
+              </Profile>
+            </Label>
+            <Label title="New Template">
+              <Profile onClick={ () => handleTabbed({ modal: MODAL_TEMPLATE }) }>
+                <Icon name="plus" />
+              </Profile>
+            </Label>
+            <Label title="Settings" override={ open ? false : null }>
+              <Profile onClick={ () => this.toggleDropdown() }>
+                <Icon name="cog" />
                 <Dropdown
                   handleClose={ () => this.toggleDropdown() }
                   active={ open }
@@ -113,11 +117,11 @@ class HeaderBar extends Component {
                     <Icon name="sign-out" /> Logout
                   </DropItem>
                 </Dropdown>
-              </MenuItem>
-            </Menu>
-          </Content>
-        </Container>
-      </Wrap>
+              </Profile>
+            </Label>
+          </Menu>
+        </Content>
+      </Container>
     );
   }
 }
@@ -125,6 +129,11 @@ class HeaderBar extends Component {
 HeaderBar.propTypes = {
   handleLogout: PropTypes.func.isRequired,
   handleTabbed: PropTypes.func.isRequired,
+  player: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
 };
 
 export default HeaderBar;

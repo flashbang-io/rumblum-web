@@ -10,8 +10,8 @@ const DropWrap = styled.div`
   overflow: hidden;
   display: none;
   position: absolute;
-  right: 0;
-  top: 30px;
+  right: 10px;
+  top: 10px;
   padding: 10px 0;
   ${props => props.open && css`
     display: block;

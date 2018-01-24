@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { attemptLogoutPlayer } from '../../player/player.reducer';
 import { modalCampaign, tabCampaign } from '../campaign.reducer';
-import HeaderBar from '../components/HeaderBar';
+import HeaderProfile from '../components/HeaderProfile';
 
 class Header extends Component {
 
@@ -18,7 +18,7 @@ class Header extends Component {
 
   render() {
     return (
-      <HeaderBar
+      <HeaderProfile
         handleTabbed={ (...args) => this.handleTabbed(...args) }
         handleLogout={ () => this.handleLogout() }
         { ...this.props }

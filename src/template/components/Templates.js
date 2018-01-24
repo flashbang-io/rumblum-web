@@ -95,7 +95,7 @@ const Template = ({ handleInspect, handleRender, handleDefaults, template: { id,
         { accessPublic && (
           <Label title="Share">
             <Action href={ `${config.url}/share/${id}` } target="_blank">
-              <Icon name="share-alt" />
+              <Icon name="share-square-o" />
             </Action>
           </Label>
         ) }

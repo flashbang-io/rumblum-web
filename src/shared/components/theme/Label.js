@@ -1,9 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 const Wrap = styled.div`
   position: relative;
+  &:hover .help-label {
+    ${props => typeof props.override === 'boolean' ? css`
+      display: ${props.override ? 'flex' : 'none'};
+    ` : css`
+      display: flex;
+    `}
+  }
 `;
 
 const Center = styled.div`
@@ -12,7 +19,7 @@ const Center = styled.div`
   left: 0;
   right: 0;
   transform: translateY(110%);
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   ${props => props.right && css`
@@ -42,47 +49,24 @@ const Arrow = styled.div`
   margin-bottom: -1px;
 `;
 
-class Label extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-    };
-  }
-
-  handleOpen() {
-    this.setState({ show: true });
-  }
-
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  render() {
-    const { title, children } = this.props;
-    const { show } = this.state;
-    return (
-      <Wrap
-        onMouseEnter={ () => this.handleOpen() }
-        onMouseLeave={ () => this.handleClose() }
-      >
-        { children }
-        { show && (
-          <Center>
-            <Arrow />
-            <Bubble { ...this.props }>{ title }</Bubble>
-          </Center>
-        ) }
-      </Wrap>
-    );
-  }
-
-}
+const Label = ({ title, children, override }) => (
+  <Wrap override={ override }>
+    { children }
+    <Center className="help-label">
+      <Arrow />
+      <Bubble { ...this.props }>{ title }</Bubble>
+    </Center>
+  </Wrap>
+);
 
 Label.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
+  override: PropTypes.bool,
+};
+
+Label.defaultProps = {
+  override: null,
 };
 
 export default Label;
