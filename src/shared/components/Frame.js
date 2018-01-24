@@ -39,8 +39,9 @@ const Square = styled.div`
 const Download = styled.button`
   border: none;
   background-color: ${props => props.theme.colors.dark};
+  box-shadow: ${props => props.theme.shadows.off};
   color: ${props => props.theme.colors.white};
-  padding: 6px 10px;
+  padding: 10px 14px;
   margin-left: 10px;
   border-radius: 3px;
   font-size: 11px;
@@ -56,7 +57,7 @@ const Download = styled.button`
 `;
 
 const Badge = Download.withComponent('a').extend`
-  border: 1px solid #c1c1c1;
+  padding: 10px;
   background-color: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.dark};
   font-weight: bold;

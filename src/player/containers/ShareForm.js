@@ -5,7 +5,6 @@ import { Input, Button, Error, Group, Icon, Control } from '../../shared/compone
 
 const PersonFields = ({ fields }) => (
   <div>
-    <Button small onClick={ () => fields.push({}) }>Add Person</Button>
     { fields.map((person, index) => (
       <Group space key={ index }>
         <Field
@@ -14,17 +13,17 @@ const PersonFields = ({ fields }) => (
           placeholder="First Name"
           component={ Input }
         />
-        {/* <Field
+        <Field
           name={ `${person}.lastName` }
           type="text"
           placeholder="Last Name (Optional)"
           component={ Input }
-        /> */}
+        />
         <Field
           name={ `${person}.email` }
           type="email"
           placeholder="Email"
-          style={{ minWidth: '60%' }}
+          style={{ minWidth: '45%' }}
           component={ Input }
         />
         { fields && fields.length > 1 && (
@@ -34,6 +33,11 @@ const PersonFields = ({ fields }) => (
         ) }
       </Group>
     )) }
+    <Group>
+      <Button float small onClick={ () => fields.push({}) }>
+        <Icon name="plus" /> Person
+      </Button>
+    </Group>
   </div>
 );
 

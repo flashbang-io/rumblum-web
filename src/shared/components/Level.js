@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { pulse } from '../../shared/util.helper';
 
 const Level = styled.div`
   padding: 10px;
@@ -19,9 +18,3 @@ const Level = styled.div`
 `;
 
 export default Level;
-
-export const Ghost = Level.extend`
-  height: ${props => props.heigh || '100px'};
-  background-color: ${props => props.theme.colors.off};
-  animation: ${props => pulse(props.theme.colors.off, props.theme.colors.offer)} 2s linear infinite;
-`;

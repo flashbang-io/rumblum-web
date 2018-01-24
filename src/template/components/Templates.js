@@ -2,20 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
+import { pulse } from '../../shared/util.helper';
 import { Icon, Group, Label } from '../../shared/components/theme';
-import { Ghost } from '../../shared/components/Level';
 import config from '../../config';
 
 const Item = styled.div`
   box-shadow: ${props => props.theme.shadows.off};
   background-color: ${props => props.theme.colors.white};
   border-radius: ${props => props.theme.size.radius};
-  colors: ${props => props.theme.size.greyer};
   border: 1px solid #dee8f1;
   display: flex;
   padding: 15px;
   box-sizing: border-box;
   margin-bottom: 10px;
+`;
+
+const Placeholder = Item.extend`
+  height: 120px;
+  background-color: ${props => props.theme.colors.offer};
+  border: 1px solid ${props => props.theme.colors.offest};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: ${props => props.theme.colors.greyless};
+  i {
+    margin-left: 5px;
+  }
+`;
+
+const Ghost = Placeholder.extend`
+  animation: ${props => pulse(props.theme.colors.offer, props.theme.colors.offest)} 2s linear infinite;
 `;
 
 const Badge = styled.div`
@@ -143,7 +160,12 @@ const Templates = ({ templates, loading, ...props }) => (
         { ...props }
       />
     )) }
-    { loading && (!templates || !templates.length) && <Ghost /> }
+    { loading && !templates.length && <Ghost /> }
+    { !loading && !templates.length && (
+      <Placeholder>
+        Make your first template by clicking the button up there <Icon name="chevron-up" />
+      </Placeholder>
+    ) }
   </Wrap>
 );
 

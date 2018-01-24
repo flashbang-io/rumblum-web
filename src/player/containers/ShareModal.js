@@ -30,7 +30,7 @@ I wanted to share a cool little app I found that I think you may be interested i
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
           <Heading inverted flatten>Share</Heading>
-          <Subheading>Invite people to view rumblum to earn document credits.</Subheading>
+          <Subheading>Invite new members to use rumblum.</Subheading>
           <ShareForm
             handleSubmit={ event => this.handleSubmit(event) }
             initialValues={ values }

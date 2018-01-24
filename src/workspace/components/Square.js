@@ -8,6 +8,7 @@ const Wrap = styled.div`
   width: ${props => props.size || '70px'};
   border-radius: ${props => props.theme.size.radius};
   box-shadow: ${props => props.theme.shadows.off};
+  background-color: ${props => props.theme.colors.white};
   cursor: pointer;
   overflow: hidden;
   position: relative;
