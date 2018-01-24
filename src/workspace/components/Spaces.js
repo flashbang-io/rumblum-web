@@ -4,6 +4,7 @@ import onClickOutside from 'react-onclickoutside';
 import styled, { css } from 'styled-components';
 import { Icon } from '../../shared/components/theme';
 import LoadingCircles from '../../shared/components/LoadingCircles';
+import Square from './Square';
 
 const Wrap = styled.div`
   box-shadow: ${props => props.theme.shadows.off};
@@ -42,15 +43,8 @@ const Space = styled.div`
   `}
 `;
 
-const Square = styled.div`
-  background-color: blue;
-  border-radius: ${props => props.theme.size.radius};
-  height: 50px;
-  width: 50px;
-  margin-right: 10px;
-`;
-
 const Content = styled.div`
+  margin-left: 10px;
   span {
     color: ${props => props.theme.colors.grey};
     font-size: 11px;
@@ -96,13 +90,13 @@ class Spaces extends Component {
     const { workspaces, handleSelect, handleOpen, workspace, loading } = this.props;
     return (
       <Wrap>
-        { workspaces.map(({ id, name, subscription }) => (
+        { workspaces.map(({ id, name, subscription, createdAt }) => (
           <Space
             key={ id }
             onClick={ () => handleSelect(id) }
             active={ workspace && id === workspace.id }
           >
-            <Square />
+            <Square size="50px" workspace={{ id, name, createdAt }} />
             <Content>
               { name }
               <br />

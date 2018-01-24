@@ -37,9 +37,13 @@ class SpaceList extends Component {
 
   render() {
     const { show } = this.state;
+    const { workspace } = this.props;
     return (
       <SpaceWrap>
-        <Prep onClick={ () => this.toggleShow() } />
+        <Prep
+          onClick={ () => this.toggleShow() }
+          workspace={ workspace }
+        />
         { show && <Spaces
           handleSelect={ (...args) => this.handleSelect(...args) }
           handleOpen={ () => this.handleForm() }
@@ -61,6 +65,13 @@ SpaceList.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
+  workspace: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
+};
+
+SpaceList.defaultProps = {
+  workspace: null,
 };
 
 const mapStateToProps = ({

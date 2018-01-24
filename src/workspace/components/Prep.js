@@ -1,42 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Icon, Label } from '../../shared/components/theme';
+import Square from './Square';
 
 export const SpaceWrap = styled.div`
   position: relative;
 `;
 
-const Wrap = styled.div`
-  height: 70px;
-  width: 70px;
-  border-radius: ${props => props.theme.size.radius};
-  background-color: ${props => props.theme.colors.grey};
-  box-shadow: ${props => props.theme.shadows.off};
-  cursor: pointer;
-  transition: .2s;
+const Shadow = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 30px;
-  color: transparent;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${props => props.theme.colors.white};
+  opacity: 0;
+  transition: .2s;
   &:hover {
-    background-color: ${props => props.theme.colors.greyer};
-    color: ${props => props.theme.colors.white};
+    opacity: 1;
   }
 `;
 
 const Prep = ({ ...props }) => (
   <Label title="Workspace">
-    <Wrap { ...props }>
-      <Icon name="circle-o" />
-    </Wrap>
+    <Square { ...props }>
+      <Shadow>
+        <Icon name="circle-o" />
+      </Shadow>
+    </Square>
   </Label>
 );
-
-Prep.propTypes = {
-};
-
-Prep.defaultProps = {
-};
 
 export default Prep;
