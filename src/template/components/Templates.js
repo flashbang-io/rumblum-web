@@ -100,7 +100,7 @@ const Template = ({ handleInspect, handleRender, handleDefaults, handleUpload, t
         { currentChronicle && (
           <Label title="Preview File">
             <Action href={ `${config.url}/preview?url=${encodeURIComponent(currentChronicle.location)}` } target="_blank">
-              <Icon name="search" />
+              <Icon name="search-plus" />
             </Action>
           </Label>
         ) }
