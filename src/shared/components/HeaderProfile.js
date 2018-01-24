@@ -59,7 +59,7 @@ const Profile = styled.div`
   }
 `;
 
-class HeaderBar extends Component {
+class HeaderProfile extends Component {
 
   constructor(props) {
     super(props);
@@ -126,7 +126,7 @@ class HeaderBar extends Component {
   }
 }
 
-HeaderBar.propTypes = {
+HeaderProfile.propTypes = {
   handleLogout: PropTypes.func.isRequired,
   handleTabbed: PropTypes.func.isRequired,
   player: PropTypes.shape({
@@ -136,4 +136,4 @@ HeaderBar.propTypes = {
   }).isRequired,
 };
 
-export default HeaderBar;
+export default HeaderProfile;

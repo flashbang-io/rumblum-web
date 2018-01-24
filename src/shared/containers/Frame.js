@@ -35,13 +35,13 @@ class Frame extends Component {
   }
 
   render() {
-    const { workspace, loading, modal } = this.props;
+    const { workspace, loading, modal, player } = this.props;
     if (!workspace && loading) {
       return <Splash />;
     }
     return (
       <FrameWrapper>
-        <Header />
+        { player && <Header /> }
         <Container>
           <Switch>
             <Route path="/templates" exact component={ MainPage } />
@@ -73,23 +73,29 @@ Frame.propTypes = {
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
+  player: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
   loading: PropTypes.bool.isRequired,
   modal: PropTypes.string,
 };
 
 Frame.defaultProps = {
   workspace: null,
+  player: null,
   modal: null,
 };
 
 const mapStateToProps = ({
   workspace: { workspaces, current, loading },
   campaign: { modal },
+  player,
 }) => ({
   workspaces,
   workspace: current,
   loading,
   modal,
+  player: player.current,
 });
 const mapDispatchToProps = {
   attemptGetWorkspaces,
