@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Container, Icon, Label } from '../components/theme';
 import Dropdown, { DropItem } from './Dropdown';
 import {
@@ -44,6 +44,7 @@ const Profile = styled.div`
   color: ${props => props.theme.colors.white};
   background-color: ${props => props.theme.colors.dark};
   border-radius: ${props => props.theme.size.radius};
+  box-shadow: ${props => props.theme.shadows.off};
   height: 50px;
   width: 50px;
   font-size: 20px;
@@ -57,6 +58,12 @@ const Profile = styled.div`
     color: ${props => props.theme.colors.white};
     background-color: ${props => props.theme.colors.darklesser};
   }
+  ${props => props.highlight && css`
+    background-color: ${props.theme.colors.pinch};
+    &:hover {
+      background-color: ${props.theme.colors.pinchHover};
+    }
+  `}
 `;
 
 class HeaderProfile extends Component {
@@ -84,14 +91,14 @@ class HeaderProfile extends Component {
             <span>{ email }</span>
           </Brand>
           <Menu>
+            <Label title="New Template">
+              <Profile onClick={ () => handleTabbed({ modal: MODAL_TEMPLATE }) } highlight>
+                <Icon name="plus" />
+              </Profile>
+            </Label>
             <Label title="Invite New Users">
               <Profile onClick={ () => handleTabbed({ modal: MODAL_SHARE }) }>
                 <Icon name="share-alt" />
-              </Profile>
-            </Label>
-            <Label title="New Template">
-              <Profile onClick={ () => handleTabbed({ modal: MODAL_TEMPLATE }) }>
-                <Icon name="plus" />
               </Profile>
             </Label>
             <Label title="Settings" override={ open ? false : null }>
