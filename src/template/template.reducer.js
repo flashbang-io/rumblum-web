@@ -90,7 +90,7 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   if (!values || (!values.file && !values.premade)) {
     throw new Error('Please complete the form before submitting.');
   }
-  const body = { ...state.form[formName].values, id: undefined };
+  const body = { ...state.form[formName].values, id: undefined, file: undefined };
   const temporary = await apiCreateTemplate(token, workspaceId, body);
   const { id } = temporary;
   dispatch(addTemplate(temporary));

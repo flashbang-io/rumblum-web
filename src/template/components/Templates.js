@@ -29,6 +29,11 @@ const Badge = styled.div`
   border-radius: ${props => props.theme.size.radius};
   color: ${props => props.theme.colors.greyless};
   font-size: 30px;
+  transition: .2s;
+  cursor: pointer;
+  &:hover {
+    background-color: ${props => props.theme.colors.offest};
+  }
 `;
 
 const Content = styled.div`
@@ -67,7 +72,7 @@ const Action = styled.a`
   }
 `;
 
-const Template = ({ handleInspect, handleRender, handleDefaults, template: { id, name, updatedAt, currentChronicleId, accessPublic } }) => (
+const Template = ({ handleInspect, handleRender, handleDefaults, handleUpload, template: { id, name, updatedAt, currentChronicleId, currentChronicle, accessPublic } }) => (
   <Item>
     <Content>
       <Name>{ name }</Name>
@@ -92,6 +97,13 @@ const Template = ({ handleInspect, handleRender, handleDefaults, template: { id,
             </Action>
           </Label>
         ) }
+        { currentChronicle && (
+          <Label title="Preview File">
+            <Action href={ `${config.url}/preview?url=${encodeURIComponent(currentChronicle.location)}` } target="_blank">
+              <Icon name="search" />
+            </Action>
+          </Label>
+        ) }
         { accessPublic && (
           <Label title="Share">
             <Action href={ `${config.url}/share/${id}` } target="_blank">
@@ -101,7 +113,7 @@ const Template = ({ handleInspect, handleRender, handleDefaults, template: { id,
         ) }
       </Group>
     </Content>
-    <Badge>
+    <Badge onClick={ () => handleUpload({ id }) }>
       <Icon name="file-word-o" />
     </Badge>
   </Item>
@@ -111,6 +123,7 @@ Template.propTypes = {
   handleInspect: PropTypes.func.isRequired,
   handleRender: PropTypes.func.isRequired,
   handleDefaults: PropTypes.func.isRequired,
+  handleUpload: PropTypes.func.isRequired,
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
