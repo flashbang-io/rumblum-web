@@ -19,7 +19,7 @@ const DropWrap = styled.div`
 `;
 
 export const DropItem = styled.div`
-  font-size: 12px;
+  font-size: 13px;
   padding: 12px 10px;
   width: 100%;
   margin: 0 5px;
