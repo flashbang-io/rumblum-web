@@ -36,12 +36,12 @@ class Frame extends Component {
 
   render() {
     const { workspace, loading, modal, player } = this.props;
-    if (!workspace && loading) {
+    if ((!workspace && loading) || !player) {
       return <Splash />;
     }
     return (
       <FrameWrapper>
-        { player && <Header /> }
+        <Header />
         <Container>
           <Switch>
             <Route path="/templates" exact component={ MainPage } />
