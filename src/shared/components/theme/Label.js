@@ -38,6 +38,7 @@ const Bubble = styled.div`
   box-sizing: border-box;
   padding: 10px 14px;
   text-align: center;
+  white-space: nowrap;
 `;
 
 const Arrow = styled.div`
