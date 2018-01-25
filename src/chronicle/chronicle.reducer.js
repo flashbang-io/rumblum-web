@@ -172,7 +172,7 @@ export default handleActions({
 
   [CHRONICLE_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    chronicles: state.chronicles.map(chronicle => chronicle.id === payload.id ? { ...chronicle, ...payload } : chronicle),
   }),
 
 }, initialState);

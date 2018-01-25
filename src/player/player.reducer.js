@@ -240,7 +240,7 @@ export default handleActions({
 
   [PLAYER_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    players: state.players.map(player => player.id === payload.id ? { ...player, ...payload } : player),
   }),
 
   [PLAYER_AUTH]: (state, { payload = null }) => ({

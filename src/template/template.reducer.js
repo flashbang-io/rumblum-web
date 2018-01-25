@@ -114,7 +114,7 @@ export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch
   const body = { ...(data || state.form[formName].values), id: undefined };
   const template = await apiUpdateTemplate(token, templateId, body);
   dispatch(currentTemplate(template));
-  dispatch(replaceTemplate(template));
+  dispatch(patchTemplate(template));
   dispatch(attemptAlert({ message: 'Template updated.' }));
   return template;
 });
@@ -192,7 +192,7 @@ export default handleActions({
 
   [TEMPLATE_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    templates: state.templates.map(template => template.id === payload.id ? { ...template, ...payload } : template),
   }),
 
 }, initialState);

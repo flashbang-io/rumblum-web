@@ -189,7 +189,7 @@ export default handleActions({
 
   [WORKSPACE_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    workspaces: state.workspaces.map(workspace => workspace.id === payload.id ? { ...workspace, ...payload } : workspace),
   }),
 
 }, initialState);

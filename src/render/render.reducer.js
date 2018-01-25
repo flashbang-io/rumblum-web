@@ -169,7 +169,7 @@ export default handleActions({
 
   [RENDER_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    renders: state.renders.map(render => render.id === payload.id ? { ...render, ...payload } : render),
   }),
 
 }, initialState);
