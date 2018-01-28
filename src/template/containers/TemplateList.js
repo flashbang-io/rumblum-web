@@ -24,6 +24,12 @@ class TemplateList extends Component {
     this.props.modalCampaign(MODAL_INSPECT);
   }
 
+  handleUpload({ id }) {
+    this.props.currentTemplate(this.props.templates.find(template => template.id === id));
+    this.props.tabCampaign(MODAL_INSPECT_TAB_FILE);
+    this.props.modalCampaign(MODAL_INSPECT);
+  }
+
   handleRender({ id }) {
     this.props.attemptGetTemplate(id);
     this.props.modalCampaign(MODAL_RENDER);
@@ -32,12 +38,6 @@ class TemplateList extends Component {
   handleDefaults({ id }) {
     this.props.attemptGetTemplate(id);
     this.props.modalCampaign(MODAL_TEMPLATE_DEFAULTS);
-  }
-
-  handleUpload({ id }) {
-    this.props.attemptGetTemplate(id);
-    this.props.tabCampaign(MODAL_INSPECT_TAB_FILE);
-    this.props.modalCampaign(MODAL_INSPECT);
   }
 
   render() {
