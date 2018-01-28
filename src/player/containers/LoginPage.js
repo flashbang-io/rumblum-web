@@ -41,8 +41,8 @@ class LoginPage extends Component {
               { ...this.props }
             />
             <Group>
-              <Button small dull to="/register">Sign Up</Button>
-              <Button small dull to="/forgot">Forgot Password</Button>
+              <Button small="true" dull="true" to="/register">Sign Up</Button>
+              <Button small="true" dull="true" to="/forgot">Forgot Password</Button>
             </Group>
           </Container>
         </Page>

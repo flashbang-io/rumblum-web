@@ -32,7 +32,7 @@ class RegisterPage extends Component {
               handleSubmit={ event => this.handleSubmit(event) }
               { ...this.props }
             />
-            <Button small dull to="/login">Login</Button>
+            <Button small="true" dull="true" to="/login">Login</Button>
           </Container>
         </Page>
       </DocumentTitle>

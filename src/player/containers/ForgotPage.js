@@ -31,8 +31,8 @@ class ForgotPage extends Component {
               { ...this.props }
             />
             <Group>
-              <Button small dull to="/login">Login</Button>
-              <Button small dull to="/register">Sign Up</Button>
+              <Button small="true" dull="true" to="/login">Login</Button>
+              <Button small="true" dull="true" to="/register">Sign Up</Button>
             </Group>
           </Container>
         </Page>
