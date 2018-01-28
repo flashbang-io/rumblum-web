@@ -6,6 +6,7 @@ import { modalCampaign } from '../../shared/campaign.reducer';
 import { Heading, Subheading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
 import ShareForm from './ShareForm';
+import config from '../../config';
 
 class ShareModal extends Component {
 
@@ -23,14 +24,16 @@ class ShareModal extends Component {
     const values = {
       message: `Hi {firstName},
 
-I wanted to share a cool little app I found that I think you may be interested in.`,
+I wanted to share a little app that I found, which I think you may be interested in.`,
       contacts: [{}],
     };
     return (
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
           <Heading inverted flatten>Share</Heading>
-          <Subheading>Invite new members to use rumblum.</Subheading>
+          <Subheading>
+            { config.beta ? 'Rumblum is currently "invite-only" which means others can only use it if you invite them.' : 'Invite new members to use rumblum.' }
+          </Subheading>
           <ShareForm
             handleSubmit={ event => this.handleSubmit(event) }
             initialValues={ values }

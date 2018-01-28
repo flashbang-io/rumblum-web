@@ -15,6 +15,7 @@ import Splash from '../components/Splash';
 import Preview from './Preview';
 import Helpers from './Helpers';
 import Pending from '../components/Pending';
+import BetaFlag from '../components/BetaFlag';
 
 class App extends Component {
 
@@ -61,6 +62,7 @@ class App extends Component {
           <Redirect to="/templates" />
         </Switch>
         <Helpers />
+        { config.beta && <BetaFlag /> }
       </div>
     );
   }

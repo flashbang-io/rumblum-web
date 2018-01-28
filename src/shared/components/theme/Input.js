@@ -13,6 +13,7 @@ export const InputStyled = styled.input`
   border-radius: ${props => props.theme.size.radius};
   outline: none;
   box-sizing: border-box;
+  line-height: 1.5em;
   margin-bottom: 10px;
   width: 100%;
   max-width: 100%;
