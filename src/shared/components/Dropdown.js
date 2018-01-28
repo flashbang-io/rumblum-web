@@ -7,6 +7,7 @@ const DropWrap = styled.div`
   width: 200px;
   background-color: ${props => props.theme.colors.darkless};
   border-radius: ${props => props.theme.size.radius};
+  box-shadow: ${props => props.theme.shadows.dark};
   overflow: hidden;
   display: none;
   position: absolute;

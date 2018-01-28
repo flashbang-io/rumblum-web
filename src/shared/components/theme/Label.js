@@ -22,8 +22,10 @@ const Center = styled.div`
   display: none;
   flex-direction: column;
   align-items: center;
-  ${props => props.right && css`
-    transform: translateY(110%);
+  ${props => props.sideways && css`
+    transform: translateX(105%);
+    flex-direction: row;
+    top: 0;
   `}
 `;
 
@@ -48,13 +50,21 @@ const Arrow = styled.div`
   border-right: 6px solid transparent;
   border-bottom: 6px solid ${props => props.theme.colors.dark};
   margin-bottom: -1px;
+  ${props => props.sideways && css`
+    border: none;
+    margin: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid ${props.theme.colors.dark};
+    margin-right: -1px;
+  `}
 `;
 
-const Label = ({ title, children, override }) => (
+const Label = ({ title, children, override, ...props }) => (
   <Wrap override={ override }>
     { children }
-    <Center className="help-label">
-      <Arrow />
+    <Center className="help-label" { ...props }>
+      <Arrow { ...props } />
       <Bubble { ...this.props }>{ title }</Bubble>
     </Center>
   </Wrap>

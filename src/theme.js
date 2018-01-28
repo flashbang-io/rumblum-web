@@ -6,6 +6,7 @@ const theme = {
   },
   shadows: {
     off: '0 0 5px 0 rgba(90, 90, 90, 0.10)',
+    dark: '0 0 5px 0 rgba(0, 0, 0, 0.5)',
   },
   colors: {
     white: '#ffffff',

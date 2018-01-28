@@ -27,7 +27,7 @@ const Shadow = styled.div`
 `;
 
 const Prep = ({ ...props }) => (
-  <Label title="Workspace">
+  <Label title="Workspace" sideways>
     <Square { ...props }>
       <Shadow>
         <Icon name="circle-o" />
