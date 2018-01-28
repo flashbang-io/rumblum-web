@@ -12,6 +12,12 @@ class TemplateList extends Component {
     this.props.attemptGetTemplates(this.props.workspace.id);
   }
 
+  componentWillReceiveProps({ workspace }) {
+    if (this.props.workspace && workspace && this.props.workspace.id !== workspace.id) {
+      this.props.attemptGetTemplates(workspace.id);
+    }
+  }
+
   handleInspect({ id }) {
     this.props.currentTemplate(this.props.templates.find(template => template.id === id));
     this.props.tabCampaign(MODAL_INSPECT_TAB_EDIT);

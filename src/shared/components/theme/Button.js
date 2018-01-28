@@ -29,6 +29,9 @@ const ButtonStyled = styled.button`
   ${props => props.tiny && sizeTiny}
   ${props => props.danger && css`
     background-color: ${props.theme.colors.danger};
+    &:hover {
+      background-color: ${props.theme.colors.dangerHover};
+    }
   `}
   ${props => props.dull && css`
     color: ${props.theme.colors.grey};

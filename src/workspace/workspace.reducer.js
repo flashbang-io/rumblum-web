@@ -108,6 +108,7 @@ export const attemptRemoveWorkspace = workspaceId => thunk(async (dispatch, getS
   const { token } = getState().player.auth;
   await apiRemoveWorkspace(token, workspaceId);
   dispatch(removeWorkspace(workspaceId));
+  dispatch(currentWorkspace());
   dispatch(attemptAlert({ message: 'Workspace removed.' }));
   return workspaceId;
 });

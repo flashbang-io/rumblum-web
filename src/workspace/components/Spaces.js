@@ -100,7 +100,7 @@ class Spaces extends Component {
             <Content>
               { name }
               <br />
-              <span>{ subscription ? 'No Plan' : 'Subscribed' }</span>
+              <span>{ subscription ? 'Subscribed' : 'No Plan' }</span>
             </Content>
           </Space>
         )) }

@@ -29,7 +29,7 @@ const theme = {
     electric: '#0e4756',
     success: '#2fce3a',
     danger: '#fc0f3e',
-    dangerover: chroma('#fc0f3e').darken(0.3),
+    dangerHover: chroma('#fc0f3e').darken(0.3),
   },
 };
 

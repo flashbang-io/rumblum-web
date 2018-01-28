@@ -22,10 +22,7 @@ class SpaceList extends Component {
   }
 
   handleSelect(id) {
-    // it's important to load the workspace first, even if it's at the cost of speed
-    // this is so that a user will no be shown templates for a workspaces that can't load
     this.props.attemptGetWorkspace(id)
-      .then(({ error }) => error ? { error } : this.props.attemptGetTemplates(id))
       .then(({ error }) => !error && this.toggleShow());
   }
 
@@ -86,10 +83,9 @@ SpaceList.defaultProps = {
 
 const mapStateToProps = ({
   workspace: { workspaces, loading, problem, current },
-  template,
 }) => ({
   workspaces,
-  loading: loading || template.loading,
+  loading,
   problem,
   workspace: current,
 });

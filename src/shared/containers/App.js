@@ -38,30 +38,30 @@ class App extends Component {
 
   render() {
     const { checked, player } = this.props;
-    if (!checked) {
-      return <Splash />;
-    }
-    if (player && !player.invitation) {
-      return (
-        <Pending
-          handleLogout={ () => this.handleLogout() }
-          { ...this.props }
-        />
-      );
-    }
     return (
       <div>
-        <Switch>
-          <Route path="/login" component={ LoginPage } />
-          <Route path="/register" component={ RegisterPage } />
-          <Route path="/forgot" component={ ForgotPage } />
-          <Route path="/reset" component={ ResetPage } />
-          <Route path="/preview" component={ Preview } />
-          <Route path="/share/:templateId" component={ RenderPage } />
-          <Route path="/" component={ Frame } />
-          <Redirect to="/templates" />
-        </Switch>
-        <Helpers />
+        { !checked ? (
+          <Splash />
+        ) : player && !player.invitation ? (
+          <Pending
+            handleLogout={ () => this.handleLogout() }
+            { ...this.props }
+          />
+        ) : (
+          <div>
+            <Switch>
+              <Route path="/login" component={ LoginPage } />
+              <Route path="/register" component={ RegisterPage } />
+              <Route path="/forgot" component={ ForgotPage } />
+              <Route path="/reset" component={ ResetPage } />
+              <Route path="/preview" component={ Preview } />
+              <Route path="/share/:templateId" component={ RenderPage } />
+              <Route path="/" component={ Frame } />
+              <Redirect to="/templates" />
+            </Switch>
+            <Helpers />
+          </div>
+        ) }
         { config.beta && <BetaFlag /> }
       </div>
     );
