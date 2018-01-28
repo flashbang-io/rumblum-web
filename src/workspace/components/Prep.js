@@ -7,6 +7,7 @@ import { MODAL_SPACE_TAB_EDIT, MODAL_SPACE, MODAL_SPACE_TAB_PLAN, MODAL_SPACE_TA
 
 const Wrap = styled.div`
   position: relative;
+  z-index: 500;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,15 +71,21 @@ const Prep = ({ handleModal, ...props }) => (
       </Square>
     </Label>
     <Nav>
-      <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_EDIT }) }>
-        <Icon name="suitcase" />
-      </Item>
-      <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_MEMBERS }) }>
-        <Icon name="users" />
-      </Item>
-      <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_PLAN }) }>
-        <Icon name="trophy" />
-      </Item>
+      <Label title="Edit Workspace" sideways>
+        <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_EDIT }) }>
+          <Icon name="suitcase" />
+        </Item>
+      </Label>
+      <Label title="Workspace Members" sideways>
+        <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_MEMBERS }) }>
+          <Icon name="users" />
+        </Item>
+      </Label>
+      <Label title="Subscription Plan" sideways>
+        <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_PLAN }) }>
+          <Icon name="trophy" />
+        </Item>
+      </Label>
     </Nav>
   </Wrap>
 );
