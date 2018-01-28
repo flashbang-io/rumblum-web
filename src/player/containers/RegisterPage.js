@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptCreatePlayer, cleanPlayer } from '../player.reducer';
@@ -17,7 +18,8 @@ class RegisterPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.attemptCreatePlayer();
+    this.props.attemptCreatePlayer()
+      .then(({ error }) => !error && this.props.history.push('/templates'));
   }
 
   render() {
@@ -42,6 +44,9 @@ class RegisterPage extends Component {
 RegisterPage.propTypes = {
   attemptCreatePlayer: PropTypes.func.isRequired,
   cleanPlayer: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = ({
@@ -50,5 +55,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = { attemptCreatePlayer, cleanPlayer };
 export default compose(
   redirectAuthenticatedGuard,
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
 )(RegisterPage);
