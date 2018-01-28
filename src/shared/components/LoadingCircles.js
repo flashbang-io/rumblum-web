@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 const bounce = keyframes`
   0%, 80%, 100% { 
@@ -16,10 +16,10 @@ const Spinner = styled.div`
 `;
 
 const Ball = styled.div`
-  width: 10px;
-  height: 10px;
-  margin-right: 4px;
-  background-color: ${props => props.color || 'white'};
+  width: 0.7em;
+  height: 0.7em;
+  margin-right: 0.5em;
+  background-color: ${props => props.color || props.theme.colors.white};
   border-radius: 100%;
   display: inline-block;
   animation: ${bounce} 1.4s infinite ease-in-out both;
@@ -27,6 +27,9 @@ const Ball = styled.div`
   &:last-child {
     margin-right: 0;
   }
+  ${props => props.dark && css`
+    background-color: ${props.color || props.theme.colors.greyless};
+  `}
 `;
 
 const Loading = ({ ...props }) => (

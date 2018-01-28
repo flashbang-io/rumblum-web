@@ -1,5 +1,6 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import LoadingCircles from './LoadingCircles';
 
 const Wrap = styled.div`
   position: fixed;
@@ -11,41 +12,11 @@ const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const stretch = keyframes`
-  0%, 40%, 100% { 
-    transform: scaleY(0.4);
-    -webkit-transform: scaleY(0.4);
-  }
-  20% { 
-    transform: scaleY(1.0);
-    -webkit-transform: scaleY(1.0);
-  }
-`;
-
-const Spinner = styled.div`
-  height: 50px;
-`;
-
-const Line = styled.div`
-  background-color: ${props => props.theme.colors.grey};
-  height: 100%;
-  width: 6px;
-  margin: 2px;
-  display: inline-block;
-  animation: ${stretch} 1.2s infinite ease-in-out;
-  animation-delay: ${props => props.delay};
+  font-size: 20px;
 `;
 
 export default () => (
   <Wrap>
-    <Spinner>
-      <Line delay="-1.1s" />
-      <Line delay="-1.0s" />
-      <Line delay="-0.9s" />
-      <Line delay="-0.8s" />
-      <Line delay="-0.7s" />
-    </Spinner>
+    <LoadingCircles dark />
   </Wrap>
 );
