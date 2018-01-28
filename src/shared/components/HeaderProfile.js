@@ -7,10 +7,8 @@ import {
   MODAL_SETTINGS_TAB_PROFILE,
   MODAL_SETTINGS_TAB_SECURITY,
   MODAL_SETTINGS_TAB_BILLING,
-  MODAL_SETTINGS_TAB_EDIT,
   MODAL_SETTINGS,
   MODAL_SHARE,
-  MODAL_SPACE,
   MODAL_TEMPLATE,
 } from '../../shared/shared.constants';
 
@@ -116,9 +114,6 @@ class HeaderProfile extends Component {
                   </DropItem>
                   <DropItem onClick={ () => handleTabbed({ modal: MODAL_SETTINGS, tab: MODAL_SETTINGS_TAB_BILLING }) }>
                     <Icon name="credit-card" /> Billing
-                  </DropItem>
-                  <DropItem onClick={ () => handleTabbed({ modal: MODAL_SPACE, tab: MODAL_SETTINGS_TAB_EDIT }) }>
-                    <Icon name="suitcase" /> Workspace
                   </DropItem>
                   <DropItem onClick={ handleLogout }>
                     <Icon name="sign-out" /> Logout

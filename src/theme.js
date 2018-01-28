@@ -33,3 +33,7 @@ const theme = {
 };
 
 export default theme;
+
+export const getSize = color => props => props.theme.size[color];
+export const getShadow = color => props => props.theme.shadows[color];
+export const getColor = color => props => props.theme.colors[color];

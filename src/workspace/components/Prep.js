@@ -1,7 +1,41 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Icon, Label } from '../../shared/components/theme';
 import Square from './Square';
+import { MODAL_SPACE_TAB_EDIT, MODAL_SPACE, MODAL_SPACE_TAB_PLAN, MODAL_SPACE_TAB_MEMBERS } from '../../shared/shared.constants';
+
+const Wrap = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Nav = styled.div`
+  margin-top: 10px;
+`;
+
+const Item = styled.div`
+  height: 40px;
+  width: 40px;
+  margin-top: 10px;
+  background-color: ${props => props.theme.colors.white};
+  border: 1px solid ${props => props.theme.colors.offer};
+  color: ${props => props.theme.colors.greyless};
+  box-shadow: ${props => props.theme.shadows.off};
+  font-size: 14px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    background-color: ${props => props.theme.colors.off};
+  }
+`;
 
 export const SpaceWrap = styled.div`
   position: relative;
@@ -26,14 +60,31 @@ const Shadow = styled.div`
   }
 `;
 
-const Prep = ({ ...props }) => (
-  <Label title="Workspace" sideways>
-    <Square { ...props }>
-      <Shadow>
-        <Icon name="circle-o" />
-      </Shadow>
-    </Square>
-  </Label>
+const Prep = ({ handleModal, ...props }) => (
+  <Wrap>
+    <Label title="Workspace" sideways>
+      <Square { ...props }>
+        <Shadow>
+          <Icon name="circle-o" />
+        </Shadow>
+      </Square>
+    </Label>
+    <Nav>
+      <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_EDIT }) }>
+        <Icon name="suitcase" />
+      </Item>
+      <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_MEMBERS }) }>
+        <Icon name="users" />
+      </Item>
+      <Item onClick={ () => handleModal({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_PLAN }) }>
+        <Icon name="trophy" />
+      </Item>
+    </Nav>
+  </Wrap>
 );
+
+Prep.propTypes = {
+  handleModal: PropTypes.func.isRequired,
+};
 
 export default Prep;
