@@ -42,7 +42,7 @@ class ResetPage extends Component {
               email={ email }
               { ...this.props }
             />
-            <Button to="/login">Login</Button>
+            <Button small dull to="/login">Login</Button>
           </Container>
         </Page>
       </DocumentTitle>

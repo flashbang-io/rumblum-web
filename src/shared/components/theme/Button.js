@@ -21,7 +21,7 @@ const ButtonStyled = styled.button`
     cursor: default;
   }
   &:hover {
-    background-color: ${props => props.theme.colors.infoDark};
+    background-color: ${props => props.theme.colors.infoHover};
   }
   ${sizeNormal}
   ${props => props.big && sizeBig}
@@ -31,10 +31,10 @@ const ButtonStyled = styled.button`
     background-color: ${props.theme.colors.danger};
   `}
   ${props => props.dull && css`
-    color: ${props.theme.colors.dark};
-    background-color: ${props.theme.colors.offer};
+    color: ${props.theme.colors.grey};
+    background-color: ${props.theme.colors.offest};
     &:hover {
-      background-color: ${props.theme.colors.off};
+      background-color: ${props.theme.colors.offer};
     }
   `}
   ${props => props.float && css`
