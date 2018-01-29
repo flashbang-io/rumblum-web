@@ -9,7 +9,7 @@ import {
   apiRemoveChronicle,
 } from './chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
-import { currentTemplate, replaceTemplate } from '../template/template.reducer';
+import { patchTemplate } from '../template/template.reducer';
 import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
@@ -92,8 +92,10 @@ export const attemptCreateChronicle = templateId => thunk(async (dispatch, getSt
   const { chronicle, template } = await apiCreateChronicle(token, templateId, formData);
   dispatch(currentChronicle(chronicle));
   dispatch(addChronicle(chronicle));
-  dispatch(currentTemplate(template));
-  dispatch(replaceTemplate(template));
+  dispatch(patchTemplate({
+    ...template,
+    currentChronicle: chronicle,
+  }));
   dispatch(resetForm(formName));
   dispatch(attemptAlert({ message: 'New version created.' }));
   return chronicle;
@@ -172,6 +174,7 @@ export default handleActions({
 
   [CHRONICLE_PATCH]: (state, { payload = {} }) => ({
     ...state,
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
     chronicles: state.chronicles.map(chronicle => chronicle.id === payload.id ? { ...chronicle, ...payload } : chronicle),
   }),
 

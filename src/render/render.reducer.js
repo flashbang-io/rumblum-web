@@ -169,6 +169,7 @@ export default handleActions({
 
   [RENDER_PATCH]: (state, { payload = {} }) => ({
     ...state,
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
     renders: state.renders.map(render => render.id === payload.id ? { ...render, ...payload } : render),
   }),
 

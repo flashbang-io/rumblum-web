@@ -240,6 +240,7 @@ export default handleActions({
 
   [PLAYER_PATCH]: (state, { payload = {} }) => ({
     ...state,
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
     players: state.players.map(player => player.id === payload.id ? { ...player, ...payload } : player),
   }),
 

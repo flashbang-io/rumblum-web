@@ -165,6 +165,7 @@ export default handleActions({
 
   [MEMBERSHIP_PATCH]: (state, { payload = {} }) => ({
     ...state,
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
     memberships: state.memberships.map(membership => membership.id === payload.id ? { ...membership, ...payload } : membership),
   }),
 
