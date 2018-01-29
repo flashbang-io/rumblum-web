@@ -29,7 +29,7 @@ class DefaultsModal extends Component {
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
           <Heading inverted>Default Template Values</Heading>
-          { loading ? <LoadingCircles space /> : template && <DefaultsForm
+          { loading && !template ? <LoadingCircles space /> : template && <DefaultsForm
             handleSubmit={ event => this.handleSubmit(event) }
             initialValues={{ data }}
             tags={ template.tags || [] }

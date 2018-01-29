@@ -71,12 +71,14 @@ const thunk = thunkify({
  * returns the value of the function from within it. This allows us to chain dispatch functions.
  */
 export const attemptGetWorkspaces = () => thunk(async (dispatch, getState) => {
+  dispatch(setWorkspace());
   const { token, userId } = getState().player.auth;
   const workspaces = await apiGetWorkspaces(token, userId);
   dispatch(setWorkspace(workspaces));
   return workspaces;
 });
 export const attemptGetWorkspace = workspaceId => thunk(async (dispatch, getState) => {
+  dispatch(currentWorkspace());
   const { token } = getState().player.auth;
   const workspace = await apiGetWorkspace(token, workspaceId);
   dispatch(currentWorkspace(workspace));

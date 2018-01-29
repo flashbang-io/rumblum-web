@@ -76,6 +76,7 @@ export const attemptGetTemplates = workspaceId => thunk(async (dispatch, getStat
   return templates;
 });
 export const attemptGetTemplate = templateId => thunk(async (dispatch, getState) => {
+  dispatch(currentTemplate());
   const { token } = getState().player.auth || { token: null };
   const template = await apiGetTemplate(token, templateId);
   dispatch(currentTemplate(template));

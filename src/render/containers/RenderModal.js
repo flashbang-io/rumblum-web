@@ -33,7 +33,7 @@ class RenderModal extends Component {
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
           <Heading inverted>Render Document</Heading>
-          { loading ? <LoadingCircles space /> : template && <RenderForm
+          { loading && !template ? <LoadingCircles space /> : template && <RenderForm
             handleSubmit={ event => this.handleSubmit(event) }
             initialValues={{ data }}
             tags={ tags }
