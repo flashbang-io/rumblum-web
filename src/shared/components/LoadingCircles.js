@@ -13,6 +13,9 @@ const bounce = keyframes`
 const Spinner = styled.div`
   width: 70px;
   text-align: center;
+  ${props => props.space && css`
+    margin-bottom: 10px;
+  `}
 `;
 
 const Ball = styled.div`
@@ -33,7 +36,7 @@ const Ball = styled.div`
 `;
 
 const Loading = ({ ...props }) => (
-  <Spinner>
+  <Spinner { ...props }>
     <Ball { ...props } />
     <Ball delay="-0.16s" { ...props } />
     <Ball delay="-0.32s" { ...props } />

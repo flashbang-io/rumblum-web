@@ -5,6 +5,7 @@ import { attemptUpdateTemplateDefaults, erroredTemplate } from '../template.redu
 import { Heading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
 import DefaultsForm from './DefaultsForm';
+import LoadingCircles from '../../shared/components/LoadingCircles';
 
 class DefaultsModal extends Component {
 
@@ -18,7 +19,7 @@ class DefaultsModal extends Component {
   }
 
   render() {
-    const { template } = this.props;
+    const { template, loading } = this.props;
     const tags = template && template.tags ? template.tags : [];
     const data = tags.reduce((accum, next) => ({
       ...accum,
@@ -28,7 +29,7 @@ class DefaultsModal extends Component {
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
           <Heading inverted>Default Template Values</Heading>
-          { template && <DefaultsForm
+          { loading ? <LoadingCircles space /> : template && <DefaultsForm
             handleSubmit={ event => this.handleSubmit(event) }
             initialValues={{ data }}
             tags={ template.tags || [] }
@@ -48,6 +49,7 @@ DefaultsModal.propTypes = {
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
+  loading: PropTypes.bool.isRequired,
 };
 
 DefaultsModal.defaultProps = {

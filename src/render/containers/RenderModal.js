@@ -6,6 +6,7 @@ import { currentTemplate } from '../../template/template.reducer';
 import { Heading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
 import RenderForm from './RenderForm';
+import LoadingCircles from '../../shared/components/LoadingCircles';
 
 class RenderModal extends Component {
 
@@ -22,7 +23,7 @@ class RenderModal extends Component {
   }
 
   render() {
-    const { template } = this.props;
+    const { template, loading } = this.props;
     const tags = template && template.tags ? template.tags : [];
     const data = tags.reduce((accum, next) => ({
       ...accum,
@@ -32,7 +33,7 @@ class RenderModal extends Component {
       <Modal handleClose={ this.props.handleClose }>
         <Popup>
           <Heading inverted>Render Document</Heading>
-          { template && <RenderForm
+          { loading ? <LoadingCircles space /> : template && <RenderForm
             handleSubmit={ event => this.handleSubmit(event) }
             initialValues={{ data }}
             tags={ tags }
@@ -53,6 +54,7 @@ RenderModal.propTypes = {
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
+  loading: PropTypes.bool.isRequired,
 };
 
 RenderModal.defaultProps = {
@@ -62,6 +64,10 @@ RenderModal.defaultProps = {
 const mapStateToProps = ({
   render: { loading, problem },
   template,
-}) => ({ loading, problem, template: template.current });
+}) => ({
+  loading: loading || template.loading,
+  problem,
+  template: template.current,
+});
 const mapDispatchToProps = { attemptCreateRender, currentRender, currentTemplate };
 export default connect(mapStateToProps, mapDispatchToProps)(RenderModal);
