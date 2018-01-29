@@ -10,7 +10,7 @@ const Item = styled.div`
   box-shadow: ${props => props.theme.shadows.off};
   background-color: ${props => props.theme.colors.white};
   border-radius: ${props => props.theme.size.radius};
-  border: 1px solid #dee8f1;
+  border: 1px solid ${props => props.theme.colors.offer};
   display: flex;
   padding: 15px;
   box-sizing: border-box;
