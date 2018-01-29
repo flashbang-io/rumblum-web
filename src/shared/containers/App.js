@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import queryString from 'query-string';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { attemptCheckPlayer, attemptLogoutPlayer } from '../../player/player.reducer';
 import config from '../../config';
@@ -18,6 +19,14 @@ import Pending from '../components/Pending';
 import BetaFlag from '../components/BetaFlag';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    const { redirect } = queryString.parse(props.location.search);
+    if (props.location.pathname === '/' && redirect) {
+      this.props.history.push(redirect);
+    }
+  }
 
   componentDidMount() {
     this.props.attemptCheckPlayer();
@@ -77,6 +86,10 @@ App.propTypes = {
   }),
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
