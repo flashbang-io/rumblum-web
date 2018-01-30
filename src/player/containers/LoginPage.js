@@ -15,8 +15,11 @@ class LoginPage extends Component {
 
   constructor(props) {
     super(props);
-    const { redirect } = queryString.parse(props.location.search);
-    this.state = { redirect };
+    const { redirect, email } = queryString.parse(props.location.search);
+    this.state = {
+      redirect,
+      init: { email },
+    };
   }
 
   componentWillUnmount() {
@@ -38,6 +41,7 @@ class LoginPage extends Component {
             <Title>Login</Title>
             <LoginForm
               handleSubmit={ event => this.handleSubmit(event) }
+              initialValues={ this.state.init }
               { ...this.props }
             />
             <Group>

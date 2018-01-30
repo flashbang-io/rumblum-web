@@ -15,12 +15,12 @@ class RegisterPage extends Component {
 
   constructor(props) {
     super(props);
-    const { email, first, last } = queryString.parse(props.location.search);
+    const { email, firstName, lastName } = queryString.parse(props.location.search);
     this.state = {
       init: {
         email,
-        firstName: first,
-        lastName: last,
+        firstName,
+        lastName,
       },
     };
   }
