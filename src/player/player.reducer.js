@@ -15,6 +15,7 @@ import {
   apiShare,
 } from './player.service';
 import { attemptAlert } from '../shared/campaign.reducer';
+import config from '../config';
 
 /**
  * Initial state
@@ -76,6 +77,22 @@ const thunk = thunkify({
   end: dispatch => dispatch(loadingPlayer(false)),
   error: (e, dispatch) => dispatch(erroredPlayer(e)),
 });
+const shutdownIntercom = () => {
+  if (config.intercom) {
+    window.Intercom('shutdown');
+    window.Intercom('boot', { app_id: config.intercom });
+  }
+};
+const updateIntercom = player => {
+  if (config.intercom) {
+    window.Intercom('update', {
+      user_id: player.id,
+      name: `${player.firstName} ${player.lastName}`,
+      email: player.email,
+      created_at: player.createdAt,
+    });
+  }
+};
 
 /**
  * Thunks
@@ -107,6 +124,7 @@ export const attemptUpdatePlayer = (playerId, data) => thunk(async (dispatch, ge
   dispatch(currentPlayer(player));
   dispatch(replacePlayer(player));
   dispatch(attemptAlert({ message: 'User updated.' }));
+  updateIntercom(player);
   return player;
 });
 export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
@@ -117,12 +135,14 @@ export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
   dispatch(authPlayer(auth));
   dispatch(currentPlayer(player));
   dispatch(resetForm(formName));
+  updateIntercom(player);
   return { player, auth };
 });
 export const attemptLogoutPlayer = () => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiLogoutPlayer(token);
   dispatch(logoutPlayer());
+  shutdownIntercom();
 });
 export const attemptCheckPlayer = () => thunk(async (dispatch) => {
   try {
@@ -131,6 +151,7 @@ export const attemptCheckPlayer = () => thunk(async (dispatch) => {
       const player = await apiGetPlayer(auth.token, auth.userId); // check token still good
       dispatch(authPlayer(auth));
       dispatch(currentPlayer(player));
+      updateIntercom(player);
     }
   } catch (e) {
     localStorage.removeItem('auth');

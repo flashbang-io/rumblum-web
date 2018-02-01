@@ -31,13 +31,13 @@ class App extends Component {
   componentDidMount() {
     this.props.attemptCheckPlayer();
     if (config.intercom) {
-      // window.Intercom('boot', { app_id: config.intercom });
+      window.Intercom('boot', { app_id: config.intercom });
     }
   }
 
   componentDidUpdate({ location }) {
     if (location !== this.props.location && config.intercom) {
-      // window.Intercom('update');
+      window.Intercom('update');
     }
   }
 
