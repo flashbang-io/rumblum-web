@@ -75,14 +75,14 @@ export const attemptGetWorkspaces = () => thunk(async (dispatch, getState) => {
   const { token, userId } = getState().player.auth;
   const workspaces = await apiGetWorkspaces(token, userId);
   dispatch(setWorkspace(workspaces));
-  return workspaces;
+  return { workspaces };
 });
 export const attemptGetWorkspace = workspaceId => thunk(async (dispatch, getState) => {
   dispatch(currentWorkspace());
   const { token } = getState().player.auth;
   const workspace = await apiGetWorkspace(token, workspaceId);
   dispatch(currentWorkspace(workspace));
-  return workspace;
+  return { workspace };
 });
 export const attemptCreateWorkspace = () => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -93,7 +93,7 @@ export const attemptCreateWorkspace = () => thunk(async (dispatch, getState) => 
   dispatch(currentWorkspace(workspace));
   dispatch(addWorkspace(workspace));
   dispatch(attemptAlert({ message: 'Workspace created.' }));
-  return workspace;
+  return { workspace };
 });
 export const attemptUpdateWorkspace = (workspaceId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -104,7 +104,7 @@ export const attemptUpdateWorkspace = (workspaceId, data) => thunk(async (dispat
   dispatch(currentWorkspace(workspace));
   dispatch(replaceWorkspace(workspace));
   dispatch(attemptAlert({ message: 'Workspace updated.' }));
-  return workspace;
+  return { workspace };
 });
 export const attemptRemoveWorkspace = workspaceId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
@@ -112,7 +112,7 @@ export const attemptRemoveWorkspace = workspaceId => thunk(async (dispatch, getS
   dispatch(removeWorkspace(workspaceId));
   dispatch(currentWorkspace());
   dispatch(attemptAlert({ message: 'Workspace removed.' }));
-  return workspaceId;
+  return { workspaceId };
 });
 export const attemptUpdateSubscription = (workspaceId, data) => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
@@ -120,7 +120,7 @@ export const attemptUpdateSubscription = (workspaceId, data) => thunk(async (dis
   dispatch(currentWorkspace(workspace));
   dispatch(replaceWorkspace(workspace));
   dispatch(attemptAlert({ message: 'Subscription updated.' }));
-  return workspace;
+  return { workspace };
 });
 export const attemptCancelSubscription = workspaceId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
@@ -128,7 +128,7 @@ export const attemptCancelSubscription = workspaceId => thunk(async (dispatch, g
   dispatch(currentWorkspace(workspace));
   dispatch(replaceWorkspace(workspace));
   dispatch(attemptAlert({ message: 'Subscription cancelled.' }));
-  return workspace;
+  return { workspace };
 });
 
 /**

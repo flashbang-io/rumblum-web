@@ -73,14 +73,14 @@ export const attemptGetTemplates = workspaceId => thunk(async (dispatch, getStat
   const { token } = getState().player.auth;
   const templates = await apiGetTemplates(token, workspaceId);
   dispatch(setTemplate(templates));
-  return templates;
+  return { templates };
 });
 export const attemptGetTemplate = templateId => thunk(async (dispatch, getState) => {
   dispatch(currentTemplate());
   const { token } = getState().player.auth || { token: null };
   const template = await apiGetTemplate(token, templateId);
   dispatch(currentTemplate(template));
-  return template;
+  return { template };
 });
 export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -116,7 +116,7 @@ export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch
   const template = await apiUpdateTemplate(token, templateId, body);
   dispatch(patchTemplate(template));
   dispatch(attemptAlert({ message: 'Template updated.' }));
-  return template;
+  return { template };
 });
 export const attemptUpdateTemplateDefaults = (templateId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -127,14 +127,14 @@ export const attemptUpdateTemplateDefaults = (templateId, data) => thunk(async (
   dispatch(currentTemplate(template));
   dispatch(replaceTemplate(template));
   dispatch(attemptAlert({ message: 'Template default values updated.' }));
-  return template;
+  return { template };
 });
 export const attemptRemoveTemplate = templateId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveTemplate(token, templateId);
   dispatch(removeTemplate(templateId));
   dispatch(attemptAlert({ message: 'Template removed.' }));
-  return templateId;
+  return { templateId };
 });
 
 /**

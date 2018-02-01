@@ -83,10 +83,11 @@ const shutdownIntercom = () => {
     window.Intercom('boot', { app_id: config.intercom });
   }
 };
-const updateIntercom = player => {
+const updateIntercom = ({ player, hash }) => {
   if (config.intercom) {
     window.Intercom('update', {
       user_id: player.id,
+      user_hash: hash,
       name: `${player.firstName} ${player.lastName}`,
       email: player.email,
       created_at: player.createdAt,
@@ -104,7 +105,7 @@ export const attemptGetPlayer = playerId => thunk(async (dispatch, getState) => 
   const { token } = getState().player.auth;
   const player = await apiGetPlayer(token, playerId);
   dispatch(currentPlayer(player));
-  return player;
+  return { player };
 });
 export const attemptCreatePlayer = () => thunk(async (dispatch, getState) => {
   const formName = 'register';
@@ -117,15 +118,15 @@ export const attemptCreatePlayer = () => thunk(async (dispatch, getState) => {
 });
 export const attemptUpdatePlayer = (playerId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
-  const { token } = state.player.auth;
+  const { token, hash } = state.player.auth;
   const formName = 'player';
   const body = { ...(data || state.form[formName].values), id: undefined };
   const player = await apiUpdatePlayer(token, playerId, body);
   dispatch(currentPlayer(player));
   dispatch(replacePlayer(player));
   dispatch(attemptAlert({ message: 'User updated.' }));
-  updateIntercom(player);
-  return player;
+  updateIntercom({ player, hash });
+  return { player };
 });
 export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
   const formName = 'credentials';
@@ -135,7 +136,7 @@ export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
   dispatch(authPlayer(auth));
   dispatch(currentPlayer(player));
   dispatch(resetForm(formName));
-  updateIntercom(player);
+  updateIntercom({ player, hash: auth.hash });
   return { player, auth };
 });
 export const attemptLogoutPlayer = () => thunk(async (dispatch, getState) => {
@@ -145,18 +146,20 @@ export const attemptLogoutPlayer = () => thunk(async (dispatch, getState) => {
   shutdownIntercom();
 });
 export const attemptCheckPlayer = () => thunk(async (dispatch) => {
+  let auth;
   try {
-    const auth = await apiCheckPlayer();
+    auth = await apiCheckPlayer();
     if (auth) {
       const player = await apiGetPlayer(auth.token, auth.userId); // check token still good
       dispatch(authPlayer(auth));
       dispatch(currentPlayer(player));
-      updateIntercom(player);
+      updateIntercom({ player, hash: auth.hash });
     }
   } catch (e) {
     localStorage.removeItem('auth');
   }
   dispatch(checkPlayer(true));
+  return { auth };
 });
 export const attemptChangePassword = () => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -185,7 +188,7 @@ export const attemptUpdateBilling = (playerId, source) => thunk(async (dispatch,
   const player = await apiUpdateBilling(token, playerId, { source });
   dispatch(currentPlayer(player));
   dispatch(attemptAlert({ message: 'Billing updated.' }));
-  return player;
+  return { player };
 });
 export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
   const state = getState();

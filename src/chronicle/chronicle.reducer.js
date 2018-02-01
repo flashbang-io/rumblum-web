@@ -72,13 +72,13 @@ export const attemptGetChronicles = templateId => thunk(async (dispatch, getStat
   const { token } = getState().player.auth;
   const chronicles = await apiGetChronicles(token, templateId);
   dispatch(setChronicle(chronicles));
-  return chronicles;
+  return { chronicles };
 });
 export const attemptGetChronicle = chronicleId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   const chronicle = await apiGetChronicle(token, chronicleId);
   dispatch(currentChronicle(chronicle));
-  return chronicle;
+  return { chronicle };
 });
 export const attemptCreateChronicle = templateId => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -98,7 +98,7 @@ export const attemptCreateChronicle = templateId => thunk(async (dispatch, getSt
   }));
   dispatch(resetForm(formName));
   dispatch(attemptAlert({ message: 'New version created.' }));
-  return chronicle;
+  return { chronicle };
 });
 export const attemptUpdateChronicle = (chronicleId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -109,14 +109,14 @@ export const attemptUpdateChronicle = (chronicleId, data) => thunk(async (dispat
   dispatch(currentChronicle(chronicle));
   dispatch(replaceChronicle(chronicle));
   dispatch(attemptAlert({ message: 'Template version updated.' }));
-  return chronicle;
+  return { chronicle };
 });
 export const attemptRemoveChronicle = chronicleId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveChronicle(token, chronicleId);
   dispatch(removeChronicle(chronicleId));
   dispatch(attemptAlert({ message: 'Template version removed.' }));
-  return chronicleId;
+  return { chronicleId };
 });
 
 /**

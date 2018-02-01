@@ -71,13 +71,13 @@ export const attemptGetMemberships = templateId => thunk(async (dispatch, getSta
   const { token } = getState().player.auth;
   const memberships = await apiGetMemberships(token, templateId);
   dispatch(setMembership(memberships));
-  return memberships;
+  return { memberships };
 });
 export const attemptGetMembership = membershipId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   const membership = await apiGetMembership(token, membershipId);
   dispatch(currentMembership(membership));
-  return membership;
+  return { membership };
 });
 export const attemptCreateMembership = workspaceId => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -89,7 +89,7 @@ export const attemptCreateMembership = workspaceId => thunk(async (dispatch, get
   dispatch(addMembership(membership));
   dispatch(resetForm(formName));
   dispatch(attemptAlert({ message: 'Membership created.' }));
-  return membership;
+  return { membership };
 });
 export const attemptUpdateMembership = (membershipId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -100,14 +100,14 @@ export const attemptUpdateMembership = (membershipId, data) => thunk(async (disp
   dispatch(currentMembership(membership));
   dispatch(replaceMembership(membership));
   dispatch(attemptAlert({ message: 'Membership updated.' }));
-  return membership;
+  return { membership };
 });
 export const attemptRemoveMembership = membershipId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveMembership(token, membershipId);
   dispatch(removeMembership(membershipId));
   dispatch(attemptAlert({ message: 'Membership removed.' }));
-  return membershipId;
+  return { membershipId };
 });
 
 /**

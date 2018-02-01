@@ -6,8 +6,8 @@ export const apiLoginPlayer = body => fetch(`${config.endpoint}/players/login`, 
   headers: standardHeaders(),
   body: JSON.stringify(body),
 }).then(handleResponse)
-  .then(({ id, userId, ttl }) => {
-    const auth = { token: id, userId, ttl };
+  .then(({ id, userId, ttl, hash }) => {
+    const auth = { token: id, userId, ttl, hash };
     localStorage.setItem('auth', JSON.stringify(auth));
     return auth;
   });

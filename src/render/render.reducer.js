@@ -70,13 +70,13 @@ export const attemptGetRenders = templateId => thunk(async (dispatch, getState) 
   const { token } = getState().player.auth;
   const renders = await apiGetRenders(token, templateId);
   dispatch(setRender(renders));
-  return renders;
+  return { renders };
 });
 export const attemptGetRender = renderId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   const render = await apiGetRender(token, renderId);
   dispatch(currentRender(render));
-  return render;
+  return { render };
 });
 export const attemptCreateRender = templateId => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -93,7 +93,7 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
   }
   dispatch(currentRender(render));
   dispatch(attemptAlert({ message: 'Template render created.' }));
-  return render;
+  return { render };
 });
 export const attemptUpdateRender = (renderId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -104,14 +104,14 @@ export const attemptUpdateRender = (renderId, data) => thunk(async (dispatch, ge
   dispatch(currentRender(render));
   dispatch(replaceRender(render));
   dispatch(attemptAlert({ message: 'Render updated.' }));
-  return render;
+  return { render };
 });
 export const attemptRemoveRender = renderId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveRender(token, renderId);
   dispatch(removeRender(renderId));
   dispatch(attemptAlert({ message: 'Render removed.' }));
-  return renderId;
+  return { renderId };
 });
 
 /**
