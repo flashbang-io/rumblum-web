@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { attemptGetTemplates, attemptGetTemplate, currentTemplate } from '../template.reducer';
 import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
-import { MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER, MODAL_TEMPLATE_DEFAULTS, MODAL_INSPECT_TAB_FILE } from '../../shared/shared.constants';
 
 class TemplateList extends Component {
 
@@ -13,40 +12,28 @@ class TemplateList extends Component {
   }
 
   componentWillReceiveProps({ workspace }) {
+    console.warn('There is a bug here; it runs did mount with old workspace and then this second with new one.');
     if (this.props.workspace && workspace && this.props.workspace.id !== workspace.id) {
       this.props.attemptGetTemplates(workspace.id);
     }
   }
 
-  handleInspect({ id }) {
-    this.props.currentTemplate(this.props.templates.find(template => template.id === id));
-    this.props.tabCampaign(MODAL_INSPECT_TAB_EDIT);
-    this.props.modalCampaign(MODAL_INSPECT);
-  }
-
-  handleUpload({ id }) {
-    this.props.currentTemplate(this.props.templates.find(template => template.id === id));
-    this.props.tabCampaign(MODAL_INSPECT_TAB_FILE);
-    this.props.modalCampaign(MODAL_INSPECT);
-  }
-
-  handleRender({ id }) {
-    this.props.attemptGetTemplate(id);
-    this.props.modalCampaign(MODAL_RENDER);
-  }
-
-  handleDefaults({ id }) {
-    this.props.attemptGetTemplate(id);
-    this.props.modalCampaign(MODAL_TEMPLATE_DEFAULTS);
+  handleOpen({ id, modal, tab }) {
+    if (id) {
+      // set with temp data while waits to return with full item
+      this.props.currentTemplate(this.props.templates.find(template => template.id === id));
+      this.props.attemptGetTemplate(id);
+    }
+    if (tab) {
+      this.props.tabCampaign(tab);
+    }
+    this.props.modalCampaign(modal);
   }
 
   render() {
     return (
       <Templates
-        handleInspect={ (...args) => this.handleInspect(...args) }
-        handleRender={ (...args) => this.handleRender(...args) }
-        handleDefaults={ (...args) => this.handleDefaults(...args) }
-        handleUpload={ (...args) => this.handleUpload(...args) }
+        handleOpen={ (...args) => this.handleOpen(...args) }
         { ...this.props }
       />
     );

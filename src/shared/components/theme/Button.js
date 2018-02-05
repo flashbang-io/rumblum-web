@@ -20,7 +20,7 @@ export const ButtonStyled = styled.button`
     background-color: ${props => props.theme.colors.grey};
     cursor: default;
   }
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: ${props => props.theme.colors.infoHover};
   }
   ${sizeNormal}

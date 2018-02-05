@@ -69,14 +69,12 @@ const thunk = thunkify({
  * returns the value of the function from within it. This allows us to chain dispatch functions.
  */
 export const attemptGetTemplates = workspaceId => thunk(async (dispatch, getState) => {
-  dispatch(setTemplate());
   const { token } = getState().player.auth;
   const templates = await apiGetTemplates(token, workspaceId);
   dispatch(setTemplate(templates));
   return { templates };
 });
 export const attemptGetTemplate = templateId => thunk(async (dispatch, getState) => {
-  dispatch(currentTemplate());
   const { token } = getState().player.auth || { token: null };
   const template = await apiGetTemplate(token, templateId);
   dispatch(currentTemplate(template));

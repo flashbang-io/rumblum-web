@@ -22,6 +22,7 @@ const Center = styled.div`
   display: none;
   flex-direction: column;
   align-items: center;
+  z-index: 750;
   ${props => props.sideways && css`
     transform: translateX(105%);
     flex-direction: row;

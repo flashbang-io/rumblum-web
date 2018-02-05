@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import moment from 'moment';
 import { pulse } from '../../shared/util.helper';
 import { Icon, Group, Label } from '../../shared/components/theme';
 import config from '../../config';
+import { MODAL_INSPECT, MODAL_INSPECT_TAB_CONNECTIONS, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER, MODAL_TEMPLATE_DEFAULTS, MODAL_INSPECT_TAB_FILE } from '../../shared/shared.constants';
 
 const Item = styled.div`
   box-shadow: ${props => props.theme.shadows.off};
@@ -87,29 +88,41 @@ const Action = styled.a`
   &:hover {
     background-color: ${props => props.theme.colors.offest};
   }
+  ${props => props.highlight && css`
+    color: ${props.theme.colors.white};
+    background-color: #7bdab1;
+    &:hover {
+      background-color: ${props.theme.colors.pinchHover};
+    }
+  `}
 `;
 
-const Template = ({ handleInspect, handleRender, handleDefaults, handleUpload, template: { id, name, updatedAt, currentChronicleId, currentChronicle, accessPublic } }) => (
+const Template = ({ handleOpen, template: { id, name, updatedAt, currentChronicleId, currentChronicle, accessPublic } }) => (
   <Item>
     <Content>
       <Name>{ name }</Name>
       <Meta>Last updated { moment(updatedAt).format('ll') }</Meta>
       <Group>
+        <Label title="Connect Apps">
+          <Action highlight onClick={ () => handleOpen({ id, modal: MODAL_INSPECT, tab: MODAL_INSPECT_TAB_CONNECTIONS }) }>
+            <Icon name="sitemap" />
+          </Action>
+        </Label>
         <Label title="Edit">
-          <Action onClick={ () => handleInspect({ id }) }>
+          <Action onClick={ () => handleOpen({ id, modal: MODAL_INSPECT, tab: MODAL_INSPECT_TAB_EDIT }) }>
             <Icon name="edit" />
           </Action>
         </Label>
         { currentChronicleId && (
           <Label title="Render Document">
-            <Action onClick={ () => handleRender({ id }) }>
+            <Action onClick={ () => handleOpen({ id, modal: MODAL_RENDER }) }>
               <Icon name="plus" />
             </Action>
           </Label>
         ) }
         { currentChronicleId && (
           <Label title="Default Tags">
-            <Action onClick={ () => handleDefaults({ id }) }>
+            <Action onClick={ () => handleOpen({ id, modal: MODAL_TEMPLATE_DEFAULTS }) }>
               <Icon name="bars" />
             </Action>
           </Label>
@@ -130,17 +143,14 @@ const Template = ({ handleInspect, handleRender, handleDefaults, handleUpload, t
         ) }
       </Group>
     </Content>
-    <Badge onClick={ () => handleUpload({ id }) }>
+    <Badge onClick={ () => handleOpen({ id, modal: MODAL_INSPECT, tab: MODAL_INSPECT_TAB_FILE }) }>
       <Icon name="file-word-o" />
     </Badge>
   </Item>
 );
 
 Template.propTypes = {
-  handleInspect: PropTypes.func.isRequired,
-  handleRender: PropTypes.func.isRequired,
-  handleDefaults: PropTypes.func.isRequired,
-  handleUpload: PropTypes.func.isRequired,
+  handleOpen: PropTypes.func.isRequired,
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,

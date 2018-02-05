@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { attemptGetWorkspaces, attemptGetWorkspace } from '../workspace.reducer';
-import { attemptGetTemplates } from '../../template/template.reducer';
+import { resetTemplate } from '../../template/template.reducer';
 import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Spaces from '../components/Spaces';
 import { MODAL_CREATE_SPACE } from '../../shared/shared.constants';
@@ -22,8 +22,8 @@ class SpaceList extends Component {
   }
 
   handleSelect(id) {
-    this.props.attemptGetWorkspace(id)
-      .then(({ error }) => !error && this.toggleShow());
+    this.props.resetTemplate();
+    this.props.attemptGetWorkspace(id);
   }
 
   handleForm() {
@@ -65,7 +65,7 @@ class SpaceList extends Component {
 SpaceList.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   attemptGetWorkspace: PropTypes.func.isRequired,
-  attemptGetTemplates: PropTypes.func.isRequired,
+  resetTemplate: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
   tabCampaign: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
@@ -92,7 +92,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   attemptGetWorkspaces,
   attemptGetWorkspace,
-  attemptGetTemplates,
+  resetTemplate,
   modalCampaign,
   tabCampaign,
 };
