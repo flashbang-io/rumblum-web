@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { sizeBig, sizeNormal, sizeSmall, sizeTiny } from './style';
 
-const ButtonStyled = styled.button`
+export const ButtonStyled = styled.button`
   text-decoration: none;
   outline: none;
   margin-bottom: 10px;

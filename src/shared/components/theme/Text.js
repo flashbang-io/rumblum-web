@@ -33,3 +33,14 @@ export const Subheading = styled.div`
     color: ${props.theme.colors.white};
   `}
 `;
+
+export const RegularText = styled.div`
+  font-size: 13px;
+  color: #cccccc;
+  margin: 0 0 20px;
+  line-height: 1.6em;
+  ${props => props.flatten && flatten}
+  ${props => props.inverted && css`
+    color: ${props.theme.colors.white};
+  `}
+`;

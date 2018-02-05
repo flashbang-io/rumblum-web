@@ -23,8 +23,9 @@ const Menu = styled.div`
 const MenuItem = styled.div`
   padding: 10px;
   margin-bottom: 4px;
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
@@ -36,6 +37,7 @@ const MenuItem = styled.div`
   }
   i {
     width: 20px;
+    font-size: 13px;
     text-align: center;
   }
   ${props => props.active && css`
