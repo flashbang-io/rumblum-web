@@ -32,7 +32,7 @@ I wanted to share a little app that I found, which I think you may be interested
         <Popup>
           <Heading inverted flatten>Share</Heading>
           <Subheading>
-            { config.beta ? 'Rumblum is currently "invite-only" which means others can only use it if you invite them.' : 'Invite new members to use rumblum.' }
+            { config.beta ? 'Rumblum is currently "invite only" which means others can only use it if you invite them.' : 'Invite new members to use rumblum.' }
           </Subheading>
           <ShareForm
             handleSubmit={ event => this.handleSubmit(event) }

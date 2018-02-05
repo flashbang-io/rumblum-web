@@ -18,6 +18,6 @@ const Flag = styled.div`
 `;
 
 export default () => (
-  <Flag>Invite-Only Beta</Flag>
+  <Flag>Invite Only Beta</Flag>
 );
 
