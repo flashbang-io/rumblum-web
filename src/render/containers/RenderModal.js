@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptCreateRender, currentRender } from '../render.reducer';
+import { attemptCreateRender, resetRender } from '../render.reducer';
 import { currentTemplate } from '../../template/template.reducer';
 import { Heading, Modal } from '../../shared/components/theme';
 import Popup from '../../shared/components/Popup';
@@ -11,7 +11,7 @@ import LoadingCircles from '../../shared/components/LoadingCircles';
 class RenderModal extends Component {
 
   componentWillUnmount() {
-    this.props.currentRender();
+    this.props.resetRender();
     this.props.currentTemplate();
   }
 
@@ -48,7 +48,7 @@ class RenderModal extends Component {
 
 RenderModal.propTypes = {
   attemptCreateRender: PropTypes.func.isRequired,
-  currentRender: PropTypes.func.isRequired,
+  resetRender: PropTypes.func.isRequired,
   currentTemplate: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   template: PropTypes.shape({
@@ -69,5 +69,5 @@ const mapStateToProps = ({
   problem,
   template: template.current,
 });
-const mapDispatchToProps = { attemptCreateRender, currentRender, currentTemplate };
+const mapDispatchToProps = { attemptCreateRender, currentTemplate, resetRender };
 export default connect(mapStateToProps, mapDispatchToProps)(RenderModal);
