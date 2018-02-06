@@ -53,13 +53,13 @@ const ConnectionsTab = () => (
     <Row center>
       <Connect
         target="_blank"
-        href="https://zapier.com/platform/public-invite/1470/76554a06e929894983f7271a0dcf7d74/"
+        href="https://zapier.com/platform/public-invite/1470/76554a06e929894983f7271a0dcf7d74/#app"
         style={{ marginRight: '10px' }}
       >
         <Icon name="exclamation-circle" /> Request Access
       </Connect>
       <RegularText style={{ marginBottom: '10px' }}>
-        <strong style={{ color: 'white' }}><Icon name="bullhorn" /> Important -</strong> you must request access before connecting any apps.
+        <strong style={{ color: 'white' }}><Icon name="bullhorn" /> Important -</strong> you must request access before connecting. Once you have accepted, you may connect your apps.
       </RegularText>
     </Row>
     <div>
