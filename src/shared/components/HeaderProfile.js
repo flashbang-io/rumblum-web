@@ -38,11 +38,13 @@ const Menu = styled.div`
   }
 `;
 
-const Profile = styled.div`
+const Profile = styled.a`
   color: ${props => props.theme.colors.white};
   background-color: ${props => props.theme.colors.dark};
   border-radius: ${props => props.theme.size.radius};
   box-shadow: ${props => props.theme.shadows.off};
+  text-decoration: none;
+  display: block;
   height: 50px;
   width: 50px;
   font-size: 20px;
@@ -97,6 +99,11 @@ class HeaderProfile extends Component {
             <Label title="Invite New Users">
               <Profile onClick={ () => handleTabbed({ modal: MODAL_SHARE }) }>
                 <Icon name="share-alt" />
+              </Profile>
+            </Label>
+            <Label title="Get Help">
+              <Profile target="_blank" href="http://help.rumblum.com/">
+                <Icon name="question-circle" />
               </Profile>
             </Label>
             <Label title="Settings" override={ open ? false : null }>
