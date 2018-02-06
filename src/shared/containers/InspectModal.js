@@ -31,16 +31,16 @@ class InspectModal extends Component {
           handleTab={ (...args) => this.props.tabCampaign(...args) }
         >
           <Tab
-            id={ MODAL_INSPECT_TAB_EDIT }
-            title="Edit"
-            icon="edit"
-            component={ TemplateTab }
-          />
-          <Tab
             id={ MODAL_INSPECT_TAB_CONNECTIONS }
             title="Connections"
             icon="sitemap"
             component={ ConnectionsTab }
+          />
+          <Tab
+            id={ MODAL_INSPECT_TAB_EDIT }
+            title="Edit"
+            icon="edit"
+            component={ TemplateTab }
           />
           <Tab
             id={ MODAL_INSPECT_TAB_FILE }
