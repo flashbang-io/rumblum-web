@@ -5,7 +5,7 @@ import { ButtonStyled } from './theme/Button';
 
 const Connect = ButtonStyled.withComponent('a').extend`
   background-color: #FF4A00;
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #F43E00;
   }
 `;

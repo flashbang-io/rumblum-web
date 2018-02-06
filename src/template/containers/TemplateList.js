@@ -12,7 +12,6 @@ class TemplateList extends Component {
   }
 
   componentWillReceiveProps({ workspace }) {
-    console.warn('There is a bug here; it runs did mount with old workspace and then this second with new one.');
     if (this.props.workspace && workspace && this.props.workspace.id !== workspace.id) {
       this.props.attemptGetTemplates(workspace.id);
     }

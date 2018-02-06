@@ -29,14 +29,14 @@ export const ButtonStyled = styled.button`
   ${props => props.tiny && sizeTiny}
   ${props => props.danger && css`
     background-color: ${props.theme.colors.danger};
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: ${props.theme.colors.dangerHover};
     }
   `}
   ${props => props.dull && css`
     color: ${props.theme.colors.grey};
     background-color: ${props.theme.colors.offest};
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: ${props.theme.colors.offer};
     }
   `}

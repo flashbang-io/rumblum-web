@@ -182,7 +182,7 @@ const Templates = ({ templates, loading, ...props }) => (
 Templates.propTypes = {
   templates: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  })).isRequired,
   loading: PropTypes.bool.isRequired,
 };
 

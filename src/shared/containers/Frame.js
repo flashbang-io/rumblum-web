@@ -25,18 +25,13 @@ import MainPage from './MainPage';
 class Frame extends Component {
 
   componentDidMount() {
-    this.props.attemptGetWorkspaces();
-  }
-
-  componentWillReceiveProps({ workspace, workspaces }) {
-    if (!workspace && workspaces && workspaces.length) {
-      this.props.currentWorkspace(workspaces[0]);
-    }
+    this.props.attemptGetWorkspaces()
+      .then(({ error, data }) => !error && data && data.workspaces && this.props.currentWorkspace(data.workspaces[0]));
   }
 
   render() {
-    const { workspace, loading, modal, player } = this.props;
-    if ((!workspace && loading) || !player) {
+    const { modal, player } = this.props;
+    if (!player) {
       return <Splash />;
     }
     return (
@@ -67,33 +62,21 @@ Frame.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   currentWorkspace: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
-  workspaces: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  })).isRequired,
-  workspace: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }),
   player: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
-  loading: PropTypes.bool.isRequired,
   modal: PropTypes.string,
 };
 
 Frame.defaultProps = {
-  workspace: null,
   player: null,
   modal: null,
 };
 
 const mapStateToProps = ({
-  workspace: { workspaces, current, loading },
   campaign: { modal },
   player,
 }) => ({
-  workspaces,
-  workspace: current,
-  loading,
   modal,
   player: player.current,
 });
