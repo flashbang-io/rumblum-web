@@ -60,6 +60,7 @@ const Badge = Download.withComponent('a').extend`
   padding: 10px;
   background-color: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.dark};
+  border: 1px solid ${props => props.theme.colors.greyless};
   font-weight: bold;
   &:hover {
     background-color: ${props => props.theme.colors.white};
@@ -69,7 +70,7 @@ const Badge = Download.withComponent('a').extend`
 const Group = styled.div`
   position: absolute;
   bottom: 20px;
-  right: 30px;
+  right: 100px;
   display: flex;
 `;
 
@@ -80,7 +81,7 @@ const Frame = ({ handleDownload, ...props }) => (
       <Download onClick={ handleDownload }>Download</Download>
       <Badge href="/">
         <Square>R</Square>
-        Powered by Rumblum
+        What is Rumblum?
       </Badge>
     </Group>
   </Window>
