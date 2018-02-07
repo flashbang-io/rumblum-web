@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { RegularText, Row, Icon } from './theme';
 import { ButtonStyled } from './theme/Button';
+import zaps from '../zaps.json';
 
 const Connect = ButtonStyled.withComponent('a').extend`
   white-space: nowrap;
@@ -38,12 +40,38 @@ const AppIcon = styled.div`
   border-radius: ${props => props.theme.size.radius};
   background-color: ${props => props.theme.colors.offest};
   ${props => props.src && css`
-    background-size: auto 45px;
+    background-size: auto ${props.size || '75%'};
     background-position: center;
     background-repeat: no-repeat;
     background-image: url(${props.src});
   `}
 `;
+
+const Zap = ({ name, description, alt, logo, link, size }) => (
+  <Connection>
+    <AppIcon src={ logo } size={ size } />
+    <Content>
+      <AppName>{ name }</AppName>
+      <RegularText flatten>{ description }</RegularText>
+    </Content>
+    <Connect flatten small target="_blank" alt={ alt } href={ link }>
+      Connect
+    </Connect>
+  </Connection>
+);
+
+Zap.propTypes = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  logo: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  size: PropTypes.string,
+};
+
+Zap.defaultProps = {
+  size: null,
+};
 
 const ConnectionsTab = () => (
   <div>
@@ -63,54 +91,7 @@ const ConnectionsTab = () => (
       </RegularText>
     </Row>
     <div>
-      <Connection>
-        <AppIcon src="https://www.axxun-evalua.com/wp-content/uploads/ico-sheets.png" />
-        <Content>
-          <AppName>Google Sheets to Rumblum</AppName>
-          <RegularText flatten>Create a Rumblum document when a Google Sheets row is updated.</RegularText>
-        </Content>
-        <Connect
-          flatten
-          small
-          target="_blank"
-          alt="Connect Google Sheets to Rumblum"
-          href="https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=GoogleSheetsV2API&template__0__action=updated_row&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20Google%20Sheets%20row%20is%20updated&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=no&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
-        >
-          Connect
-        </Connect>
-      </Connection>
-      <Connection>
-        <AppIcon src="https://avatars2.githubusercontent.com/u/1652745?s=280&v=4" />
-        <Content>
-          <AppName>Typeform to Rumblum</AppName>
-          <RegularText flatten>Create a Rumblum document when a Typeform is submitted.</RegularText>
-        </Content>
-        <Connect
-          flatten
-          small
-          target="_blank"
-          alt="Connect Typeform to Rumblum"
-          href="https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=TypeformDevAPI&template__0__action=entries_resthook&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20Typeform%20is%20submitted&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=no&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
-        >
-          Connect
-        </Connect>
-      </Connection>
-      <Connection>
-        <AppIcon src="https://www.ascora.com.au/Assets/img/icon_xero.png" />
-        <Content>
-          <AppName>Xero to Rumblum</AppName>
-          <RegularText flatten>Create a Rumblum document when a new Xero invoice is created.</RegularText>
-        </Content>
-        <Connect
-          flatten
-          small
-          target="_blank"
-          alt="Connect Xero to Rumblum"
-          href="https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=XeroAPI&template__0__action=sales_invoice&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20new%20Xero%20invoice%20is%20created&template__0__params__status=submitted&template__0__meta__paramamp__status=&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=yes&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
-        >
-          Connect
-        </Connect>
-      </Connection>
+      { zaps.map(zap => <Zap { ...zap } />) }
     </div>
   </div>
 );
