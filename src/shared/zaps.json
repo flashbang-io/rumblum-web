@@ -4,21 +4,16 @@
     "description": "Create a Rumblum document when a Google Sheets row is updated.",
     "alt": "Connect Google Sheets to Rumblum",
     "logo": "/assets/icons/google-sheets.png",
-    "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=GoogleSheetsV2API&template__0__action=updated_row&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20Google%20Sheets%20row%20is%20updated&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=no&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
+    "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=GoogleSheetsV2API&template__0__action=updated_row&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20Google%20Sheets%20row%20is%20updated&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=no&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send=",
+    "tutorial": "http://help.rumblum.com/use-cases/create-hundreds-of-custom-documents-with-google-sheets-and-rumblum"
   },
   {
     "name": "Typeform to Rumblum",
     "description": "Create a Rumblum document when a Typeform is submitted.",
     "alt": "Connect Typeform to Rumblum",
     "logo": "/assets/icons/typeform.png",
-    "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=TypeformDevAPI&template__0__action=entries_resthook&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20Typeform%20is%20submitted&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=no&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
-  },
-  {
-    "name": "Xero to Rumblum",
-    "description": "Create a Rumblum document when a new Xero invoice is created.",
-    "alt": "Connect Xero to Rumblum",
-    "logo": "/assets/icons/xero.png",
-    "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=XeroAPI&template__0__action=sales_invoice&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20new%20Xero%20invoice%20is%20created&template__0__params__status=submitted&template__0__meta__paramamp__status=&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=yes&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
+    "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=TypeformDevAPI&template__0__action=entries_resthook&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20Typeform%20is%20submitted&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=no&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send=",
+    "tutorial": "http://help.rumblum.com/use-cases/create-custom-documents-with-typeform-and-rumblum"
   },
   {
     "name": "Airtable to Rumblum",
@@ -26,7 +21,8 @@
     "alt": "Connect Airtable to Rumblum",
     "logo": "/assets/icons/airtable.png",
     "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=AirtableDevAPI&template__0__action=newRecordInView&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20Airtable%20record%20is%20available%20in%20a%20view&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=no&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send=",
-    "size": "60%"
+    "size": "60%",
+    "tutorial": "http://help.rumblum.com/use-cases/create-hundreds-of-custom-documents-with-airtable-and-rumblum"
   },
   {
     "name": "Eventbrite to Rumblum",
@@ -34,6 +30,13 @@
     "alt": "Connect Eventbrite to Rumblum",
     "logo": "/assets/icons/eventbrite.png",
     "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=EventbriteDevAPI&template__0__action=new_attendee_hook&template__0__title=Create%20a%20Rumblum%20document%20when%20an%20Eventbrite%20event%20gets%20a%20new%20attendee&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=yes&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
+  },
+  {
+    "name": "Xero to Rumblum",
+    "description": "Create a Rumblum document when a new Xero invoice is created.",
+    "alt": "Connect Xero to Rumblum",
+    "logo": "/assets/icons/xero.png",
+    "link": "https://zapier.com/app/editor?template__0__type_of=read&template__0__selected_api=XeroAPI&template__0__action=sales_invoice&template__0__title=Create%20a%20Rumblum%20document%20when%20a%20new%20Xero%20invoice%20is%20created&template__0__params__status=submitted&template__0__meta__paramamp__status=&template__1__type_of=write&template__1__selected_api=App1470CLIAPI%401.0.0&template__1__action=renderCreate&template__1__params__pdf=yes&template__1__params__send=yes&template__1__meta__paramamp__pdf=&template__1__meta__paramamp__send="
   },
   {
     "name": "Stripe to Rumblum",

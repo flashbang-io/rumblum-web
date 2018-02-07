@@ -5,7 +5,9 @@ import { RegularText, Row, Icon } from './theme';
 import { ButtonStyled } from './theme/Button';
 import zaps from '../zaps.json';
 
-const Connect = ButtonStyled.withComponent('a').extend`
+const Tutorial = ButtonStyled.withComponent('a');
+
+const Connect = Tutorial.extend`
   white-space: nowrap;
   background-color: #FF4A00;
   &:hover:not(:disabled) {
@@ -47,16 +49,30 @@ const AppIcon = styled.div`
   `}
 `;
 
-const Zap = ({ name, description, alt, logo, link, size }) => (
+const ConnectGroup = styled.div`
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+const Zap = ({ name, description, alt, logo, link, size, tutorial }) => (
   <Connection>
     <AppIcon src={ logo } size={ size } />
     <Content>
       <AppName>{ name }</AppName>
       <RegularText flatten>{ description }</RegularText>
     </Content>
-    <Connect flatten small target="_blank" alt={ alt } href={ link }>
-      Connect
-    </Connect>
+    <ConnectGroup>
+      <Connect flatten={ !tutorial } small target="_blank" alt={ alt } href={ link }>
+        Connect
+      </Connect>
+      { tutorial && (
+        <Tutorial flatten dull small target="_blank" alt={ `${name} Tutorial` } href={ tutorial }>
+          See Tutorial
+        </Tutorial>
+      ) }
+    </ConnectGroup>
   </Connection>
 );
 
@@ -67,10 +83,12 @@ Zap.propTypes = {
   logo: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   size: PropTypes.string,
+  tutorial: PropTypes.string,
 };
 
 Zap.defaultProps = {
   size: null,
+  tutorial: null,
 };
 
 const ConnectionsTab = () => (

@@ -13,6 +13,7 @@ export const ButtonStyled = styled.button`
   cursor: pointer;
   text-align: center;
   transition: .2s;
+  white-space: nowrap;
   border-radius: ${props => props.theme.size.radius};
   background-color: ${props => props.theme.colors.info};
   color: ${props => props.theme.colors.white};
