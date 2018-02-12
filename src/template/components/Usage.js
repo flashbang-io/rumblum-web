@@ -41,18 +41,16 @@ const Bar = styled.div`
 `;
 
 const Usage = ({ handleUpgrade, workspace, total, usage, ...props }) => {
-  const percent = !!total && !!usage && (usage / total) * 100;
+  const percent = !!total && (usage / total) * 100;
   const value = !percent ? 0 : percent > 100 ? 100 : percent;
   const nearly = value && value > 80;
   return (
     <Wrap { ...props }>
       <Details>
-        { !!total && !!usage && (
-          <Content>
-            <div>Documents created this month</div>
-            <div>{ usage } / { total }</div>
-          </Content>
-        ) }
+        <Content>
+          <div>Documents created this month</div>
+          { !!total && <div>{ usage } / { total }</div> }
+        </Content>
         <Progress>
           { !!value && <Bar value={ value } nearly={ nearly } { ...props } /> }
         </Progress>

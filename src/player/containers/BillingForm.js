@@ -50,7 +50,7 @@ class BillingForm extends Component {
     };
     return (
       <form onSubmit={ (...args) => this.handleSubmit(...args) }>
-        { player.customer && <Info>Payment card already linked to this account.</Info> }
+        { player.customer && <Info>Payment card is linked to this account.</Info> }
         <div>
           <Control
             label="Name"

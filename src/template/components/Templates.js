@@ -173,7 +173,7 @@ const Templates = ({ templates, loading, ...props }) => (
     { loading && !templates.length && <Ghost /> }
     { !loading && !templates.length && (
       <Placeholder>
-        Make your first template by clicking the button up there <Icon name="chevron-up" />
+        Make your first template by clicking the &#34;+&#34; button up there <Icon name="chevron-up" />
       </Placeholder>
     ) }
   </Wrap>

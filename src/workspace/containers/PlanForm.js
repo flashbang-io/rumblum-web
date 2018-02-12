@@ -10,12 +10,13 @@ class PlanForm extends Component {
     super(props);
     this.state = {
       plan: props.workspace && props.workspace.plan ? props.workspace.plan : null,
+      friendly: null,
       coupon: '',
     };
   }
 
-  handleSelect({ plan }) {
-    this.setState({ plan });
+  handleSelect(data) {
+    this.setState({ ...this.state, ...data });
   }
 
   handleCouponChange(event) {
@@ -39,7 +40,7 @@ class PlanForm extends Component {
             icon="trophy"
             features={ ['500 Renders a month', 'Unlimited templates', 'Unlimited team members', 'Unlimited versions'] }
             active={ plan === PLAN_500_MONTHLY_29_USD }
-            handleClick={ () => this.handleSelect({ plan: PLAN_500_MONTHLY_29_USD }) }
+            handleClick={ () => this.handleSelect({ plan: PLAN_500_MONTHLY_29_USD, friendly: 'Basic Plan' }) }
           />
           <PlanGroup>
             <Plan
@@ -48,7 +49,7 @@ class PlanForm extends Component {
               icon="bolt"
               features={ ['1000 Renders a month', 'Unlimited templates', 'Unlimited team members', 'Unlimited versions'] }
               active={ plan === PLAN_1000_MONTHLY_49_USD }
-              handleClick={ () => this.handleSelect({ plan: PLAN_1000_MONTHLY_49_USD }) }
+              handleClick={ () => this.handleSelect({ plan: PLAN_1000_MONTHLY_49_USD, friendly: 'Power Plan' }) }
             />
             <Plan
               title="Growth Plan"
@@ -56,7 +57,7 @@ class PlanForm extends Component {
               icon="globe"
               features={ ['2500 Renders a month', 'Unlimited templates', 'Unlimited team members', 'Unlimited versions'] }
               active={ plan === PLAN_2500_MONTHLY_99_USD }
-              handleClick={ () => this.handleSelect({ plan: PLAN_2500_MONTHLY_99_USD }) }
+              handleClick={ () => this.handleSelect({ plan: PLAN_2500_MONTHLY_99_USD, friendly: 'Growth Plan' }) }
             />
           </PlanGroup>
           <Control

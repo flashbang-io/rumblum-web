@@ -24,6 +24,7 @@ const initialState = {
   loading: false,
   success: null,
   usage: null,
+  sale: null,
 };
 
 /**
@@ -41,6 +42,7 @@ export const WORKSPACE_ADD = 'rumblum/workspace/ADD';
 export const WORKSPACE_CURRENT = 'rumblum/workspace/CURRENT';
 export const WORKSPACE_PATCH = 'rumblum/workspace/PATCH';
 export const WORKSPACE_USAGE = 'rumblum/workspace/USAGE';
+export const WORKSPACE_SALE = 'rumblum/workspace/SALE';
 
 /**
  * Actions
@@ -59,6 +61,7 @@ export const addWorkspace = createAction(WORKSPACE_ADD);
 export const currentWorkspace = createAction(WORKSPACE_CURRENT);
 export const patchWorkspace = createAction(WORKSPACE_PATCH);
 export const usageWorkspace = createAction(WORKSPACE_USAGE);
+export const saleWorkspace = createAction(WORKSPACE_SALE);
 
 /**
  * Config
@@ -122,8 +125,11 @@ export const attemptRemoveWorkspace = workspaceId => thunk(async (dispatch, getS
 export const attemptUpdateSubscription = (workspaceId, data) => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   const workspace = await apiUpdateSubscription(token, workspaceId, data);
+  const usage = await apiGetWorkspaceUsage(token, workspaceId);
   dispatch(currentWorkspace(workspace));
   dispatch(replaceWorkspace(workspace));
+  dispatch(usageWorkspace(usage));
+  dispatch(saleWorkspace());
   dispatch(attemptAlert({ message: 'Subscription updated.' }));
   return { workspace };
 });
@@ -215,6 +221,11 @@ export default handleActions({
   [RENDER_ADD]: (state) => ({
     ...state,
     usage: state.usage ? { ...state.usage, usage: state.usage.usage + 1 } : null,
+  }),
+
+  [WORKSPACE_SALE]: (state, { payload = null }) => ({
+    ...state,
+    sale: payload,
   }),
 
 }, initialState);
