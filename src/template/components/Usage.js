@@ -62,7 +62,7 @@ const Usage = ({ handleUpgrade, workspace, total, usage, ...props }) => {
         </Group>
       ) }
     </Wrap>
-  ); 
+  );
 };
 
 Usage.propTypes = {
