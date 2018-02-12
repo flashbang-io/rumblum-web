@@ -35,7 +35,7 @@ const Bar = styled.div`
   width: ${props => props.value}%;
   height: 100%;
   border-radius: 100px;
-  ${props => props.value && props.value > 80 && css`
+  ${props => props.nearly && css`
     background-color: ${props.theme.colors.danger};
   `}
 `;
@@ -43,6 +43,7 @@ const Bar = styled.div`
 const Usage = ({ handleUpgrade, workspace, total, usage, ...props }) => {
   const percent = !!total && !!usage && (usage / total) * 100;
   const value = !percent ? 0 : percent > 100 ? 100 : percent;
+  const nearly = value && value > 80;
   return (
     <Wrap { ...props }>
       <Details>
@@ -53,10 +54,10 @@ const Usage = ({ handleUpgrade, workspace, total, usage, ...props }) => {
           </Content>
         ) }
         <Progress>
-          { !!value && <Bar value={ value } { ...props } /> }
+          { !!value && <Bar value={ value } nearly={ nearly } { ...props } /> }
         </Progress>
       </Details>
-      { (workspace.cancelling || !workspace.subscription) && (
+      { (nearly || !workspace.subscription) && (
         <Group style={{ marginLeft: '15px' }}>
           <Button flatten small dull onClick={ handleUpgrade }>Upgrade</Button>
         </Group>
