@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { attemptGetWorkspaces, attemptGetWorkspace } from '../workspace.reducer';
+import { attemptGetWorkspaces, attemptGetWorkspace, attemptGetWorkspaceUsage } from '../workspace.reducer';
 import { resetTemplate } from '../../template/template.reducer';
 import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Spaces from '../components/Spaces';
@@ -24,6 +24,7 @@ class SpaceList extends Component {
   handleSelect(id) {
     this.props.resetTemplate();
     this.props.attemptGetWorkspace(id);
+    this.props.attemptGetWorkspaceUsage(id);
   }
 
   handleForm() {
@@ -65,6 +66,7 @@ class SpaceList extends Component {
 SpaceList.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   attemptGetWorkspace: PropTypes.func.isRequired,
+  attemptGetWorkspaceUsage: PropTypes.func.isRequired,
   resetTemplate: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
   tabCampaign: PropTypes.func.isRequired,
@@ -92,6 +94,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   attemptGetWorkspaces,
   attemptGetWorkspace,
+  attemptGetWorkspaceUsage,
   resetTemplate,
   modalCampaign,
   tabCampaign,

@@ -8,9 +8,11 @@ import {
   apiRemoveWorkspace,
   apiUpdateSubscription,
   apiCancelSubscription,
+  apiGetWorkspaceUsage,
 } from './workspace.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
 import { attemptAlert } from '../shared/campaign.reducer';
+import { RENDER_ADD } from '../render/render.reducer';
 
 /**
  * Initial state
@@ -21,6 +23,7 @@ const initialState = {
   problem: null,
   loading: false,
   success: null,
+  usage: null,
 };
 
 /**
@@ -37,6 +40,7 @@ export const WORKSPACE_REMOVE = 'rumblum/workspace/REMOVE';
 export const WORKSPACE_ADD = 'rumblum/workspace/ADD';
 export const WORKSPACE_CURRENT = 'rumblum/workspace/CURRENT';
 export const WORKSPACE_PATCH = 'rumblum/workspace/PATCH';
+export const WORKSPACE_USAGE = 'rumblum/workspace/USAGE';
 
 /**
  * Actions
@@ -54,6 +58,7 @@ export const removeWorkspace = createAction(WORKSPACE_REMOVE);
 export const addWorkspace = createAction(WORKSPACE_ADD);
 export const currentWorkspace = createAction(WORKSPACE_CURRENT);
 export const patchWorkspace = createAction(WORKSPACE_PATCH);
+export const usageWorkspace = createAction(WORKSPACE_USAGE);
 
 /**
  * Config
@@ -130,6 +135,12 @@ export const attemptCancelSubscription = workspaceId => thunk(async (dispatch, g
   dispatch(attemptAlert({ message: 'Subscription cancelled.' }));
   return { workspace };
 });
+export const attemptGetWorkspaceUsage = workspaceId => thunk(async (dispatch, getState) => {
+  const { token } = getState().player.auth;
+  const usage = await apiGetWorkspaceUsage(token, workspaceId);
+  dispatch(usageWorkspace(usage));
+  return { usage };
+});
 
 /**
  * Reducer
@@ -194,6 +205,16 @@ export default handleActions({
     ...state,
     current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
     workspaces: state.workspaces.map(workspace => workspace.id === payload.id ? { ...workspace, ...payload } : workspace),
+  }),
+
+  [WORKSPACE_USAGE]: (state, { payload = null }) => ({
+    ...state,
+    usage: payload,
+  }),
+
+  [RENDER_ADD]: (state) => ({
+    ...state,
+    usage: state.usage ? { ...state.usage, usage: state.usage.usage + 1 } : null,
   }),
 
 }, initialState);

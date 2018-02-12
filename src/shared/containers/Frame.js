@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { redirectUnauthenticatedGuard } from '../../guards';
-import { attemptGetWorkspaces, currentWorkspace } from '../../workspace/workspace.reducer';
+import { attemptGetWorkspaces, attemptGetWorkspaceUsage, currentWorkspace } from '../../workspace/workspace.reducer';
 import { modalCampaign } from '../campaign.reducer';
 import { MODAL_SETTINGS, MODAL_SHARE, MODAL_TEMPLATE, MODAL_INSPECT, MODAL_RENDER, MODAL_SPACE, MODAL_TEMPLATE_DEFAULTS, MODAL_CREATE_SPACE } from '../shared.constants';
 import { Container } from '../components/theme/index';
@@ -26,7 +26,13 @@ class Frame extends Component {
 
   componentDidMount() {
     this.props.attemptGetWorkspaces()
-      .then(({ error, data }) => !error && data && data.workspaces && this.props.currentWorkspace(data.workspaces[0]));
+      .then(({ error, data }) => {
+        if (!error && data && data.workspaces && data.workspaces.length) {
+          const workspace = data.workspaces[0];
+          this.props.currentWorkspace(workspace);
+          this.props.attemptGetWorkspaceUsage(workspace.id);
+        }
+      });
   }
 
   render() {
@@ -60,6 +66,7 @@ class Frame extends Component {
 
 Frame.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
+  attemptGetWorkspaceUsage: PropTypes.func.isRequired,
   currentWorkspace: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
   player: PropTypes.shape({
@@ -82,6 +89,7 @@ const mapStateToProps = ({
 });
 const mapDispatchToProps = {
   attemptGetWorkspaces,
+  attemptGetWorkspaceUsage,
   currentWorkspace,
   modalCampaign,
 };

@@ -7,7 +7,7 @@ import { Icon, Group, Label } from '../../shared/components/theme';
 import config from '../../config';
 import { MODAL_INSPECT, MODAL_INSPECT_TAB_CONNECTIONS, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER, MODAL_TEMPLATE_DEFAULTS, MODAL_INSPECT_TAB_FILE } from '../../shared/shared.constants';
 
-const Item = styled.div`
+export const Item = styled.div`
   box-shadow: ${props => props.theme.shadows.off};
   background-color: ${props => props.theme.colors.white};
   border-radius: ${props => props.theme.size.radius};

@@ -92,6 +92,7 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
     a.click();
   }
   dispatch(currentRender(render));
+  dispatch(addRender(render));
   dispatch(attemptAlert({ message: 'Template render created.' }));
   return { render };
 });

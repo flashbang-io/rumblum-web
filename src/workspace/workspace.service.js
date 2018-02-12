@@ -36,3 +36,7 @@ export const apiCancelSubscription = (token, workspaceId) => fetch(`${config.end
   method: 'DELETE',
   headers: standardHeaders({ 'Authorization': token }),
 }).then(handleResponse);
+
+export const apiGetWorkspaceUsage = (token, workspaceId) => fetch(`${config.endpoint}/workspaces/${workspaceId}/usage`, {
+  headers: standardHeaders({ 'Authorization': token }),
+}).then(handleResponse);
