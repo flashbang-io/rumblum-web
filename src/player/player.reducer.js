@@ -114,6 +114,7 @@ export const attemptCreatePlayer = () => thunk(async (dispatch, getState) => {
   const auth = await apiLoginPlayer(body);
   dispatch(currentPlayer(player));
   dispatch(authPlayer(auth));
+  updateIntercom({ player, hash: auth.hash });
   return { player, auth };
 });
 export const attemptUpdatePlayer = (playerId, data) => thunk(async (dispatch, getState) => {
