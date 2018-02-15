@@ -7,6 +7,7 @@ const hook = document.getElementById('hook');
 
 const Shadow = styled.div`
   padding: 60px 15px;
+  box-sizing: border-box;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.7);
   position: fixed;

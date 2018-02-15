@@ -9,7 +9,7 @@ import {
   apiRemoveChronicle,
 } from './chronicle.service';
 import { PLAYER_LOGOUT } from '../player/player.reducer';
-import { currentTemplate, replaceTemplate } from '../template/template.reducer';
+import { patchTemplate } from '../template/template.reducer';
 import { attemptAlert } from '../shared/campaign.reducer';
 
 /**
@@ -72,13 +72,13 @@ export const attemptGetChronicles = templateId => thunk(async (dispatch, getStat
   const { token } = getState().player.auth;
   const chronicles = await apiGetChronicles(token, templateId);
   dispatch(setChronicle(chronicles));
-  return chronicles;
+  return { chronicles };
 });
 export const attemptGetChronicle = chronicleId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   const chronicle = await apiGetChronicle(token, chronicleId);
   dispatch(currentChronicle(chronicle));
-  return chronicle;
+  return { chronicle };
 });
 export const attemptCreateChronicle = templateId => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -92,11 +92,13 @@ export const attemptCreateChronicle = templateId => thunk(async (dispatch, getSt
   const { chronicle, template } = await apiCreateChronicle(token, templateId, formData);
   dispatch(currentChronicle(chronicle));
   dispatch(addChronicle(chronicle));
-  dispatch(currentTemplate(template));
-  dispatch(replaceTemplate(template));
+  dispatch(patchTemplate({
+    ...template,
+    currentChronicle: chronicle,
+  }));
   dispatch(resetForm(formName));
   dispatch(attemptAlert({ message: 'New version created.' }));
-  return chronicle;
+  return { chronicle };
 });
 export const attemptUpdateChronicle = (chronicleId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -107,14 +109,14 @@ export const attemptUpdateChronicle = (chronicleId, data) => thunk(async (dispat
   dispatch(currentChronicle(chronicle));
   dispatch(replaceChronicle(chronicle));
   dispatch(attemptAlert({ message: 'Template version updated.' }));
-  return chronicle;
+  return { chronicle };
 });
 export const attemptRemoveChronicle = chronicleId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveChronicle(token, chronicleId);
   dispatch(removeChronicle(chronicleId));
   dispatch(attemptAlert({ message: 'Template version removed.' }));
-  return chronicleId;
+  return { chronicleId };
 });
 
 /**
@@ -172,7 +174,8 @@ export default handleActions({
 
   [CHRONICLE_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
+    chronicles: state.chronicles.map(chronicle => chronicle.id === payload.id ? { ...chronicle, ...payload } : chronicle),
   }),
 
 }, initialState);

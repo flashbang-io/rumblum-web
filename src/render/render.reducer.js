@@ -70,24 +70,20 @@ export const attemptGetRenders = templateId => thunk(async (dispatch, getState) 
   const { token } = getState().player.auth;
   const renders = await apiGetRenders(token, templateId);
   dispatch(setRender(renders));
-  return renders;
+  return { renders };
 });
 export const attemptGetRender = renderId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   const render = await apiGetRender(token, renderId);
   dispatch(currentRender(render));
-  return render;
+  return { render };
 });
 export const attemptCreateRender = templateId => thunk(async (dispatch, getState) => {
   const state = getState();
   const { token } = state.player.auth || { token: null };
   const formName = 'render';
   const { data, ...values } = { ...state.form[formName].values };
-  const empty = Object.keys(state.form[formName].registeredFields)
-    .filter(field => field.startsWith('data.'))
-    .map(field => field.replace('data.', ''))
-    .reduce((accum, next) => ({ ...accum, [next]: '' }), {});
-  const body = { ...values, data: { ...empty, ...data } };
+  const body = { ...values, data };
   const render = await apiCreateRender(token, templateId, body);
   if (!body.send) {
     const a = document.createElement('a');
@@ -96,8 +92,9 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
     a.click();
   }
   dispatch(currentRender(render));
+  dispatch(addRender(render));
   dispatch(attemptAlert({ message: 'Template render created.' }));
-  return render;
+  return { render };
 });
 export const attemptUpdateRender = (renderId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -108,14 +105,14 @@ export const attemptUpdateRender = (renderId, data) => thunk(async (dispatch, ge
   dispatch(currentRender(render));
   dispatch(replaceRender(render));
   dispatch(attemptAlert({ message: 'Render updated.' }));
-  return render;
+  return { render };
 });
 export const attemptRemoveRender = renderId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveRender(token, renderId);
   dispatch(removeRender(renderId));
   dispatch(attemptAlert({ message: 'Render removed.' }));
-  return renderId;
+  return { renderId };
 });
 
 /**
@@ -173,7 +170,8 @@ export default handleActions({
 
   [RENDER_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
+    renders: state.renders.map(render => render.id === payload.id ? { ...render, ...payload } : render),
   }),
 
 }, initialState);

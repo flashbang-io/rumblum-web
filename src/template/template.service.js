@@ -7,7 +7,7 @@ export const apiCreateTemplate = (token, workspaceId, body) => fetch(`${config.e
   body: JSON.stringify(body),
 }).then(handleResponse);
 
-export const apiGetTemplates = (token, workspaceId) => fetch(`${config.endpoint}/workspaces/${workspaceId}/templates`, {
+export const apiGetTemplates = (token, workspaceId) => fetch(`${config.endpoint}/workspaces/${workspaceId}/templates?filter[include]=currentChronicle`, {
   headers: standardHeaders({ 'Authorization': token }),
 }).then(handleResponse);
 

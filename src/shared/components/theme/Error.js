@@ -41,7 +41,7 @@ const Close = styled.div`
   margin-left: 10px;
   margin-bottom: auto;
   &:hover {
-    background-color: ${props => props.theme.colors.dangerover};
+    background-color: ${props => props.theme.colors.dangerHover};
   }
 `;
 

@@ -5,6 +5,7 @@ import moment from 'moment';
 import { attemptGetRenders } from '../render.reducer';
 import Level from '../../shared/components/Level';
 import { Button, Heading, Subheading, Group } from '../../shared/components/theme';
+import LoadingCircles from '../../shared/components/LoadingCircles';
 
 class RenderList extends Component {
 
@@ -13,17 +14,17 @@ class RenderList extends Component {
   }
 
   render() {
-    const { renders } = this.props;
+    const { renders, loading } = this.props;
     return (
       <div>
-        { renders.map(({ id, filename, extension, location, createdAt }) => (
+        { loading ? <LoadingCircles /> : renders.map(({ id, filename, extension, location, createdAt }) => (
           <Level key={ id } across center>
             <div style={{ marginRight: 'auto' }}>
               <Heading inverted flatten>{ filename ? `${filename}${extension}` : id }</Heading>
               <Subheading style={{ marginBottom: 0 }}>Created on { moment(createdAt).format('ll') }</Subheading>
             </div>
             <Group>
-              <Button tiny="true" flatten="true" to={ `/preview?url=${location}` } target="_blank">Preview</Button>
+              <Button tiny="true" flatten="true" to={ `/preview?url=${encodeURIComponent(location)}` } target="_blank">Preview</Button>
               <Button tiny flatten href={ location } download>Download</Button>
             </Group>
           </Level>
@@ -42,6 +43,7 @@ RenderList.propTypes = {
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = ({

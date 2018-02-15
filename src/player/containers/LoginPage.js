@@ -15,8 +15,11 @@ class LoginPage extends Component {
 
   constructor(props) {
     super(props);
-    const { redirect } = queryString.parse(props.location.search);
-    this.state = { redirect };
+    const { redirect, email } = queryString.parse(props.location.search);
+    this.state = {
+      redirect,
+      init: { email },
+    };
   }
 
   componentWillUnmount() {
@@ -27,7 +30,7 @@ class LoginPage extends Component {
     event.preventDefault();
     const { redirect } = this.state;
     this.props.attemptLoginPlayer()
-      .then(({ error }) => !error && redirect && this.props.history.push(redirect));
+      .then(({ error }) => !error && this.props.history.push(redirect || '/templates'));
   }
 
   render() {
@@ -38,11 +41,12 @@ class LoginPage extends Component {
             <Title>Login</Title>
             <LoginForm
               handleSubmit={ event => this.handleSubmit(event) }
+              initialValues={ this.state.init }
               { ...this.props }
             />
             <Group>
-              <Button to="/register">Sign Up</Button>
-              <Button to="/forgot">Forgot Password</Button>
+              <Button small="true" dull="true" to="/register">Sign Up</Button>
+              <Button small="true" dull="true" to="/forgot">Forgot Password</Button>
             </Group>
           </Container>
         </Page>

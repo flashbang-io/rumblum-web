@@ -9,6 +9,7 @@ const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: ${props => props.theme.colors.off};
 `;
 
 const Centered = styled.div`

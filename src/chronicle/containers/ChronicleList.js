@@ -5,6 +5,7 @@ import moment from 'moment';
 import { attemptGetChronicles } from '../chronicle.reducer';
 import Level from '../../shared/components/Level';
 import { Button, Heading, Subheading, Group } from '../../shared/components/theme';
+import LoadingCircles from '../../shared/components/LoadingCircles';
 
 class ChronicleList extends Component {
 
@@ -13,17 +14,17 @@ class ChronicleList extends Component {
   }
 
   render() {
-    const { chronicles } = this.props;
+    const { chronicles, loading } = this.props;
     return (
       <div>
-        { chronicles.map(({ id, location, createdAt }) => (
+        { loading ? <LoadingCircles /> : chronicles.map(({ id, location, createdAt }) => (
           <Level key={ id } across center>
             <div style={{ marginRight: 'auto' }}>
               <Heading inverted flatten>{ id }</Heading>
               <Subheading style={{ marginBottom: 0 }}>Created on { moment(createdAt).format('ll') }</Subheading>
             </div>
             <Group>
-              <Button tiny="true" flatten="true" to={ `/preview?url=${location}` } target="_blank">Preview</Button>
+              <Button tiny="true" flatten="true" to={ `/preview?url=${encodeURIComponent(location)}` } target="_blank">Preview</Button>
               <Button tiny flatten href={ location } download>Download</Button>
             </Group>
           </Level>
@@ -42,6 +43,7 @@ ChronicleList.propTypes = {
   template: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = ({

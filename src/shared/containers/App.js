@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import queryString from 'query-string';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { attemptCheckPlayer, attemptLogoutPlayer } from '../../player/player.reducer';
 import config from '../../config';
@@ -15,19 +16,28 @@ import Splash from '../components/Splash';
 import Preview from './Preview';
 import Helpers from './Helpers';
 import Pending from '../components/Pending';
+import BetaFlag from '../components/BetaFlag';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    const { redirect } = queryString.parse(props.location.search);
+    if (props.location.pathname === '/' && redirect) {
+      this.props.history.push(redirect);
+    }
+  }
 
   componentDidMount() {
     this.props.attemptCheckPlayer();
     if (config.intercom) {
-      // window.Intercom('boot', { app_id: config.intercom });
+      window.Intercom('boot', { app_id: config.intercom });
     }
   }
 
   componentDidUpdate({ location }) {
     if (location !== this.props.location && config.intercom) {
-      // window.Intercom('update');
+      window.Intercom('update');
     }
   }
 
@@ -37,30 +47,31 @@ class App extends Component {
 
   render() {
     const { checked, player } = this.props;
-    if (!checked) {
-      return <Splash />;
-    }
-    if (player && !player.invitation) {
-      return (
-        <Pending
-          handleLogout={ () => this.handleLogout() }
-          { ...this.props }
-        />
-      );
-    }
     return (
       <div>
-        <Switch>
-          <Route path="/login" component={ LoginPage } />
-          <Route path="/register" component={ RegisterPage } />
-          <Route path="/forgot" component={ ForgotPage } />
-          <Route path="/reset" component={ ResetPage } />
-          <Route path="/preview" component={ Preview } />
-          <Route path="/share/:templateId" component={ RenderPage } />
-          <Route path="/" component={ Frame } />
-          <Redirect to="/templates" />
-        </Switch>
-        <Helpers />
+        { !checked ? (
+          <Splash />
+        ) : player && !player.invitation ? (
+          <Pending
+            handleLogout={ () => this.handleLogout() }
+            { ...this.props }
+          />
+        ) : (
+          <div>
+            <Switch>
+              <Route path="/login" component={ LoginPage } />
+              <Route path="/register" component={ RegisterPage } />
+              <Route path="/forgot" component={ ForgotPage } />
+              <Route path="/reset" component={ ResetPage } />
+              <Route path="/preview" component={ Preview } />
+              <Route path="/share/:templateId" component={ RenderPage } />
+              <Route path="/" component={ Frame } />
+              <Redirect to="/templates" />
+            </Switch>
+            <Helpers />
+          </div>
+        ) }
+        { config.beta && <BetaFlag /> }
       </div>
     );
   }
@@ -75,6 +86,10 @@ App.propTypes = {
   }),
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 

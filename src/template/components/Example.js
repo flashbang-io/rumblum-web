@@ -44,7 +44,7 @@ const Example = ({ document: { id, title, location, description }, handleSelect,
     <Subheading>{ description }</Subheading>
     <Group>
       <Button flatten grow tiny onClick={ () => handleSelect(id) }>Select</Button>
-      <Button flatten grow tiny href={ `${config.url}/preview?url=${location}` } target="_blank">Preview</Button>
+      <Button flatten grow tiny href={ `${config.url}/preview?url=${encodeURIComponent(location)}` } target="_blank">Preview</Button>
     </Group>
   </Wrap>
 );

@@ -69,17 +69,16 @@ const thunk = thunkify({
  * returns the value of the function from within it. This allows us to chain dispatch functions.
  */
 export const attemptGetTemplates = workspaceId => thunk(async (dispatch, getState) => {
-  dispatch(setTemplate());
   const { token } = getState().player.auth;
   const templates = await apiGetTemplates(token, workspaceId);
   dispatch(setTemplate(templates));
-  return templates;
+  return { templates };
 });
 export const attemptGetTemplate = templateId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth || { token: null };
   const template = await apiGetTemplate(token, templateId);
   dispatch(currentTemplate(template));
-  return template;
+  return { template };
 });
 export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -90,7 +89,7 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
   if (!values || (!values.file && !values.premade)) {
     throw new Error('Please complete the form before submitting.');
   }
-  const body = { ...state.form[formName].values, id: undefined };
+  const body = { ...state.form[formName].values, id: undefined, file: undefined };
   const temporary = await apiCreateTemplate(token, workspaceId, body);
   const { id } = temporary;
   dispatch(addTemplate(temporary));
@@ -113,10 +112,9 @@ export const attemptUpdateTemplate = (templateId, data) => thunk(async (dispatch
   const formName = 'template';
   const body = { ...(data || state.form[formName].values), id: undefined };
   const template = await apiUpdateTemplate(token, templateId, body);
-  dispatch(currentTemplate(template));
-  dispatch(replaceTemplate(template));
+  dispatch(patchTemplate(template));
   dispatch(attemptAlert({ message: 'Template updated.' }));
-  return template;
+  return { template };
 });
 export const attemptUpdateTemplateDefaults = (templateId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -127,14 +125,14 @@ export const attemptUpdateTemplateDefaults = (templateId, data) => thunk(async (
   dispatch(currentTemplate(template));
   dispatch(replaceTemplate(template));
   dispatch(attemptAlert({ message: 'Template default values updated.' }));
-  return template;
+  return { template };
 });
 export const attemptRemoveTemplate = templateId => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiRemoveTemplate(token, templateId);
   dispatch(removeTemplate(templateId));
   dispatch(attemptAlert({ message: 'Template removed.' }));
-  return templateId;
+  return { templateId };
 });
 
 /**
@@ -192,7 +190,8 @@ export default handleActions({
 
   [TEMPLATE_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
+    templates: state.templates.map(template => template.id === payload.id ? { ...template, ...payload } : template),
   }),
 
 }, initialState);

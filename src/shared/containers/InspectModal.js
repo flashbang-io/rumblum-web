@@ -7,11 +7,12 @@ import { setRender } from '../../render/render.reducer';
 import { tabCampaign } from '../campaign.reducer';
 import { Modal } from '../components/theme';
 import Popup, { Tab } from '../components/Popup';
-import { MODAL_INSPECT_TAB_EDIT, MODAL_INSPECT_TAB_CHRONICLES, MODAL_INSPECT_TAB_RENDERS, MODAL_INSPECT_TAB_FILE } from '../shared.constants';
+import { MODAL_INSPECT_TAB_EDIT, MODAL_INSPECT_TAB_CHRONICLES, MODAL_INSPECT_TAB_RENDERS, MODAL_INSPECT_TAB_FILE, MODAL_INSPECT_TAB_CONNECTIONS } from '../shared.constants';
 import TemplateTab from '../../template/containers/TemplateTab';
 import ChronicleList from '../../chronicle/containers/ChronicleList';
 import RenderList from '../../render/containers/RenderList';
 import ChronicleTab from '../../chronicle/containers/ChronicleTab';
+import ConnectionsTab from '../components/ConnectionsTab';
 
 class InspectModal extends Component {
 
@@ -29,6 +30,12 @@ class InspectModal extends Component {
           active={ active }
           handleTab={ (...args) => this.props.tabCampaign(...args) }
         >
+          <Tab
+            id={ MODAL_INSPECT_TAB_CONNECTIONS }
+            title="Connections"
+            icon="sitemap"
+            component={ ConnectionsTab }
+          />
           <Tab
             id={ MODAL_INSPECT_TAB_EDIT }
             title="Edit"

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptCreatePlayer, cleanPlayer } from '../player.reducer';
@@ -11,13 +13,26 @@ import Page from '../components/Page';
 
 class RegisterPage extends Component {
 
+  constructor(props) {
+    super(props);
+    const { email, firstName, lastName } = queryString.parse(props.location.search);
+    this.state = {
+      init: {
+        email,
+        firstName,
+        lastName,
+      },
+    };
+  }
+
   componentWillUnmount() {
     this.props.cleanPlayer();
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.attemptCreatePlayer();
+    this.props.attemptCreatePlayer()
+      .then(({ error }) => !error && this.props.history.push('/templates'));
   }
 
   render() {
@@ -28,9 +43,10 @@ class RegisterPage extends Component {
             <Title>Sign Up</Title>
             <RegisterForm
               handleSubmit={ event => this.handleSubmit(event) }
+              initialValues={ this.state.init }
               { ...this.props }
             />
-            <Button to="/login">Login</Button>
+            <Button small="true" dull="true" to="/login">Login</Button>
           </Container>
         </Page>
       </DocumentTitle>
@@ -42,6 +58,12 @@ class RegisterPage extends Component {
 RegisterPage.propTypes = {
   attemptCreatePlayer: PropTypes.func.isRequired,
   cleanPlayer: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = ({
@@ -50,5 +72,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = { attemptCreatePlayer, cleanPlayer };
 export default compose(
   redirectAuthenticatedGuard,
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
 )(RegisterPage);

@@ -15,6 +15,7 @@ import {
   apiShare,
 } from './player.service';
 import { attemptAlert } from '../shared/campaign.reducer';
+import config from '../config';
 
 /**
  * Initial state
@@ -76,6 +77,23 @@ const thunk = thunkify({
   end: dispatch => dispatch(loadingPlayer(false)),
   error: (e, dispatch) => dispatch(erroredPlayer(e)),
 });
+const shutdownIntercom = () => {
+  if (config.intercom) {
+    window.Intercom('shutdown');
+    window.Intercom('boot', { app_id: config.intercom });
+  }
+};
+const updateIntercom = ({ player, hash }) => {
+  if (config.intercom) {
+    window.Intercom('update', {
+      user_id: player.id,
+      user_hash: hash,
+      name: `${player.firstName} ${player.lastName}`,
+      email: player.email,
+      created_at: player.createdAt,
+    });
+  }
+};
 
 /**
  * Thunks
@@ -87,7 +105,7 @@ export const attemptGetPlayer = playerId => thunk(async (dispatch, getState) => 
   const { token } = getState().player.auth;
   const player = await apiGetPlayer(token, playerId);
   dispatch(currentPlayer(player));
-  return player;
+  return { player };
 });
 export const attemptCreatePlayer = () => thunk(async (dispatch, getState) => {
   const formName = 'register';
@@ -96,18 +114,20 @@ export const attemptCreatePlayer = () => thunk(async (dispatch, getState) => {
   const auth = await apiLoginPlayer(body);
   dispatch(currentPlayer(player));
   dispatch(authPlayer(auth));
+  updateIntercom({ player, hash: auth.hash });
   return { player, auth };
 });
 export const attemptUpdatePlayer = (playerId, data) => thunk(async (dispatch, getState) => {
   const state = getState();
-  const { token } = state.player.auth;
+  const { token, hash } = state.player.auth;
   const formName = 'player';
   const body = { ...(data || state.form[formName].values), id: undefined };
   const player = await apiUpdatePlayer(token, playerId, body);
   dispatch(currentPlayer(player));
   dispatch(replacePlayer(player));
   dispatch(attemptAlert({ message: 'User updated.' }));
-  return player;
+  updateIntercom({ player, hash });
+  return { player };
 });
 export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
   const formName = 'credentials';
@@ -117,25 +137,30 @@ export const attemptLoginPlayer = () => thunk(async (dispatch, getState) => {
   dispatch(authPlayer(auth));
   dispatch(currentPlayer(player));
   dispatch(resetForm(formName));
+  updateIntercom({ player, hash: auth.hash });
   return { player, auth };
 });
 export const attemptLogoutPlayer = () => thunk(async (dispatch, getState) => {
   const { token } = getState().player.auth;
   await apiLogoutPlayer(token);
   dispatch(logoutPlayer());
+  shutdownIntercom();
 });
 export const attemptCheckPlayer = () => thunk(async (dispatch) => {
+  let auth;
   try {
-    const auth = await apiCheckPlayer();
+    auth = await apiCheckPlayer();
     if (auth) {
       const player = await apiGetPlayer(auth.token, auth.userId); // check token still good
       dispatch(authPlayer(auth));
       dispatch(currentPlayer(player));
+      updateIntercom({ player, hash: auth.hash });
     }
   } catch (e) {
     localStorage.removeItem('auth');
   }
   dispatch(checkPlayer(true));
+  return { auth };
 });
 export const attemptChangePassword = () => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -164,7 +189,7 @@ export const attemptUpdateBilling = (playerId, source) => thunk(async (dispatch,
   const player = await apiUpdateBilling(token, playerId, { source });
   dispatch(currentPlayer(player));
   dispatch(attemptAlert({ message: 'Billing updated.' }));
-  return player;
+  return { player };
 });
 export const attemptSharePlayer = () => thunk(async (dispatch, getState) => {
   const state = getState();
@@ -240,7 +265,8 @@ export default handleActions({
 
   [PLAYER_PATCH]: (state, { payload = {} }) => ({
     ...state,
-    current: { ...state.current, ...payload },
+    current: state.current.id && payload.id && state.current.id === payload.id ? { ...state.current, ...payload } : state.current,
+    players: state.players.map(player => player.id === payload.id ? { ...player, ...payload } : player),
   }),
 
   [PLAYER_AUTH]: (state, { payload = null }) => ({

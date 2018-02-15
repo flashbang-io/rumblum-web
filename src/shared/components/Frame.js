@@ -39,8 +39,9 @@ const Square = styled.div`
 const Download = styled.button`
   border: none;
   background-color: ${props => props.theme.colors.dark};
+  box-shadow: ${props => props.theme.shadows.off};
   color: ${props => props.theme.colors.white};
-  padding: 6px 10px;
+  padding: 10px 14px;
   margin-left: 10px;
   border-radius: 3px;
   font-size: 11px;
@@ -56,9 +57,10 @@ const Download = styled.button`
 `;
 
 const Badge = Download.withComponent('a').extend`
-  border: 1px solid #c1c1c1;
+  padding: 10px;
   background-color: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.dark};
+  border: 1px solid ${props => props.theme.colors.greyless};
   font-weight: bold;
   &:hover {
     background-color: ${props => props.theme.colors.white};
@@ -68,7 +70,7 @@ const Badge = Download.withComponent('a').extend`
 const Group = styled.div`
   position: absolute;
   bottom: 20px;
-  right: 30px;
+  right: 100px;
   display: flex;
 `;
 
@@ -79,7 +81,7 @@ const Frame = ({ handleDownload, ...props }) => (
       <Download onClick={ handleDownload }>Download</Download>
       <Badge href="/">
         <Square>R</Square>
-        Powered by Rumblum
+        What is Rumblum?
       </Badge>
     </Group>
   </Window>

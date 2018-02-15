@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { attemptUpdateSubscription, attemptCancelSubscription, erroredWorkspace } from '../workspace.reducer';
-import { modalCampaign } from '../../shared/campaign.reducer';
+import { attemptUpdateSubscription, attemptCancelSubscription, erroredWorkspace, saleWorkspace } from '../workspace.reducer';
+import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import PlanForm from './PlanForm';
 import { Control, Button, Group } from '../../shared/components/theme';
+import { MODAL_SPACE_TAB_BILLING } from '../../shared/shared.constants';
 
 class PlanTab extends Component {
 
@@ -20,8 +21,14 @@ class PlanTab extends Component {
   }
 
   handleSubscription(data) {
-    this.props.attemptUpdateSubscription(this.props.workspace.id, data)
-      .then(({ error }) => !error && this.props.modalCampaign());
+    const { customer } = this.props.player;
+    if (customer) {
+      this.props.attemptUpdateSubscription(this.props.workspace.id, data)
+        .then(({ error }) => !error && this.props.modalCampaign());
+    } else {
+      this.props.saleWorkspace(data);
+      this.props.tabCampaign(MODAL_SPACE_TAB_BILLING);
+    }
   }
 
   handleCancel() {
@@ -73,14 +80,33 @@ PlanTab.propTypes = {
   attemptUpdateSubscription: PropTypes.func.isRequired,
   attemptCancelSubscription: PropTypes.func.isRequired,
   erroredWorkspace: PropTypes.func.isRequired,
+  saleWorkspace: PropTypes.func.isRequired,
   modalCampaign: PropTypes.func.isRequired,
+  tabCampaign: PropTypes.func.isRequired,
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
+  }).isRequired,
+  player: PropTypes.shape({
+    customer: PropTypes.string,
   }).isRequired,
 };
 
 const mapStateToProps = ({
   workspace: { current, loading, problem },
-}) => ({ loading, problem, workspace: current });
-const mapDispatchToProps = { attemptUpdateSubscription, attemptCancelSubscription, erroredWorkspace, modalCampaign };
+  player,
+}) => ({
+  loading,
+  problem,
+  workspace:
+  current,
+  player: player.current,
+});
+const mapDispatchToProps = {
+  attemptUpdateSubscription,
+  attemptCancelSubscription,
+  erroredWorkspace,
+  saleWorkspace,
+  modalCampaign,
+  tabCampaign,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(PlanTab);

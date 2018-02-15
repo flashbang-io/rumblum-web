@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { attemptGetTemplates, attemptGetTemplate, currentTemplate } from '../template.reducer';
 import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Templates from '../components/Templates';
-import { MODAL_INSPECT, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER, MODAL_TEMPLATE_DEFAULTS } from '../../shared/shared.constants';
+import Usage from '../components/Usage';
+import { MODAL_SPACE, MODAL_SPACE_TAB_PLAN } from '../../shared/shared.constants';
 
 class TemplateList extends Component {
 
@@ -12,30 +13,38 @@ class TemplateList extends Component {
     this.props.attemptGetTemplates(this.props.workspace.id);
   }
 
-  handleInspect({ id }) {
-    this.props.currentTemplate(this.props.templates.find(template => template.id === id));
-    this.props.tabCampaign(MODAL_INSPECT_TAB_EDIT);
-    this.props.modalCampaign(MODAL_INSPECT);
+  componentWillReceiveProps({ workspace }) {
+    if (this.props.workspace && workspace && this.props.workspace.id !== workspace.id) {
+      this.props.attemptGetTemplates(workspace.id);
+    }
   }
 
-  handleRender({ id }) {
-    this.props.attemptGetTemplate(id);
-    this.props.modalCampaign(MODAL_RENDER);
-  }
-
-  handleDefaults({ id }) {
-    this.props.attemptGetTemplate(id);
-    this.props.modalCampaign(MODAL_TEMPLATE_DEFAULTS);
+  handleOpen({ id, modal, tab }) {
+    if (id) {
+      // set with temp data while waits to return with full item
+      this.props.currentTemplate(this.props.templates.find(template => template.id === id));
+      this.props.attemptGetTemplate(id);
+    }
+    if (tab) {
+      this.props.tabCampaign(tab);
+    }
+    this.props.modalCampaign(modal);
   }
 
   render() {
+    const { usage, workspace } = this.props;
     return (
-      <Templates
-        handleInspect={ (...args) => this.handleInspect(...args) }
-        handleRender={ (...args) => this.handleRender(...args) }
-        handleDefaults={ (...args) => this.handleDefaults(...args) }
-        { ...this.props }
-      />
+      <div>
+        <Usage
+          handleUpgrade={ () => this.handleOpen({ modal: MODAL_SPACE, tab: MODAL_SPACE_TAB_PLAN }) }
+          workspace={ workspace }
+          { ...usage }
+        />
+        <Templates
+          handleOpen={ (...args) => this.handleOpen(...args) }
+          { ...this.props }
+        />
+      </div>
     );
   }
 
@@ -53,6 +62,14 @@ TemplateList.propTypes = {
   workspace: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
+  usage: PropTypes.shape({
+    total: PropTypes.number.isRequired,
+    usage: PropTypes.number.isRequired,
+  }),
+};
+
+TemplateList.defaultProps = {
+  usage: null,
 };
 
 const mapStateToProps = ({
@@ -62,6 +79,7 @@ const mapStateToProps = ({
   templates,
   loading,
   workspace: workspace.current,
+  usage: workspace.usage,
 });
 const mapDispatchToProps = { attemptGetTemplates, attemptGetTemplate, currentTemplate, modalCampaign, tabCampaign };
 export default connect(mapStateToProps, mapDispatchToProps)(TemplateList);

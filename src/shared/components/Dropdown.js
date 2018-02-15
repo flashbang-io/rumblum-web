@@ -7,11 +7,13 @@ const DropWrap = styled.div`
   width: 200px;
   background-color: ${props => props.theme.colors.darkless};
   border-radius: ${props => props.theme.size.radius};
+  box-shadow: ${props => props.theme.shadows.dark};
   overflow: hidden;
   display: none;
   position: absolute;
-  right: 0;
-  top: 30px;
+  right: 10px;
+  top: 10px;
+  z-index: 500;
   padding: 10px 0;
   ${props => props.open && css`
     display: block;
@@ -19,7 +21,7 @@ const DropWrap = styled.div`
 `;
 
 export const DropItem = styled.div`
-  font-size: 12px;
+  font-size: 13px;
   padding: 12px 10px;
   width: 100%;
   margin: 0 5px;

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, erroredWorkspace } from '../workspace.reducer';
-import { attemptGetTemplates } from '../../template/template.reducer';
+import { attemptGetWorkspaces, attemptGetWorkspace, attemptGetWorkspaceUsage } from '../workspace.reducer';
+import { resetTemplate } from '../../template/template.reducer';
+import { modalCampaign, tabCampaign } from '../../shared/campaign.reducer';
 import Spaces from '../components/Spaces';
-import CreateForm from './CreateForm';
+import { MODAL_CREATE_SPACE } from '../../shared/shared.constants';
+import Prep, { SpaceWrap } from '../components/Prep';
 
 class SpaceList extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      form: false,
+      show: false,
     };
   }
 
@@ -19,39 +21,43 @@ class SpaceList extends Component {
     this.props.attemptGetWorkspaces();
   }
 
-  componentWillUnmount() {
-    this.props.erroredWorkspace();
-  }
-
-  handleCreate(event) {
-    event.preventDefault();
-    this.props.attemptCreateWorkspace()
-      .then(({ error }) => !error && this.toggleForm());
-  }
-
   handleSelect(id) {
+    this.props.resetTemplate();
     this.props.attemptGetWorkspace(id);
-    this.props.attemptGetTemplates(id);
+    this.props.attemptGetWorkspaceUsage(id);
   }
 
-  toggleForm(status) {
-    this.setState({ form: status || !this.state.form });
+  handleForm() {
+    this.toggleShow();
+    this.props.modalCampaign(MODAL_CREATE_SPACE);
+  }
+
+  handleModal({ modal, tab }) {
+    this.props.tabCampaign(tab);
+    this.props.modalCampaign(modal);
+  }
+
+  toggleShow() {
+    this.setState({ show: !this.state.show });
   }
 
   render() {
-    const { form } = this.state;
+    const { show } = this.state;
+    const { workspace } = this.props;
     return (
-      <Spaces
-        handleSelect={ (...args) => this.handleSelect(...args) }
-        handleOpen={ () => this.toggleForm() }
-        { ...this.props }
-      >
-        { form && <CreateForm
-          handleSubmit={ (...args) => this.handleCreate(...args) }
-          handleClose={ () => this.toggleForm() }
+      <SpaceWrap>
+        <Prep
+          onClick={ () => this.toggleShow() }
+          workspace={ workspace }
+          handleModal={ (...args) => this.handleModal(...args) }
+        />
+        { show && <Spaces
+          handleSelect={ (...args) => this.handleSelect(...args) }
+          handleOpen={ () => this.handleForm() }
+          handleClose={ () => this.toggleShow() }
           { ...this.props }
         /> }
-      </Spaces>
+      </SpaceWrap>
     );
   }
 
@@ -60,13 +66,21 @@ class SpaceList extends Component {
 SpaceList.propTypes = {
   attemptGetWorkspaces: PropTypes.func.isRequired,
   attemptGetWorkspace: PropTypes.func.isRequired,
-  attemptCreateWorkspace: PropTypes.func.isRequired,
-  erroredWorkspace: PropTypes.func.isRequired,
-  attemptGetTemplates: PropTypes.func.isRequired,
+  attemptGetWorkspaceUsage: PropTypes.func.isRequired,
+  resetTemplate: PropTypes.func.isRequired,
+  modalCampaign: PropTypes.func.isRequired,
+  tabCampaign: PropTypes.func.isRequired,
   workspaces: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
+  workspace: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
+};
+
+SpaceList.defaultProps = {
+  workspace: null,
 };
 
 const mapStateToProps = ({
@@ -77,5 +91,12 @@ const mapStateToProps = ({
   problem,
   workspace: current,
 });
-const mapDispatchToProps = { attemptGetWorkspaces, attemptGetWorkspace, attemptCreateWorkspace, erroredWorkspace, attemptGetTemplates };
+const mapDispatchToProps = {
+  attemptGetWorkspaces,
+  attemptGetWorkspace,
+  attemptGetWorkspaceUsage,
+  resetTemplate,
+  modalCampaign,
+  tabCampaign,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(SpaceList);
