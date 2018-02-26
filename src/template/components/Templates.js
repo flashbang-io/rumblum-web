@@ -108,27 +108,27 @@ const Template = ({ handleOpen, template: { id, name, updatedAt, currentChronicl
             <Icon name="sitemap" />
           </Action>
         </Label>
-        <Label title="Edit">
+        <Label title="Edit Template">
           <Action onClick={ () => handleOpen({ id, modal: MODAL_INSPECT, tab: MODAL_INSPECT_TAB_EDIT }) }>
             <Icon name="edit" />
           </Action>
         </Label>
         { currentChronicleId && (
-          <Label title="Render Document">
+          <Label title="Generate Document From Template">
             <Action onClick={ () => handleOpen({ id, modal: MODAL_RENDER }) }>
               <Icon name="plus" />
             </Action>
           </Label>
         ) }
         { currentChronicleId && (
-          <Label title="Default Tags">
+          <Label title="Make Default Tags">
             <Action onClick={ () => handleOpen({ id, modal: MODAL_TEMPLATE_DEFAULTS }) }>
               <Icon name="bars" />
             </Action>
           </Label>
         ) }
         { accessPublic && (
-          <Label title="Share">
+          <Label title="Share Document Form">
             <Action href={ `${config.url}/share/${id}` } target="_blank">
               <Icon name="share-square-o" />
             </Action>

@@ -23,17 +23,17 @@ const IFrame = styled.iframe`
 `;
 
 const Square = styled.div`
-  height: 15px;
-  width: 15px;
-  border-radius: 2px;
-  background-color: ${props => props.theme.colors.darkless};
-  border: 1px solid ${props => props.theme.colors.darker};
+  height: 20px;
+  width: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 5px;
   font-size: 10px;
   color: ${props => props.theme.colors.white};
+  img {
+    width: 100%;
+  }
 `;
 
 const Download = styled.button`
@@ -80,7 +80,9 @@ const Frame = ({ handleDownload, ...props }) => (
     <Group>
       <Download onClick={ handleDownload }>Download</Download>
       <Badge href="https://www.rumblum.com/">
-        <Square>R</Square>
+        <Square>
+          <img alt="Rumblum Logo" src="/assets/branding/rumblum-logo.png" />
+        </Square>
         What is Rumblum?
       </Badge>
     </Group>
