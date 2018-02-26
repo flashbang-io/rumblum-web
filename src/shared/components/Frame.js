@@ -79,7 +79,7 @@ const Frame = ({ handleDownload, ...props }) => (
     <IFrame { ...props } />
     <Group>
       <Download onClick={ handleDownload }>Download</Download>
-      <Badge href="/">
+      <Badge href="https://www.rumblum.com/">
         <Square>R</Square>
         What is Rumblum?
       </Badge>

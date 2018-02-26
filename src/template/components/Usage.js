@@ -48,7 +48,7 @@ const Usage = ({ handleUpgrade, workspace, total, usage, ...props }) => {
     <Wrap { ...props }>
       <Details>
         <Content>
-          <div>Documents created this month</div>
+          <div>Documents generated this month</div>
           { !!total && <div>{ usage } / { total }</div> }
         </Content>
         <Progress>

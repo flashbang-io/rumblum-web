@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import Frame from '../components/Frame';
+import Splash from '../components/Splash';
 
 class RenderPage extends Component {
 
@@ -15,7 +16,14 @@ class RenderPage extends Component {
     if (!url) {
       this.props.history.push('/');
     }
-    this.state = { url };
+    this.state = {
+      url,
+      display: false,
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ display: true }), 1000);
   }
 
   handleDownload() {
@@ -26,7 +34,10 @@ class RenderPage extends Component {
   }
 
   render() {
-    const { url } = this.state;
+    const { url, display } = this.state;
+    if (!display) {
+      return <Splash />;
+    }
     return (
       <DocumentTitle title="Preview | Rumblum">
         <Frame

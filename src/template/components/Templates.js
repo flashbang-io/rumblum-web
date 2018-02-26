@@ -5,7 +5,7 @@ import moment from 'moment';
 import { pulse } from '../../shared/util.helper';
 import { Icon, Group, Label } from '../../shared/components/theme';
 import config from '../../config';
-import { MODAL_INSPECT, MODAL_INSPECT_TAB_CONNECTIONS, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER, MODAL_TEMPLATE_DEFAULTS, MODAL_INSPECT_TAB_FILE } from '../../shared/shared.constants';
+import { MODAL_INSPECT, MODAL_INSPECT_TAB_CONNECTIONS, MODAL_INSPECT_TAB_EDIT, MODAL_RENDER, MODAL_TEMPLATE_DEFAULTS } from '../../shared/shared.constants';
 
 export const Item = styled.div`
   box-shadow: ${props => props.theme.shadows.off};
@@ -36,7 +36,7 @@ const Ghost = Placeholder.extend`
   animation: ${props => pulse(props.theme.colors.offer, props.theme.colors.offest)} 2s linear infinite;
 `;
 
-const Badge = styled.div`
+const Badge = styled.a`
   height: 90px;
   width: 90px;
   display: flex;
@@ -127,13 +127,6 @@ const Template = ({ handleOpen, template: { id, name, updatedAt, currentChronicl
             </Action>
           </Label>
         ) }
-        { currentChronicle && (
-          <Label title="Preview File">
-            <Action href={ `${config.url}/preview?url=${encodeURIComponent(currentChronicle.location)}` } target="_blank">
-              <Icon name="search-plus" />
-            </Action>
-          </Label>
-        ) }
         { accessPublic && (
           <Label title="Share">
             <Action href={ `${config.url}/share/${id}` } target="_blank">
@@ -143,9 +136,17 @@ const Template = ({ handleOpen, template: { id, name, updatedAt, currentChronicl
         ) }
       </Group>
     </Content>
-    <Badge onClick={ () => handleOpen({ id, modal: MODAL_INSPECT, tab: MODAL_INSPECT_TAB_FILE }) }>
-      <Icon name="file-word-o" />
-    </Badge>
+    { currentChronicle ? (
+      <Label title="Preview File">
+        <Badge href={ `${config.url}/preview?url=${encodeURIComponent(currentChronicle.location)}` } target="_blank">
+          <Icon name="file-word-o" />
+        </Badge>
+      </Label>
+    ) : (
+      <Badge>
+        <Icon name="file-word-o" />
+      </Badge>
+    ) }
   </Item>
 );
 

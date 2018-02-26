@@ -90,9 +90,9 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
     throw new Error('Please complete the form before submitting.');
   }
   const body = { ...state.form[formName].values, id: undefined, file: undefined };
-  const temporary = await apiCreateTemplate(token, workspaceId, body);
-  const { id } = temporary;
-  dispatch(addTemplate(temporary));
+  const tempTemplate = await apiCreateTemplate(token, workspaceId, body);
+  const { id } = tempTemplate;
+  dispatch(addTemplate(tempTemplate));
   let models;
   if (values.file) {
     formData.append('file', values.file[0]);
@@ -101,8 +101,9 @@ export const attemptCreateTemplate = workspaceId => thunk(async (dispatch, getSt
     models = await apiCreateChroniclePremade(token, id, { data: values.premade });
   }
   const { chronicle, template } = models;
-  dispatch(currentTemplate(template));
-  dispatch(replaceTemplate(template));
+  const updatedTemplate = { currentChronicle: chronicle, ...template };
+  dispatch(currentTemplate(updatedTemplate));
+  dispatch(replaceTemplate(updatedTemplate));
   dispatch(attemptAlert({ message: 'Template created.' }));
   return { template, chronicle };
 });
