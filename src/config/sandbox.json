@@ -4,5 +4,6 @@
   "endpoint": "https://stage.rumblum.com/api",
   "stripeKey": "pk_test_7iwdGKGGspOf4rdCQ1uHa3Fu",
   "ravenDSN": "https://7a30ef4b69eb4236b51d752d15fd466b@sentry.io/235198",
-  "intercom": false
+  "intercom": false,
+  "google": false
 }
