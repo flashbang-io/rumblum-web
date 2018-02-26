@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptForgotPassword, cleanPlayer } from '../player.reducer';
-import { Container, Title, Button, Group } from '../../shared/components/theme';
+import { Container, Title, Button, Group, Heading } from '../../shared/components/theme';
 import ForgotForm from './ForgotForm';
 import Page from '../components/Page';
 
@@ -25,7 +25,8 @@ class ForgotPage extends Component {
       <DocumentTitle title="Forgot Password | Rumblum">
         <Page>
           <Container>
-            <Title>Forgot Password</Title>
+            <Title flatten>Forgot Password</Title>
+            <Heading style={{ marginTop: '10px', fontSize: '16px' }}>Rumblum document automation.</Heading>
             <ForgotForm
               handleSubmit={ event => this.handleSubmit(event) }
               { ...this.props }
