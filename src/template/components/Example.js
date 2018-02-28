@@ -12,7 +12,6 @@ export const ExampleWrap = styled.div`
 
 const Wrap = styled.div`
   min-width: 30%;
-  max-width: 180px;
   margin-right: 10px;
   margin-bottom: 10px;
   padding: 10px;

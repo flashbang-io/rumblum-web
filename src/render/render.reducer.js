@@ -93,7 +93,7 @@ export const attemptCreateRender = templateId => thunk(async (dispatch, getState
   }
   dispatch(currentRender(render));
   dispatch(addRender(render));
-  dispatch(attemptAlert({ message: 'Template render created.' }));
+  dispatch(attemptAlert({ message: body.send ? 'Document generated and sent to email addresses.' : 'Document generated. Please check your downloads.' }));
   return { render };
 });
 export const attemptUpdateRender = (renderId, data) => thunk(async (dispatch, getState) => {

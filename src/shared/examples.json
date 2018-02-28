@@ -1,18 +1,34 @@
 [
   {
     "id": "0",
-    "title": "Basic Cover Letter",
+    "title": "Basic Resume",
     "description": "Encourage job applicants to fill this out before submitting.",
-    "location": "https://s3-us-west-1.amazonaws.com/rumblumcalifornia/static/templates/basic-cover-letter.docx",
+    "location": "https://s3-us-west-1.amazonaws.com/rumblumcalifornia/static/templates/resume-example.docx",
     "bucket": "rumblumcalifornia",
-    "key": "static/templates/basic-cover-letter.docx"
+    "key": "static/templates/resume-example.docx"
   },
   {
     "id": "1",
-    "title": "Sales Quote",
+    "title": "Sales Invoice",
+    "description": "Create a customised invoice for a client after a sale.",
+    "location": "https://s3-us-west-1.amazonaws.com/rumblumcalifornia/static/templates/sales-invoice-template.docx",
+    "bucket": "rumblumcalifornia",
+    "key": "static/templates/sales-invoice-template.docx"
+  },
+  {
+    "id": "2",
+    "title": "Product Quote",
     "description": "Used to quote a customer for a service.",
     "location": "https://s3-us-west-1.amazonaws.com/rumblumcalifornia/static/templates/sales-quote.docx",
     "bucket": "rumblumcalifornia",
     "key": "static/templates/sales-quote.docx"
+  },
+  {
+    "id": "3",
+    "title": "Meeting Minutes",
+    "description": "Formalise company meeting minutes.",
+    "location": "https://s3-us-west-1.amazonaws.com/rumblumcalifornia/static/templates/meeting-minutes-template.docx",
+    "bucket": "rumblumcalifornia",
+    "key": "static/templates/meeting-minutes-template.docx"
   }
 ]
