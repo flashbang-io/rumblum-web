@@ -58,7 +58,7 @@ class App extends Component {
       <div>
         { !checked ? (
           <Splash />
-        ) : player && !player.invitation ? (
+        ) : player && !player.invitation && config.beta ? (
           <Pending
             handleLogout={ () => this.handleLogout() }
             { ...this.props }
