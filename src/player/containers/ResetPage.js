@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptResetPassword, cleanPlayer } from '../player.reducer';
-import { Container, Title, Button } from '../../shared/components/theme';
+import { Container, Title, Button, Heading } from '../../shared/components/theme';
 import ResetForm from './ResetForm';
 import Page from '../components/Page';
 
@@ -35,7 +35,8 @@ class ResetPage extends Component {
       <DocumentTitle title="Reset Password | Rumblum">
         <Page>
           <Container>
-            <Title>Reset Password</Title>
+            <Title flatten>Reset Password</Title>
+            <Heading style={{ marginTop: '10px', fontSize: '16px' }}>Rumblum document automation.</Heading>
             <ResetForm
               handleSubmit={ event => this.handleSubmit(event) }
               initialValues={{ email }}

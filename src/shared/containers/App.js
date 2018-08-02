@@ -36,8 +36,15 @@ class App extends Component {
   }
 
   componentDidUpdate({ location }) {
-    if (location !== this.props.location && config.intercom) {
-      window.Intercom('update');
+    if (location !== this.props.location) {
+      if (config.google && window.gtag) {
+        window.gtag('config', config.google, {
+          'page_path': this.props.location.pathname,
+        });
+      }
+      if (config.intercom && window.Intercom) {
+        window.Intercom('update');
+      }
     }
   }
 
@@ -51,7 +58,7 @@ class App extends Component {
       <div>
         { !checked ? (
           <Splash />
-        ) : player && !player.invitation ? (
+        ) : player && !player.invitation && config.beta ? (
           <Pending
             handleLogout={ () => this.handleLogout() }
             { ...this.props }

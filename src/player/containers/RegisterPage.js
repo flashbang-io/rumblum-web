@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptCreatePlayer, cleanPlayer } from '../player.reducer';
-import { Container, Title, Button } from '../../shared/components/theme';
+import { Container, Title, Button, Heading } from '../../shared/components/theme';
 import RegisterForm from './RegisterForm';
 import Page from '../components/Page';
 
@@ -40,7 +40,8 @@ class RegisterPage extends Component {
       <DocumentTitle title="Sign Up | Rumblum">
         <Page>
           <Container>
-            <Title>Sign Up</Title>
+            <Title flatten>Sign Up</Title>
+            <Heading style={{ marginTop: '10px', fontSize: '16px' }}>Rumblum document automation.</Heading>
             <RegisterForm
               handleSubmit={ event => this.handleSubmit(event) }
               initialValues={ this.state.init }

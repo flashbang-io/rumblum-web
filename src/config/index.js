@@ -2,7 +2,7 @@ const env = process.env.REACT_APP_NODE_ENV || 'development';
 
 const defaults = {
   website: 'https://www.rumblum.com',
-  beta: true,
+  beta: false,
 };
 
 const environment = require(`./${env}`);

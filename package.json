@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy:sandbox": "REACT_APP_NODE_ENV=sandbox yarn run build && now ./build --name=rumblum-web && now alias --local-config=now.sandbox.json",
-    "deploy:production": "REACT_APP_NODE_ENV=production yarn run build && now ./build --name=rumblum-web && now alias --local-config=now.production.json",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run deploy:dev && npm run deploy:prod",
+    "deploy:dev": "REACT_APP_NODE_ENV=sandbox yarn run build && now ./build --name=rumblum-web-dev && now alias --local-config=now.sandbox.json",
+    "deploy:prod": "REACT_APP_NODE_ENV=production yarn run build && now ./build --name=rumblum-web-prod && now alias --local-config=now.production.json"
   },
   "dependencies": {
     "change-case": "^3.0.1",

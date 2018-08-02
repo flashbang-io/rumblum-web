@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import DocumentTitle from 'react-document-title';
 import { redirectAuthenticatedGuard } from '../../guards';
 import { attemptLoginPlayer, cleanPlayer } from '../player.reducer';
-import { Container, Title, Button, Group } from '../../shared/components/theme';
+import { Container, Title, Button, Group, Heading } from '../../shared/components/theme';
 import LoginForm from './LoginForm';
 import Page from '../components/Page';
 
@@ -38,7 +38,8 @@ class LoginPage extends Component {
       <DocumentTitle title="Login | Rumblum">
         <Page>
           <Container>
-            <Title>Login</Title>
+            <Title flatten>Login</Title>
+            <Heading style={{ marginTop: '10px', fontSize: '16px' }}>Rumblum document automation.</Heading>
             <LoginForm
               handleSubmit={ event => this.handleSubmit(event) }
               initialValues={ this.state.init }
